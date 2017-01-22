@@ -9,6 +9,8 @@ ENT.ComponentScreenHeight = 180
 ENT.ComponentScreenOffset = Vector(24,-22.5,46)
 ENT.ComponentScreenRotation = Angle(0,90,90)
 
+ENT.StartingCash = 100
+
 
 local sound_add = Sound("ambient/levels/canals/windchime2.wav")
 local sound_buy = Sound("ambient/levels/citadel/weapon_disintegrate2.wav")
@@ -27,7 +29,7 @@ function ENT:Initialize()
 	BaseClass.Initialize(self)
 
 	if SERVER then
-		self:SetCash(100)
+		self:SetCash(self.StartingCash)
 		self.next_paytime = 0
 	end
 end
@@ -107,7 +109,7 @@ local items = {
 	{
 		name="Reload Guns",
 		desc="Fully loads both cannons.",
-		cost=50,
+		cost=25,
 		pv="models/items/ammocrate_ar2.mdl",
 		func = function(ship)
 			ship:ReloadGuns()
@@ -143,7 +145,7 @@ local items = {
 	},
 	{
 		name="Hook Cannon Shells",
-		desc="Reloads 2 hook cannon shells.",
+		desc="Reloads 4 hook cannon shells.",
 		cost=5,
 		pv="models/props_junk/meathook001a.mdl",
 		ent="micro_item_shell_2"
@@ -175,7 +177,29 @@ local items = {
 		cost=500,
 		pv="models/maxofs2d/gm_painting.mdl",
 		ent="micro_item_collectable_deco"
+	},
+	{
+		name="Manhack",
+		desc="Want a challenge? Try sharing your ship with a few of these!",
+		cost=500,
+		pv="models/manhack.mdl",
+		ent="npc_manhack"
+	},
+	{
+		name="Rollermine",
+		desc="beep boop",
+		cost=500,
+		pv="models/roller.mdl",
+		ent="npc_rollermine"
 	}
+	--[[,
+	{
+		name="Scanner Buddy",
+		desc="This one can't hurt you so I'm making it cost even more.",
+		cost=10,
+		pv="models/Combine_Scanner.mdl",
+		ent="npc_cscanner"
+	},]]
 }
 
 if SERVER then

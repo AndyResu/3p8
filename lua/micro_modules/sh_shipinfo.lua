@@ -13,12 +13,18 @@ function ENTITY:GetShipInfo()
 	end
 end
 
-function ENTITY:CheckBroken(health)
+--[[function ENTITY:CheckBroken(health,)
 	return health < self:GetMaxHealth()*.3
-end
+end]]
 
 function ENTITY:IsBroken()
-	return self:CheckBroken(self:Health())
+	local frac = .3
+
+	if self:GetClass()=="micro_ship" then
+		frac=.1
+	end
+
+	return self:Health() < self:GetMaxHealth()*frac
 end
 
 function ENTITY:AddToExternalShip()
@@ -136,9 +142,10 @@ if SERVER then
 		end
 		nav:Spawn()
 
-		local tele = ents.Create("micro_comp_teleporter")
+		--disable this for now
+		--[[local tele = ents.Create("micro_comp_teleporter")
 		tele:SetPos(micro_ship_origin+Vector(-200,-225,0))
-		tele:Spawn()
+		tele:Spawn()]]
 
 		local spk = ents.Create("micro_speaker")
 		spk:SetPos(micro_ship_origin+Vector(0,0,-100))
@@ -153,11 +160,19 @@ if SERVER then
 		ship_ent.speaker_engine = spk
 	end
 
+	hook.easy("AcceptInput",function(ent, input, activator, caller, value )
+		print("io",ent,input,activator,caller,value)
+	end)
+
 	hook.easy("InitPostEntity",function()
 		--print("hi!")
 
 		for _,v in pairs(ents.FindByClass("info_target")) do
 			print(v,v:GetName())
+		end
+
+		for _,v in pairs(ents.FindByClass("point_clientcommand")) do
+			print("cmd",v,v:GetName())
 		end
 
 		for i,base_ent in pairs(ents.FindByName("micro_ship_*")) do
