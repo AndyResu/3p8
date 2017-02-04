@@ -90,7 +90,13 @@ function SWEP:PrimaryAttack()
 		ply:SetAnimation(PLAYER_ATTACK1)
 
 		ply:EmitSound(hit_sound)
-		ent:SetHealth(ent:Health()-25)
+		
+		--THANKS AWKEWAINZE
+		local d = DamageInfo()
+        d:SetDamage( 25 )
+        d:SetAttacker( ply )
+        ent:TakeDamageInfo( d )
+
 
 		--gives hp
 		ply:SetHealth(math.Clamp(ply:Health() + 10, 1, ply:GetMaxHealth()))
@@ -135,7 +141,7 @@ function SWEP:Initialize()
 	-- other initialize code goes here
 	--vmodel:SetColor(255,255,255,0)
 	self:SetWeaponHoldType(self.HoldType)
-	
+
 
 	if CLIENT then
 		-- Create a new table for every weapon instance
