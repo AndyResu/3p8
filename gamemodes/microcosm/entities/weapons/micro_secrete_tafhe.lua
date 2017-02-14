@@ -1,51 +1,76 @@
---FILE THEME SONG
---https://www.youtube.com/watch?v=YIlheWVe3tg
---Hint: It's a remix
+--[[
+	FILE THEME SONG:
+	https://www.youtube.com/watch?v=Gp2JKXBhP6M
+	FREE HOTDOGS MOD
+]]
 
 AddCSLuaFile()
 
-SWEP.PrintName = "THE CLIP WITH THE STENDO" --I got the clip with the stendo and the Gamecube Nintendo
+SWEP.PrintName = "T.A.F.H.E."
 SWEP.Author = "Sky"
-SWEP.Purpose = "only one may become the wewest lad"
-SWEP.Instructions = "M1 to Fire"
+SWEP.Purpose = "Tactically Assertained Free Hotdogs Enhancement" --Tactically Assertained Free Frankenfurter Yielder
+SWEP.Instructions = "Primary Fire to Liberate the Hungry"
+SWEP.Category = "Microcosm"
+SWEP.Spawnable = true
+SWEP.AdminSpawnable = true
+SWEP.Weight = 100 --it's a heavy burden
 
-SWEP.Primary.ClipSize		= 10
-SWEP.Primary.DefaultClip	= 100
-SWEP.Primary.Automatic		= false
-SWEP.Primary.Ammo		    = "pistol"
+SWEP.Primary.ClipSize		= 1 --feel free to pop off a few hotdogs when you get this gun.
+SWEP.Primary.DefaultClip	= 1338 --will show up as 1/1337
+SWEP.Primary.Automatic		= false --i wish
+SWEP.Primary.Ammo		    = "XBowBolt"
  
-SWEP.Secondary.ClipSize	    = -1 --weapons/usp/usp_slideback.wav play dat sound
+SWEP.Secondary.ClipSize	    = -1 --makes a cool clicking sound
 SWEP.Secondary.DefaultClip	= -1
 SWEP.Secondary.Automatic	= false
 SWEP.Secondary.Ammo		    = "none"
 
-SWEP.HoldType = "pistol"
+SWEP.HoldType = "crossbow"
 SWEP.ViewModelFOV = 70
 SWEP.ViewModelFlip = false
-SWEP.UseHands = true
-SWEP.ViewModel = "models/weapons/c_pistol.mdl"
-SWEP.WorldModel = "models/weapons/w_pistol.mdl"
+SWEP.UseHands = true --you haven't lived until you have seen the dat boi playermodel carry it
+SWEP.ViewModel = "models/weapons/c_crossbow.mdl"
+SWEP.WorldModel = "models/weapons/w_crossbow.mdl"
 SWEP.ShowViewModel = true
 SWEP.ShowWorldModel = true
-SWEP.ViewModelBoneMods = {
-	["ValveBiped.square"] = { scale = Vector(0.009, 0.009, 0.009), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) },
-	["ValveBiped.eject"] = { scale = Vector(0.009, 0.009, 0.009), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) },
-	["ValveBiped.hammer"] = { scale = Vector(0.009, 0.009, 0.009), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) },
-	["ValveBiped.muzzle"] = { scale = Vector(0.009, 0.009, 0.009), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) },
-	["ValveBiped.base"] = { scale = Vector(0.009, 0.009, 0.009), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) },
-	["ValveBiped.clip"] = { scale = Vector(0.009, 0.009, 0.009), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) }
-}
+SWEP.ViewModelBoneMods = {}
 
 SWEP.VElements = {
-	["element_name"] = { type = "Model", model = "models/airboatgun.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(5.699, 1.799, -5), angle = Angle(0, 0, 0), size = Vector(0.5, 0.5, 0.5), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
-	["handle"] = { type = "Model", model = "models/gibs/helicopter_brokenpiece_05_tailfan.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 1.557, 0), angle = Angle(-100, 180, 0), size = Vector(0.05, 0.05, 0.05), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["hotdog"] = { type = "Model", model = "models/food/hotdog.mdl", bone = "ValveBiped.bolt", rel = "", pos = Vector(0, 6.25, 6), angle = Angle(90, 0, -90), size = Vector(1.7, 0.5, 0.5), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
-	["handle"] = { type = "Model", model = "models/gibs/helicopter_brokenpiece_05_tailfan.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4, 1.5, 0), angle = Angle(-110, 180, 0), size = Vector(0.05, 0.05, 0.05), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
-	["element_name"] = { type = "Model", model = "models/airboatgun.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(7.791, 2.596, -5.401), angle = Angle(0, 0, 0), size = Vector(0.5, 0.5, 0.5), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["hotdog"] = { type = "Model", model = "models/food/hotdog.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(6.5, -2, 4.675), angle = Angle(84, -22, 90), size = Vector(1.7, 0.5, 0.5), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 }
 
+function SWEP:liberate_the_hungry()
+	local tr = self.Owner:GetEyeTrace()
+
+	if CLIENT then return end
+
+	local ent = ents.Create("micro_item_secrete_hd")
+	local vector_rotated = Vector(0,-20,-22)
+	vector_rotated:Rotate(self.Owner:GetAngles())
+	ent:SetPos(self.Owner:EyePos() + vector_rotated)
+	ent:SetAngles(self.Owner:EyeAngles())
+	ent:Spawn()
+
+	local phys = ent:GetPhysicsObject()
+
+	if !(phys && IsValid(phys)) then ent:Remove() return end
+
+	phys:ApplyForceCenter(self.Owner:GetAimVector():GetNormalized() *  math.pow(tr.HitPos:Length(), 3))
+end
+
+function SWEP:PrimaryAttack()
+	if (!self:CanPrimaryAttack()) then return end
+
+	self.Weapon:EmitSound("weapons/crossbow/fire1.wav")
+	self:liberate_the_hungry()
+	self:TakePrimaryAmmo(1)
+end
+
+--saved as hotdog in SCK
 --[[/********************************************************
 	SWEP Construction Kit base code
 		Created by Clavus
@@ -69,24 +94,19 @@ SWEP.WElements = {
 function SWEP:Initialize()
 	-- other initialize code goes here
 	self:SetWeaponHoldType(self.HoldType)
-	
 
 	if CLIENT then
-	
 		-- Create a new table for every weapon instance
 		self.VElements = table.FullCopy( self.VElements )
 		self.WElements = table.FullCopy( self.WElements )
 		self.ViewModelBoneMods = table.FullCopy( self.ViewModelBoneMods )
-
 		self:CreateModels(self.VElements) -- create viewmodels
 		self:CreateModels(self.WElements) -- create worldmodels
-		
 		-- init view model bone build function
 		if IsValid(self.Owner) then
 			local vm = self.Owner:GetViewModel()
 			if IsValid(vm) then
 				self:ResetBonePositions(vm)
-				
 				-- Init viewmodel visibility
 				if (self.ShowViewModel == nil or self.ShowViewModel) then
 					vm:SetColor(Color(255,255,255,255))
@@ -99,20 +119,16 @@ function SWEP:Initialize()
 				end
 			end
 		end
-		
 	end
-
 end
 
 function SWEP:Holster()
-	
 	if CLIENT and IsValid(self.Owner) then
 		local vm = self.Owner:GetViewModel()
 		if IsValid(vm) then
 			self:ResetBonePositions(vm)
 		end
 	end
-	
 	return true
 end
 
@@ -121,22 +137,15 @@ function SWEP:OnRemove()
 end
 
 if CLIENT then
-
 	SWEP.vRenderOrder = nil
 	function SWEP:ViewModelDrawn()
-		
 		local vm = self.Owner:GetViewModel()
 		if !IsValid(vm) then return end
-		
 		if (!self.VElements) then return end
-		
 		self:UpdateBonePositions(vm)
-
 		if (!self.vRenderOrder) then
-			
 			-- we build a render order because sprites need to be drawn after models
 			self.vRenderOrder = {}
-
 			for k, v in pairs( self.VElements ) do
 				if (v.type == "Model") then
 					table.insert(self.vRenderOrder, 1, k)
@@ -144,47 +153,34 @@ if CLIENT then
 					table.insert(self.vRenderOrder, k)
 				end
 			end
-			
 		end
-
 		for k, name in ipairs( self.vRenderOrder ) do
-		
 			local v = self.VElements[name]
 			if (!v) then self.vRenderOrder = nil break end
 			if (v.hide) then continue end
-			
 			local model = v.modelEnt
 			local sprite = v.spriteMaterial
-			
 			if (!v.bone) then continue end
-			
 			local pos, ang = self:GetBoneOrientation( self.VElements, v, vm )
-			
 			if (!pos) then continue end
-			
 			if (v.type == "Model" and IsValid(model)) then
-
 				model:SetPos(pos + ang:Forward() * v.pos.x + ang:Right() * v.pos.y + ang:Up() * v.pos.z )
 				ang:RotateAroundAxis(ang:Up(), v.angle.y)
 				ang:RotateAroundAxis(ang:Right(), v.angle.p)
 				ang:RotateAroundAxis(ang:Forward(), v.angle.r)
-
 				model:SetAngles(ang)
 				--model:SetModelScale(v.size)
 				local matrix = Matrix()
 				matrix:Scale(v.size)
 				model:EnableMatrix( "RenderMultiply", matrix )
-				
 				if (v.material == "") then
 					model:SetMaterial("")
 				elseif (model:GetMaterial() != v.material) then
 					model:SetMaterial( v.material )
 				end
-				
 				if (v.skin and v.skin != model:GetSkin()) then
 					model:SetSkin(v.skin)
 				end
-				
 				if (v.bodygroup) then
 					for k, v in pairs( v.bodygroup ) do
 						if (model:GetBodygroup(k) != v) then
@@ -192,57 +188,40 @@ if CLIENT then
 						end
 					end
 				end
-				
 				if (v.surpresslightning) then
 					render.SuppressEngineLighting(true)
 				end
-				
 				render.SetColorModulation(v.color.r/255, v.color.g/255, v.color.b/255)
 				render.SetBlend(v.color.a/255)
 				model:DrawModel()
 				render.SetBlend(1)
 				render.SetColorModulation(1, 1, 1)
-				
 				if (v.surpresslightning) then
 					render.SuppressEngineLighting(false)
 				end
-				
 			elseif (v.type == "Sprite" and sprite) then
-				
 				local drawpos = pos + ang:Forward() * v.pos.x + ang:Right() * v.pos.y + ang:Up() * v.pos.z
 				render.SetMaterial(sprite)
 				render.DrawSprite(drawpos, v.size.x, v.size.y, v.color)
-				
 			elseif (v.type == "Quad" and v.draw_func) then
-				
 				local drawpos = pos + ang:Forward() * v.pos.x + ang:Right() * v.pos.y + ang:Up() * v.pos.z
 				ang:RotateAroundAxis(ang:Up(), v.angle.y)
 				ang:RotateAroundAxis(ang:Right(), v.angle.p)
 				ang:RotateAroundAxis(ang:Forward(), v.angle.r)
-				
 				cam.Start3D2D(drawpos, ang, v.size)
 					v.draw_func( self )
 				cam.End3D2D()
-
 			end
-			
 		end
-		
 	end
-
 	SWEP.wRenderOrder = nil
 	function SWEP:DrawWorldModel()
-		
 		if (self.ShowWorldModel == nil or self.ShowWorldModel) then
 			self:DrawModel()
 		end
-		
 		if (!self.WElements) then return end
-		
 		if (!self.wRenderOrder) then
-
 			self.wRenderOrder = {}
-
 			for k, v in pairs( self.WElements ) do
 				if (v.type == "Model") then
 					table.insert(self.wRenderOrder, 1, k)
@@ -250,58 +229,44 @@ if CLIENT then
 					table.insert(self.wRenderOrder, k)
 				end
 			end
-
 		end
-		
 		if (IsValid(self.Owner)) then
 			bone_ent = self.Owner
 		else
 			-- when the weapon is dropped
 			bone_ent = self
 		end
-		
 		for k, name in pairs( self.wRenderOrder ) do
-		
 			local v = self.WElements[name]
 			if (!v) then self.wRenderOrder = nil break end
 			if (v.hide) then continue end
-			
 			local pos, ang
-			
 			if (v.bone) then
 				pos, ang = self:GetBoneOrientation( self.WElements, v, bone_ent )
 			else
-				pos, ang = self:GetBoneOrientation( self.WElements, v, bone_ent, "ValveBiped.Bip01_R_Hand" )
+				pos, ang = self:GetBoneOrientation( self.WElements, v, bone_ent, "ValveBiped.Bip01_R_Hand")
 			end
-			
 			if (!pos) then continue end
-			
 			local model = v.modelEnt
 			local sprite = v.spriteMaterial
-			
 			if (v.type == "Model" and IsValid(model)) then
-
 				model:SetPos(pos + ang:Forward() * v.pos.x + ang:Right() * v.pos.y + ang:Up() * v.pos.z )
 				ang:RotateAroundAxis(ang:Up(), v.angle.y)
 				ang:RotateAroundAxis(ang:Right(), v.angle.p)
 				ang:RotateAroundAxis(ang:Forward(), v.angle.r)
-
 				model:SetAngles(ang)
 				--model:SetModelScale(v.size)
 				local matrix = Matrix()
 				matrix:Scale(v.size)
 				model:EnableMatrix( "RenderMultiply", matrix )
-				
 				if (v.material == "") then
 					model:SetMaterial("")
 				elseif (model:GetMaterial() != v.material) then
 					model:SetMaterial( v.material )
 				end
-				
 				if (v.skin and v.skin != model:GetSkin()) then
 					model:SetSkin(v.skin)
 				end
-				
 				if (v.bodygroup) then
 					for k, v in pairs( v.bodygroup ) do
 						if (model:GetBodygroup(k) != v) then
