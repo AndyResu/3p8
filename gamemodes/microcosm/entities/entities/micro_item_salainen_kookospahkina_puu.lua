@@ -1,11 +1,8 @@
 --shameless copy-pasta of SkyLight's micro_item_secrete_hd which was a copy-pasta of SkyLight's micro_collectable_food which was a copy-pasta of SkyLight's micro_item_armorkit.lua which was a copy-pasta of Parakeet's micro_item_medkit.lua
 --gottem
 
---FILE THEME SONG:
---https://www.youtube.com/watch?v=NtxmnBQmfZs I didn't feel like finding a Finnish song about trees...
-
 --puu on kaunis
---micro_item_salainen_kookospahkina_puu for copy-paste
+--micro_item_salainen_kookospahkina_puu copy-paste
 
 --TODO: Make sure SERVER and CLIENT stuff are correct...!
 --have a timer that detracts energy based on traits and adds energy based on traits also
