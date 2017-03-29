@@ -2,12 +2,21 @@
 	FILE THEME SONG:
 	https://www.youtube.com/watch?v=Gp2JKXBhP6M
 	FREE HOTDOGS MOD
+
+	Genesis:
+	Teamspeak bros and I were putting together a mod pack for Minecraft once. 
+	Some memebers of the community wanted certain niche mods that they probably never would use, but whatever, we chose those people to make the modpack for us. 
+	They came up with over 200 mods and, bless them, they debugged it and added/removed mods until they had something playable. 
+	I didn't like having so many mods. 
+	When they asked me if I wanted to play, I told them I'd only play if we had some super niche mod I just made up called project free hotdogs mod. 
+	Server host is like, oh yeah, we got that mod. 
+	So I join, hosts gives me a stack of hotdogs from Pam's Harvest Craft and I waste another bajillion hours of my life playing Minecraft. 
 ]]
 
 AddCSLuaFile()
 
 SWEP.PrintName = "T.A.F.H.E."
-SWEP.Author = "Sky"
+SWEP.Author = "Sky / Taivas"
 SWEP.Purpose = "Tactically Assertained Free Hotdogs Enhancement" --Tactically Assertained Free Frankenfurter Yielder
 SWEP.Instructions = "Primary Fire to Liberate the Hungry"
 SWEP.Category = "Microcosm"
