@@ -5,44 +5,31 @@
 
 AddCSLuaFile()
 
-ENT.Base = "micro_item"
+ENT.Base = "micro_item_salainen"
 
-ENT.ItemName = "Kookospahkina Puu"
+--ENT.ItemName = "Kookospahkina Puu"
 ENT.ItemModel = "models/props_foliage/ferns03.mdl"
-ENT.MaxCount = 1
+--ENT.MaxCount = 1
 
 function ENT:Initialize()
 	self:SetModel(self.ItemModel)
 	self:PhysicsInitStandard()
+	--self:PhysicsInit(SOLID_VPHYSICS)
+	self:SetMoveType(MOVETYPE_VPHYSICS)
+	self:SetSolid(SOLID_VPHYSICS)
 	self:SetMoveType(0)
 	self.treeLevel = 1
 	self.hasLeveled = false
 
-	self.growthSpeed = 105
-	self.numberOfFruit = 2
+	--self.growthSpeed = 105
+	--self.numberOfFruit = 2
 	self.startingEnergy = 10000
 	self.energy = self.startingEnergy
 
-	print("growthSpeed at stage1 part2: " .. self.growthSpeed)
-	print("energy at stage1 part2: " .. self.energy)
+	self.health = 250 * self.treeLevel
+	--print("growthSpeed at stage1 part2: " .. self.growthSpeed)
+	--print("energy at stage1 part2: " .. self.energy)
 
-	if SERVER then
-		--energy timer
-		local timer_name = "treeEnergyDepletion_" .. self:EntIndex()
-		timer.Create(timer_name,100,0, function() --every 100s, update energy status
-			if IsValid(self)then
-				self.energy = self.energy - ((100 / self.growthSpeed) + 0) + 100*self.treeLevel --wew?
-				--print(self.energy)
-				print("growthSpeed at stage1 part3: " .. self.growthSpeed)
-				print("energy at stage1 part3: " .. self.energy)
-				if self.energy <= 0 then --KILL FUNCTION; SLAYER
-					self:Remove()
-				end
-			else
-				timer.Remove(timer_name)
-			end
-		end)
-	end
 end
 
 if SERVER then
@@ -50,7 +37,8 @@ if SERVER then
 		if !self.hasLeveled then
 			self.hasLeveled = true
 			print("growthSpeed at stage1 part4: " .. self.growthSpeed)
-			print("energy at stage1 part4: " .. self.energy)
+			--print("energy at stage1 part4: " .. self.energy)
+			print("number of fruit at stage1 part4: " .. self.numberOfFruit)
 			timer.Simple( self.growthSpeed, function()
 				newFruit = ents.Create("micro_item_salainen_kookospahkina_puu" .. (self.treeLevel + 1))
 				if ( !IsValid( newFruit ) ) then return end
@@ -59,7 +47,7 @@ if SERVER then
 				newFruit:Spawn()
 				newFruit:PassOnInfo(self.growthSpeed, self.numberOfFruit, self.startingEnergy, self.energy)
 				print("growthSpeed at stage1 part5: " .. self.growthSpeed)
-				print("energy at stage1 part5: " .. self.energy)
+				--print("energy at stage1 part5: " .. self.energy)
 				self:Remove()
 			end )
 		end
@@ -71,6 +59,34 @@ if SERVER then
 		self.numberOfFruit = setNumberOfFruit
 		self.startingEnergy = setStartingEnergy
 		self.energy = setEnergy
+		
+		--energy timer
+		local timer_name = "treeEnergyDepletion_" .. self:EntIndex()
+		timer.Create(timer_name,100,0, function() --every 100s, update energy status
+			if IsValid(self)then
+				self.energy = self.energy - ((100 / self.growthSpeed) + 0) + 100*self.treeLevel --wew?
+				--print(self.energy)
+				print("growthSpeed at stage1 part3: " .. self.growthSpeed)
+				print("energy at stage1 part3: " .. self.energy)
+				if self.energy <= 0 then --KILL FUNCTION; SLAYER
+					self:Remove()
+				end
+				if self:IsOnFire() then
+					self:Remove()
+				end
+			else
+				timer.Remove(timer_name)
+			end
+		end)
+
+	end
+end
+
+function ENT:OnTakeDamage(damageto)
+	self.health = self.health - damageto:GetDamage()
+	if self.health <= 0 then
+		self:EmitSound("weapons/debris1.wav")
+		self:Remove()
 	end
 end
 

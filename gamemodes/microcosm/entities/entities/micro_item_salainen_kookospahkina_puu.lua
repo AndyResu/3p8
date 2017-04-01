@@ -4,87 +4,43 @@
 --puu on kaunis
 --micro_item_salainen_kookospahkina_puu copy-paste
 
---TODO: Make coconut float
---		fix the collision models
---		on plantable on ground
-
 AddCSLuaFile()
 
-ENT.Base = "micro_item"
+ENT.Base = "micro_item_salainen"
 
-ENT.ItemName = "Kookospahkina"
+--ENT.ItemName = "Kookospahkina"
 ENT.ItemModel = "models/hunter/misc/sphere025x025.mdl"
-ENT.MaxCount = 1
+--ENT.MaxCount = 1
 
 function ENT:Use(ply)
 	--plant the coconut
-	if !self.isPlanted && self:WaterLevel() == 0 then --TODO: && self:OnGround() 
-		self.isPlanted = true
-		--stop movement
-		self:SetMoveType(0)
-		--make sound
-		self:EmitSound("phx/eggcrack.wav")
-		--go to next level
-		newFruit = ents.Create("micro_item_salainen_kookospahkina_puu" .. (self.treeLevel + 1))
-		if ( !IsValid( newFruit ) ) then return end
-		newFruit:SetPos(self:GetPos() + Vector(0,0,-5))
-		--set new values for growth speed and gestation or w/e on new entity
-		newFruit:PassOnInfo(self.growthSpeed, self.numberOfFruit, self.startingEnergy, self.energy)
-		newFruit:Spawn()
-		self:Remove()
-	end
-	print("growthSpeed at planting: " .. self.growthSpeed)
-	print("energy at planting: " .. self.energy)
-	--print(self.isPlanted)
-	--print(self.treeLevel .. " should be 0")
-	--print(self:WaterLevel() .. " should be 0")
+	self:Upgrayed()
 end
 
 function ENT:Initialize()
 	self:SetMaterial("models/props_pipes/guttermetal01a")
 	self:SetModel(self.ItemModel)
 	self:PhysicsInitStandard()
+	--self:PhysicsInit(SOLID_VPHYSICS)
+	self:SetMoveType(MOVETYPE_VPHYSICS)
+	self:SetSolid(SOLID_VPHYSICS)
+
+	local phys = self:GetPhysicsObject()
+	if (phys:IsValid()) then
+		phys:Wake()
+		--make float (bouyancy)
+		self:GetPhysicsObject():SetBuoyancyRatio(1.0) --0 min, 1 max (wood)
+	end
 	self.isPlanted = false
 
 	self.growthSpeed = 5
-	self.numberOfFruit = 2
+	self.numberOfFruit = 4
 	self.startingEnergy = 10000
 	self.energy = self.startingEnergy
 	self.treeLevel = 0
+	self.plantTime = math.random(10, 50)
 
-	if SERVER then
-		--energy timer
-		local timer_name = "treeEnergyDepletion_" .. self:EntIndex()
-		timer.Create(timer_name,100,0, function() --every 100s, update energy status
-			if IsValid(self) && math.Rand(0,1) > 0.67 then
-				-- autoplant functionality
-				--plant itself. below copy pasted from ENT:Use()
-					--plant the coconut
-					if !self.isPlanted && self:WaterLevel() == 0 then --TODO: && self:OnGround() 
-						self.isPlanted = true
-						--stop movement
-						self:SetMoveType(0)
-						--make sound
-						self:EmitSound("phx/eggcrack.wav")
-						--go to next level
-						newFruit = ents.Create("micro_item_salainen_kookospahkina_puu" .. (self.treeLevel + 1))
-						if ( !IsValid( newFruit ) ) then return end
-						newFruit:SetPos(self:GetPos() + Vector(0,0,-5))
-						--set new values for growth speed and gestation or w/e on new entity
-						newFruit:Spawn()
-						newFruit:PassOnInfo(self.growthSpeed, self.numberOfFruit, self.startingEnergy, self.energy)
-						self:Remove()
-					end
-					--print("current growthspeed: " .. self.growthSpeed)
-					--print(self.isPlanted)
-					--print(self.treeLevel .. " should be 0")
-					--print(self:WaterLevel() .. " should be 0")
-				--
-			elseif !IsValid(self) then
-				timer.Remove(timer_name)
-			end
-		end)
-	end
+	self.health = 75
 end
 
 if SERVER then
@@ -99,7 +55,7 @@ if SERVER then
 		end
 
 		self.growthSpeed = newGrowthSpeed
-		print("new growthSpeed: " .. self.growthSpeed)
+		--print("new growthSpeed: " .. self.growthSpeed)
 
 		newNumberOfFruit = setNumberOfFruit + math.random(-1,1)
 		if newNumberOfFruit < 1 then
@@ -119,6 +75,28 @@ if SERVER then
 		self.startingEnergy = newStartingEnergy
 		self.energy = self.startingEnergy
 		print("new energy: " .. self.energy)
+
+		--energy timer
+		local timer_name = "treeEnergyDepletion_" .. self:EntIndex()
+		--print(self.plantTime .. " homoeggs")
+		timer.Create(timer_name,self.plantTime,0, function() --every (some amount) seconds, update energy status
+			--print("yeah, we doing it now!1")
+			chance = math.Rand(0,1)
+			if IsValid(self) && chance > 0.67 then
+				-- autoplant functionality
+				--plant itself. below copy pasted from ENT:Use()
+				self:Upgrayed()
+			elseif !IsValid(self) then
+				timer.Remove(timer_name)
+			end
+			if IsValid(self) then
+				self.energy = self.energy - self.plantTime
+				if self.energy <= 0 then
+					self.Remove()
+				end
+			end
+		end)
+
 	end
 	--
 
@@ -129,6 +107,76 @@ if SERVER then
 		self.numberOfFruit = setNumberOfFruit
 		self.startingEnergy = setStartingEnergy
 		self.energy = setEnergy
+	end
+end --end SERVER
+
+function ENT:Upgrayed()
+	--plant the coconut
+	if !self.isPlanted && self:WaterLevel() == 0 && self:OnGroundNotStupidEdition(self:GetPos()) then
+		self.isPlanted = true
+		--debug
+		--print("growthSpeed at planting: " .. self.growthSpeed)
+		--print("energy at planting: " .. self.energy)
+		--print(self.isPlanted)
+		--print(self.treeLevel .. " should be 0")
+		--print(self:WaterLevel() .. " should be 0")
+
+		--stop movement
+		self:SetMoveType(0)
+		--make sound
+		self:EmitSound("phx/eggcrack.wav")
+		--go to next level
+		newFruit = ents.Create("micro_item_salainen_kookospahkina_puu" .. (self.treeLevel + 1))
+		if ( !IsValid( newFruit ) ) then return end
+		newFruit:SetPos(self:GetPos() + Vector(0,0,-5))
+		--set new values for growth speed and gestation or w/e on new entity
+		newFruit:Spawn()
+		newFruit.growthSpeed = self.growthSpeed
+		newFruit.numberOfFruit = self.numberOfFruit
+		newFruit.startingEnergy = self.startingEnergy
+		newFruit.energy = newFruit.startingEnergy
+		print(newFruit.energy .. "newFruit Energy")
+		
+		newFruit:PassOnInfo(self.growthSpeed, self.numberOfFruit, self.startingEnergy, self.energy)
+		self:Remove()
+	end
+end
+
+function ENT:OnGroundNotStupidEdition(position)
+	local plantable = false
+	local startpos = position
+	local endpos = 	startpos + Vector(0,0,-1)*10
+	local tmin = Vector(1,1,1)*-5
+	local tmax = Vector(1,1,1)*5
+	local tr = util.TraceHull( {
+		start = startpos,
+		endpos = endpos,
+		filter = self,
+		mins = tmin,
+		maxs = tmax,
+		mask = MASK_SHOT_HULL
+	} )
+	if not IsValid(tr.Entity) then
+		tr = util.TraceLine({
+			start = startpos,
+			endpos = endpos,
+			filter = self,
+			mask = MASK_SHOT_HULL
+		})
+	end
+	local ent = tr.Entity
+	if IsValid(ent) && ent:GetClass() == "func_brush" then
+		plantable = true
+	end
+
+	return plantable
+end
+
+function ENT:OnTakeDamage(damageto)
+	self.health = self.health - damageto:GetDamage()
+	if self.health <= 0 then
+		self:EmitSound("weapons/debris1.wav")
+		self:Remove()
 	end
 end
 

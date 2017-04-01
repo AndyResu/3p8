@@ -5,15 +5,18 @@
 
 AddCSLuaFile()
 
-ENT.Base = "micro_item"
+ENT.Base = "micro_item_salainen"
 
-ENT.ItemName = "Kookospahkina Puu"
+--ENT.ItemName = "Kookospahkina Puu"
 ENT.ItemModel = "models/props_foliage/urban_small_palm01.mdl"
-ENT.MaxCount = 1
+--ENT.MaxCount = 1
 
 function ENT:Initialize()
 	self:SetModel(self.ItemModel)
 	self:PhysicsInitStandard()
+	--self:PhysicsInit(SOLID_VPHYSICS)
+	self:SetMoveType(MOVETYPE_VPHYSICS)
+	self:SetSolid(SOLID_VPHYSICS)
 	self:SetMoveType(0)
 	self.treeLevel = 4
 	self.hasLeveled = false
@@ -23,21 +26,10 @@ function ENT:Initialize()
 	self.startingEnergy = 10000
 	self.energy = self.startingEnergy
 
-	if SERVER then
-		--energy timer
-		local timer_name = "treeEnergyDepletion_" .. self:EntIndex()
-		timer.Create(timer_name,100,0, function() --every 100s, update energy status
-			if IsValid(self)then
-				self.energy = self.energy - ((100 / self.growthSpeed) + 0) + 100*self.treeLevel --wew?
-				--print(self.energy)
-				if self.energy <= 0 then --KILL FUNCTION; SLAYER
-					self:Remove()
-				end
-			else
-				timer.Remove(timer_name)
-			end
-		end)
-	end
+	self.health = 250 * self.treeLevel
+
+	self:SetCollisionBounds(Vector(-5,-5,0), Vector(5,5,140))
+	self:SetSolid(3)
 end
 
 if SERVER then
@@ -62,6 +54,31 @@ if SERVER then
 		self.numberOfFruit = setNumberOfFruit
 		self.startingEnergy = setStartingEnergy
 		self.energy = setEnergy
+
+		--energy timer
+		local timer_name = "treeEnergyDepletion_" .. self:EntIndex()
+		timer.Create(timer_name,100,0, function() --every 100s, update energy status
+			if IsValid(self)then
+				self.energy = self.energy - ((100 / self.growthSpeed) + 0) + 100*self.treeLevel --wew?
+				--print(self.energy)
+				if self.energy <= 0 then --KILL FUNCTION; SLAYER
+					self:Remove()
+				end
+				if self:IsOnFire() then
+					self:Remove()
+				end
+			else
+				timer.Remove(timer_name)
+			end
+		end)
+	end
+end
+
+function ENT:OnTakeDamage(damageto)
+	self.health = self.health - damageto:GetDamage()
+	if self.health <= 0 then
+		self:EmitSound("weapons/debris1.wav")
+		self:Remove()
 	end
 end
 

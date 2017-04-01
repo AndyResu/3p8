@@ -5,15 +5,18 @@
 
 AddCSLuaFile()
 
-ENT.Base = "micro_item"
+ENT.Base = "micro_item_salainen"
 
-ENT.ItemName = "Kookospahkina Puu"
+--ENT.ItemName = "Kookospahkina Puu"
 ENT.ItemModel = "models/props_foliage/mall_palm01.mdl"
-ENT.MaxCount = 1
+--ENT.MaxCount = 1
 
 function ENT:Initialize()
 	self:SetModel(self.ItemModel)
 	self:PhysicsInitStandard()
+	--self:PhysicsInit(SOLID_VPHYSICS)
+	self:SetMoveType(MOVETYPE_VPHYSICS)
+	self:SetSolid(SOLID_VPHYSICS)
 	self:SetMoveType(0)
 	self.treeLevel = 7
 	self.hasLeveled = false
@@ -23,25 +26,40 @@ function ENT:Initialize()
 	self.startingEnergy = 10000
 	self.energy = self.startingEnergy
 
-	if SERVER then
+	self.health = 250 * self.treeLevel
+
+	self:SetCollisionBounds(Vector(-5,-5,0), Vector(5,5,140))
+	self:SetSolid(3)
+end
+
+if SERVER then
+
+	--if fertilizer is introduced like in SS13, then make a GetGenes...
+	
+	function ENT:PassOnInfo(setGrowthSpeed, setNumberOfFruit, setStartingEnergy, setEnergy)
+		self.growthSpeed = setGrowthSpeed
+		self.numberOfFruit = setNumberOfFruit
+		self.startingEnergy = setStartingEnergy
+		self.energy = setEnergy
+
 		--energy timer
 		local timer_name = "treeEnergyDepletion_" .. self:EntIndex()
 		timer.Create(timer_name,100,0, function() --every 100s, update energy status
-			print("100 seconds pass")
+			--print("100 seconds pass")
 			if IsValid(self)then
 				self.energy = self.energy - ((100 / self.growthSpeed) + 0) + 100*self.treeLevel --wew?
-				print(self.energy)
+				--print(self.energy)
 				-- fruit production
 				--if math.Rand() < self.growthSpeed then
 					--bear fruit
 					for i = 1,self.numberOfFruit do
-						print("making coconut again")
+						--print("making coconut again")
 						newFruit = ents.Create("micro_item_salainen_kookospahkina_puu")
 						if ( !IsValid( newFruit ) ) then return end
-						newFruit:SetPos(self:GetPos() + Vector(math.random(-20,20),math.random(-20,20),128))
+						newFruit:SetPos(self:GetPos() + Vector(math.random(-25,25),math.random(-25,25),128))
 						--at position up in the tree (might need some if statements to do bearing fruit earlier/later)
 							--maybe use the entity's height subtract some?
-						self.energy = self.energy - (self.startingEnergy * self.numberOfFruit)
+						self.energy = self.energy - (self.startingEnergy / self.numberOfFruit)
 						newFruit:Spawn()
 						--set new values for growth speed and gestation or w/e on new entity
 						newFruit:SetGenes(self.growthSpeed, self.numberOfFruit, self.startingEnergy)
@@ -51,6 +69,9 @@ function ENT:Initialize()
 				if self.energy <= 0 then --KILL FUNCTION; SLAYER
 					self:Remove()
 				end
+				if self:IsOnFire() then
+					self:Remove()
+				end
 			else
 				timer.Remove(timer_name)
 			end
@@ -58,35 +79,28 @@ function ENT:Initialize()
 	end
 end
 
-if SERVER then
-	--this code is used to level up the tree. This is the last level currently implemented, so keep it commented.
-	--[[function ENT:Think()
-		if !self.hasLeveled then
-			self.hasLeveled = true
-			timer.Simple( self.growthSpeed, function() 
-				newFruit = ents.Create("micro_item_salainen_kookospahkina_puu" .. (self.treeLevel + 1))
-				if ( !IsValid( newFruit ) ) then return end
-				newFruit:SetPos(self:GetPos())
-				--set new values for growth speed and gestation or w/e on new entity
-				newFruit:PassOnInfo(self.growthSpeed, self.numberOfFruit, self.startingEnergy, self.energy)
-				newFruit:Spawn()
-				self:Remove()
-			end )
-		end
-	end
-	--]]
+function ENT:OnTakeDamage(damageto)
+	--print("we doing it now, doctor! " .. self.health)
+	self.health = self.health - damageto:GetDamage()
+	if self.health <= 0 then
+		self:EmitSound("weapons/debris1.wav")
+		--PRODUCE WOOD HERE
+		puulle = ents.Create("micro_item_salainen_puulle")
+		if ( !IsValid( puulle ) ) then return end
+		puulle:SetPos(self:GetPos() + Vector(0,0,100))
+		puulle:Spawn()
 
-	--if fertilizer is introduced like in SS13, then make a GetGenes...
-	
-	function ENT:PassOnInfo(setGrowthSpeed, setNumberOfFruit, setStartingEnergy, setEnergy)
-		self.growthSpeed = setGrowthSpeed
-		self.numberOfFruit = setNumberOfFruit
-		self.startingEnergy = setStartingEnergy
-		self.energy = setEnergy
+		--make a stump: kanto
+		kanto = ents.Create("micro_item_salainen_kanto")
+		if ( !IsValid( kanto ) ) then return end
+		kanto:SetPos(self:GetPos() + Vector(0,0,-50))
+		kanto:Spawn()
+
+		--make leaf gibs...
+		--???
+		self:Remove()
 	end
 end
-
---models/props_forest/log.mdl
 
 --cocnut21
 --0 models/hunter/misc/sphere025x025.mdl
