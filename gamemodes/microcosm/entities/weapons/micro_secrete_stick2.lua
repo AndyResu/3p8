@@ -1,28 +1,33 @@
 --[[
 	FILE THEME SONG:
-	https://www.youtube.com/watch?v=ZXhuso4OTG4
-	I was thinking about a children's song about tapping sticks together. The innocence would match this weapon's innocence. Styx is much danker tho :^P
-	https://www.youtube.com/watch?v=M-UKTeWNgOk "Tap your Sticks", reminds me of King Louie's' "Throw Yo Sets Up" https://www.youtube.com/watch?v=ntGq2MdbP_Y
-	I sorta want to make a remix. 
+	https://www.youtube.com/watch?v=jNtwb4sP0IA
+	STICK STICK STICK STICK
 
 	--I was thinking maybe use driftwood for the stick, OR a pallet gib :^)
+	or models/props_canal/mattpipe.mdl
+
+	Todo:
+	stick1 becomes stick2...
+	add view/world model for magic item.
+
+	money wizard, height wizard, banana wizard, color wizard?, trash wizard, plant wizard (DEATH WEED?), cleric/necro? biomage?, fire (rage) mage
 ]]
 
 AddCSLuaFile()
 
-SWEP.PrintName = "Stick"
+SWEP.PrintName = "S.T.I.C.K."
 SWEP.Author = "Sky"
-SWEP.Purpose = "Pretend you have a sword!" --
-SWEP.Instructions = "Primary Fire to wave to your friends!"
+SWEP.Purpose = "Spells of Thaumaturgy, Illusion, Conjuration, and Killing" --something tacticool in cilla kombat, small tree...
+SWEP.Instructions = "Turns out this is a magical stick..."
 SWEP.Category = "Microcosm"
 SWEP.Spawnable = true
 SWEP.AdminSpawnable = true
 SWEP.Weight = 3 --it's a stick, what do you expect?
 
-SWEP.Primary.ClipSize		= -1
-SWEP.Primary.DefaultClip	= -1
-SWEP.Primary.Automatic		= true
-SWEP.Primary.Ammo		    = "none"
+SWEP.Primary.ClipSize		= 100
+SWEP.Primary.DefaultClip	= 1
+SWEP.Primary.Automatic		= false
+SWEP.Primary.Ammo		    = "GaussEnergy"
 SWEP.Primary.Delay			= 0.5
 SWEP.Primary.Recoil			= 0
 SWEP.Primary.TakeAmmo		= 0
@@ -32,7 +37,7 @@ SWEP.Secondary.DefaultClip	= -1
 SWEP.Secondary.Automatic	= false
 SWEP.Secondary.Ammo		    = "none"
 
-SWEP.HoldType = "melee2"
+SWEP.HoldType = "knife"
 SWEP.ViewModelFOV = 70
 SWEP.ViewModelFlip = false
 SWEP.UseHands = true
@@ -57,26 +62,279 @@ SWEP.ViewModelBoneMods = {
 }
 
 SWEP.VElements = {
+	["None"] = { type = "Model", model = "models/props/cs_office/trash_can_p5.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(7, 2, -23), angle = Angle(0, 0, 0), size = Vector(0.5, 0.5, 0.5), color = Color(255, 255, 255, 0), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
+	["Trash"] = { type = "Model", model = "models/props/cs_office/trash_can_p5.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(7, 2, -23), angle = Angle(0, 0, 0), size = Vector(0.5, 0.5, 0.5), color = Color(255, 255, 255, 0), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
+	["Meme"] = { type = "Model", model = "models/props_junk/ravenholmsign.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(7, 2, -23), angle = Angle(0, 0, 0), size = Vector(0.25, 0.25, 0.25), color = Color(255, 255, 255, 0), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
 	["stick"] = { type = "Model", model = "models/props_foliage/driftwood_02a.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4.675, 1.557, -5.715), angle = Angle(104.026, -19.871, 36.234), size = Vector(0.035, 0.05, 0.05), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
-	["stick"] = { type = "Model", model = "models/props_foliage/driftwood_02a.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(6.752, 1.557, -6.753), angle = Angle(111.039, -10.52, -17.532), size = Vector(0.035, 0.05, 0.05), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["None"] = { type = "Model", model = "models/props/cs_office/trash_can_p5.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(12, 2, -23), angle = Angle(110, -10, -17), size = Vector(0.5, 0.5, 0.5), color = Color(255, 255, 255, 0), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
+	["Trash"] = { type = "Model", model = "models/props/cs_office/trash_can_p5.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(12, 2, -23), angle = Angle(110, -10, -17), size = Vector(0.5, 0.5, 0.5), color = Color(255, 255, 255, 0), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
+	["Meme"] = { type = "Model", model = "models/props_junk/ravenholmsign.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(12, 2, -23), angle = Angle(180, -10, -17), size = Vector(0.25, 0.25, 0.25), color = Color(255, 255, 255, 0), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
+	["stick"] = { type = "Model", model = "models/props_foliage/driftwood_02a.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(7, 1.5, -7), angle = Angle(110, -10, -17), size = Vector(0.035, 0.05, 0.05), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 }
 
-function SWEP:PrimaryAttack()
-	--if (!self:CanPrimaryAttack()) then return end
-	self.Weapon:SendWeaponAnim(ACT_VM_THROW) --ACT_VM_THROW
-	self.Owner:SetAnimation(PLAYER_ATTACK1)
-	--delay
-	self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
+local eat_range = 70
 
-	self.Weapon:EmitSound("npc/fast_zombie/claw_miss1.wav")
+function SWEP:PrimaryAttack()
+	if (!self:CanPrimaryAttack()) then return end
+	local trash_primary_cost = 5
+
+	if self.current_spells == "Trash" then
+		--eat prop_physics items
+		--do a trace
+		--if prop_physics then eat it and self:SetClip1(self:Clip1()+2)
+		--if player or NPC then do a little damage and take ammo.  Maybe shoot trash for 5?
+		if CLIENT then return end
+		local ply = self:GetOwner()
+		local shootpos = ply:GetShootPos()
+		local endshootpos = shootpos + ply:GetAimVector() * eat_range
+		local tmin = Vector(1,1,1)*-10
+		local tmax = Vector(1,1,1)*10
+		local tr = util.TraceHull( {
+			start = shootpos,
+			endpos = endshootpos,
+			filter = ply,
+			mins = tmin,
+			maxs = tmax,
+			mask = MASK_SHOT_HULL
+		} )
+		if not IsValid(tr.Entity) then
+			tr = util.TraceLine({
+				start = shootpos,
+				endpos = endshootpos,
+				filter = ply,
+				mask = MASK_SHOT_HULL
+			})
+		end
+		local ent = tr.Entity
+		if IsValid(ent) && (ent:IsPlayer() || ent:IsNPC()) && self:Clip1() >= trash_primary_cost then
+			ply:EmitSound("npc/headcrab_fast/headbite.wav")
+			self:SetClip1(self:Clip1()-trash_primary_cost)
+			--THANKS (again) AWKEWAINZE
+			local d = DamageInfo()
+        	d:SetDamage( 25 )
+        	d:SetAttacker( ply )
+        	ent:TakeDamageInfo( d )
+		elseif IsValid(ent) && ent:GetClass() == "prop_physics" then
+			ent:Remove()
+			self:SetClip1(self:Clip1()+2)
+			ply:EmitSound("npc/headcrab_fast/headbite.wav")
+		elseif !IsValid(ent) then
+			ply:EmitSound("npc/fast_zombie/claw_miss1.wav")
+		end
+		--self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
+	elseif self.current_spells == "Meme" then --meme magic
+		--spigot toolbar wizard 1 protection from memes 2 roll knowledge nature
+		if !meme_protection && CLIENT then 
+			self.Owner:ChatPrint("You are now protected from memes.") --maybe put player name?
+			meme_protection = true
+		elseif meme_protection && CLIENT then
+			self.Owner:ChatPrint("You are now unprotected from memes. Please reinstall spigot toolbar to get your system scanned for memes!")
+			meme_protection = false
+		end
+		self.Owner:EmitSound("ambient/machines/train_pass_far.wav")
+	else --no magic
+		--self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
+		self.Weapon:EmitSound("npc/fast_zombie/claw_miss1.wav")
+	end
+	self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
+	self.Weapon:SendWeaponAnim(ACT_VM_THROW)
+	self.Owner:SetAnimation(PLAYER_ATTACK1)
 	timer.Simple( 0.5, function() self.Weapon:SendWeaponAnim(ACT_VM_IDLE) end )
 end
 
 function SWEP:SecondaryAttack()
-	self.Weapon:SendWeaponAnim(ACT_VM_IDLE)
+	--used for creating a secondary spell
+	local trash_secondary_cost = 10
+	if self.current_spells == "Trash" && self:Clip1() >= trash_secondary_cost then
+		--produce armor item
+		if CLIENT then return end
+		local ent = ents.Create("micro_item_armorkit")
+		local vector_rotated = Vector(0,0,40)
+		vector_rotated:Rotate(self.Owner:GetAngles())
+		ent:SetPos(self.Owner:GetPos() + vector_rotated)
+		ent:SetAngles(self.Owner:EyeAngles())
+		ent:SetModel("models/items/battery.mdl")
+		ent:Spawn()
+		self:SetClip1(self:Clip1()-trash_secondary_cost)
+	elseif self.current_spells == "Meme" && SERVER then --meme magic
+		self.Owner:ChatPrint("Rolling a D20: ".. math.random(1,20))
+		self.Onwer:EmitSount("ambient/animal/rodent_scratch_short_2.wav")
+	else
+
+	end
+	self.Weapon:SendWeaponAnim(ACT_VM_THROW)
+	self.Owner:SetAnimation(PLAYER_ATTACK1)
+	timer.Simple( 0.5, function() self.Weapon:SendWeaponAnim(ACT_VM_IDLE) end )
+end
+
+function SWEP:Think()
+	--spins the current spell item like a globe!
+	if self.current_spells == "Trash" then
+		self.VElements["Trash"].angle.y = self.VElements["Trash"].angle.y + 0.5
+		self.WElements["Trash"].angle.y = self.WElements["Trash"].angle.y + 0.5
+	elseif self.current_spells == "Meme" then
+		self.VElements["Meme"].angle.y = self.VElements["Meme"].angle.y + 0.5
+		self.WElements["Meme"].angle.y = self.WElements["Meme"].angle.y + 0.5
+	end
+end
+
+function SWEP:Reload()
+	--used to change what spell the player is on (current_spells) by using a trace to find what prop_physics the player is aiming at and eating it >:)
+	--print("Current Spells "..current_spells)
+	local ply = self:GetOwner()
+	local shootpos = ply:GetShootPos()
+	local endshootpos = shootpos + ply:GetAimVector() * eat_range
+	local tmin = Vector(1,1,1)*-10
+	local tmax = Vector(1,1,1)*10
+	local tr = util.TraceHull( {
+		start = shootpos,
+		endpos = endshootpos,
+		filter = ply,
+		mins = tmin,
+		maxs = tmax,
+		mask = MASK_SHOT_HULL
+	} )
+	if not IsValid(tr.Entity) then
+		tr = util.TraceLine({
+			start = shootpos,
+			endpos = endshootpos,
+			filter = ply,
+			mask = MASK_SHOT_HULL
+		})
+	end
+	local ent = tr.Entity
+	if IsValid(ent) && ent:GetClass() == "prop_physics" then
+		self.VElements[self.current_spells].color.a = 0
+		self.WElements[self.current_spells].color.a = 0
+		--the client is not allowed access to this command...
+		self.Weapon:SendWeaponAnim(ACT_VM_THROW)
+		ply:SetAnimation(PLAYER_ATTACK1)
+		model_eaten = ent:GetModel()
+		if string.match(model_eaten, "trash") || string.match(model_eaten, "dumpster") || string.match(model_eaten, "ruin") || string.match(model_eaten, "debris") then
+			--trash wizard
+			self.current_spells = "Trash"
+			self.VElements["Trash"].color.a = 255
+			self.WElements["Trash"].color.a = 255
+			if CLIENT then self.Owner:ChatPrint("You are now a Trash Wizard!") end
+		elseif string.match(model_eaten, "blastdoor" || model_eaten == "models/props_junk/ravenholmsign.mdl") then
+			self.current_spells = "Meme"
+			self.VElements["Meme"].color.a = 255
+			self.WElements["Meme"].color.a = 255
+			if CLIENT then self.Owner:ChatPrint("You are now a Spigot Toolbar Wizard!") end
+		elseif string.match(model_eaten, "explosive") || string.match(model_eaten, "gas") || string.match(model_eaten, "ropane") || string.match(model_eaten, "fire") then
+		--rage mage aka pyro aka fire mage
+			--shoot fireball (flaming explosive barrel?)
+			--set on fire for 10 seconds?
+
+		--balloon wizard?
+			--1 spawn balloon animal
+			--2 launch balloon animal towards location
+
+
+		--magic tree in detail
+		--Wizard 1 produce light 2 spend mana to add max mana 
+			--maybe try using a fancy color/material?
+			--item for make wizard
+				--models/props_phx/misc/egg.mdl
+				--models/props/cs_italy/orange.mdl
+				--models/props/cs_italy/bananna.mdl
+				--models/props/de_inferno/crate_fruit_break_gib2.mdl
+				--gnome? pumpkin?
+				
+			--flower models to be placed underground as static props?
+				--models/props/de_inferno/potted_plant1_p1.mdl
+				--models/props/de_inferno/potted_plant2_p1.mdl
+				--models/props/de_inferno/potted_plant3_p1.mdl
+
+			--cool stuff for map
+				--models/props/de_inferno/laundrylineacross.mdl
+				--models/props/de_inferno/laundrylineflat.mdl
+			--Life Wizard (cleric) 1 heal 2 armor?... ideally resurrect. maybe add max hp?
+				--plant wizard 1 make plant 2 make fancy plant. maybe death weed 3 maybe shoot stick. stick win everytime
+					--death weedzard
+					--ant/bug wizard 1 shoot spit 2 drop edible grub or spawn antlion grub
+						--height wizard 1 make smaller 2 make bigger
+						--Culture/Color wizard 1 change color 2 change material
+							--money wizard 1 turn to gold? 2 make monies & dance
+							--balloon wizard 1 spawn balloon animal 2 launch baloon animal towards location
+							--noise/music wizard 1 play random sound 2 play random music/ambience
+							--install wizard
+								--1 dialup sounds? 2 shoot computer?
+								--spigot toolbar wizard 1 2 done
+								--parakeet "JavaScript" wizard
+								--SkyLight "Taivas" wizard 1 make random required prop 2 make immortal?
+							--OSHA/Safety Wizard
+								--1 spawn construction barricade/cone maybe make a ladder?
+									--models/props_junk/TrafficCone001a.mdl
+									--models/props_wasteland/barricade001a.mdl
+									--models/props_wasteland/barricade002a.mdl
+								--2 shoot not-safe objects like sawblades and hooks and harpoons
+				--blood wizard 1 life steal 2 SLAY?
+					--blood powered weapons
+				--lust wizard 1 shoot paintcan fast 2 change playermodel, either self or enemy AKA booty wizard
+			--Element Wizard 1 magic missle? 2 force push?
+				--fire wizard 1 ignite 2 firebarrel
+					--electricity wizard 1 shoot electricity 2 produce light???
+				--"air jordan" on the wizards 1 run speed 2 high jump
+					--maybe flying "sky" wizard... or maybe for balloon?
+				--dirt wizard 1 shoot rock bullet 2 drop rock from sky?
+					--stone wizard 1 make wall 2 ???
+				--water wizard 1 fish swarm (shotgun) 2 shield?
+					--SNOW WIZARD 1 shoots snowball 2 turns into snowman for 10 seconds
+				--trash wizard 1 2 done
+
+		--gun wizard not sure I should have one because guns are not magic
+		--sleep, detect players, give more maxhp, damp lazer, aggressive ray, illusion, teleport, become water, polymoprh
+		--door wizard
+		--suomi wizard?
+		--Hyphy [BASED] wizard...
+		--space wizard?
+		--EXODUS WIZARD
+		--interdimensional psychic vampire
+			--telports between ship
+		--immortality wizard?
+
+
+
+		--confusion wizard 1 spin target 2 move target in random directions
+		--probably should restructure the tree so crappy stuff comes first...
+		--maybe instead of a tree, just have the steam ID pick one, or one of the starter classes. 
+			--split between helpful and harmful?
+		--wizard wizard -BAirborne, spawns mimics 
+		--rpg wizard? level up, ding, useless crap?
+			--really uses an RPG
+		--maybe have the tree advancement be based on props being spawned by certain wizards... like wizard 1 spawns this object, makes you into wizard 2... to 4 then you become
+			--super wizard...
+		
+		--test if "it"'s shield will be affected by swep change
+
+
+		elseif string.match(model_eaten, "bananna") || string.match(model_eaten, "doll") || string.match(model_eaten, "orange") || string.match(model_eaten, "hotdog") then
+			--lust wizard
+			--shoot paintcan fast
+			--change playermodel --changeling or maybe change other people
+
+		elseif string.match(model_eaten, "paint") then
+			--color wizard
+			--change color
+			--change material?
+		else
+			self.current_spells = "None"
+			if CLIENT then self.Owner:ChatPrint("This lacks magic...") end
+		end
+		if SERVER then --maybe disable and leave for the trash wizard to clean up.
+			ent:Remove()
+		end
+		ply:EmitSound("npc/headcrab_fast/headbite.wav") --magical sound garrysmod/save_load1.wav 1-4 are all magical!!!
+	elseif !IsValid(ent) then
+		self.Weapon:SendWeaponAnim(ACT_VM_THROW)
+		ply:SetAnimation(PLAYER_ATTACK1)
+		ply:EmitSound("npc/fast_zombie/claw_miss1.wav")
+	end
+	timer.Simple( 0.5, function() self.Weapon:SendWeaponAnim(ACT_VM_IDLE) end )
 end
 
 --saved as stick in SCK
@@ -103,6 +361,23 @@ end
 function SWEP:Initialize()
 	-- other initialize code goes here
 	self:SetWeaponHoldType(self.HoldType)
+	self.current_spells = "None"
+	self.model_eaten = ""
+	self.meme_protection = false
+
+	if SERVER then
+		local timer_name = "magic_regen_"..self:EntIndex()
+		timer.Create(timer_name,10,0, function()
+			if IsValid(self) then
+				if self:Clip1()<self.Primary.ClipSize then
+					self:SetClip1(self:Clip1()+1)
+				end
+			else
+				timer.Destroy(timer_name)
+			end
+		end)
+	end
+
 
 	if CLIENT then
 		-- Create a new table for every weapon instance

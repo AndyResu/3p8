@@ -36,9 +36,9 @@ if SERVER then
 	function ENT:Think()
 		if !self.hasLeveled then
 			self.hasLeveled = true
-			print("growthSpeed at stage1 part4: " .. self.growthSpeed)
+			--print("growthSpeed at stage1 part4: " .. self.growthSpeed)
 			--print("energy at stage1 part4: " .. self.energy)
-			print("number of fruit at stage1 part4: " .. self.numberOfFruit)
+			--print("number of fruit at stage1 part4: " .. self.numberOfFruit)
 			timer.Simple( self.growthSpeed, function()
 				newFruit = ents.Create("micro_item_salainen_kookospahkina_puu" .. (self.treeLevel + 1))
 				if ( !IsValid( newFruit ) ) then return end
@@ -46,7 +46,7 @@ if SERVER then
 				--set new values for growth speed and gestation or w/e on new entity
 				newFruit:Spawn()
 				newFruit:PassOnInfo(self.growthSpeed, self.numberOfFruit, self.startingEnergy, self.energy)
-				print("growthSpeed at stage1 part5: " .. self.growthSpeed)
+				--print("growthSpeed at stage1 part5: " .. self.growthSpeed)
 				--print("energy at stage1 part5: " .. self.energy)
 				self:Remove()
 			end )
@@ -66,8 +66,8 @@ if SERVER then
 			if IsValid(self)then
 				self.energy = self.energy - ((100 / self.growthSpeed) + 0) + 100*self.treeLevel --wew?
 				--print(self.energy)
-				print("growthSpeed at stage1 part3: " .. self.growthSpeed)
-				print("energy at stage1 part3: " .. self.energy)
+				--print("growthSpeed at stage1 part3: " .. self.growthSpeed)
+				--print("energy at stage1 part3: " .. self.energy)
 				if self.energy <= 0 then --KILL FUNCTION; SLAYER
 					self:Remove()
 				end

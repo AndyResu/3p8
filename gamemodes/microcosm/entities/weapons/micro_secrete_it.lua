@@ -1,85 +1,303 @@
---[[
-	FILE THEME SONG:
-	https://www.youtube.com/watch?v=ZXhuso4OTG4
-	I was thinking about a children's song about tapping sticks together. The innocence would match this weapon's innocence. Styx is much danker tho :^P
-	https://www.youtube.com/watch?v=M-UKTeWNgOk "Tap your Sticks", reminds me of King Louie's' "Throw Yo Sets Up" https://www.youtube.com/watch?v=ntGq2MdbP_Y
-	I sorta want to make a remix. 
 
-	--I was thinking maybe use driftwood for the stick, OR a pallet gib :^)
-]]
+--[[
+FILE THEME SONG: https://www.youtube.com/watch?v=hF9Gr5waAJg
+--death squad's off to disney land
+
+Say your prayers little one
+Don't forget my son
+To include everyone
+
+I set you up, weak teams
+Keep you free from memes
+'Til the Death Squad comes
+
+With your third eye open
+Blame SkyLight
+
+Exit light
+Enter fight
+Take my gun
+Death Squad's off to Disney Land
+
+Something's wrong, shut the light
+War thoughts tonight
+Know your tank is fight
+
+Dreams of war, dreams of liars
+Dreams of purifying fire
+And of things that will bite, yeah
+
+With your third eye open
+Blame SkyLight
+
+Exit light
+Enter fight
+Take my gun
+Death Squad's off to Disney Land
+
+Now I lay me down to sleep
+Now I lay me down to sleep
+Pray Parakeet my soul to keep
+Pray Parakeet my soul to keep
+
+If I bleed before I wake
+If I bleed before I wake
+Pray Teemo my soul to take --blood god?
+Pray Teemo my soul to take
+
+Hush my friend don't say a word
+And never mind those shots you heard
+It's just the wewlad under your bed
+In your closet in your head
+
+Exit light
+Enter fight
+Bit of Sun
+
+Exit light
+Enter fight
+Take my gun
+Death Squad's off to Disney Land
+
+Boom
+! Yeah yeah!
+
+Death Squad's off to Disney Land
+Take my gun
+Death Squad's off to Disney Land
+Take my gun
+
+Death Squad's off to Disney Land
+Death Squad's off to Disney Land
+They're off to never-never land
+--]]
+
+--This weapon is so strong it has two themes:
+--https://www.youtube.com/watch?v=MISEMo8xxII
+
+--the ultimate, ancient, sumerian man who became a god, Ihuicatl Tonauac's master-form jihadblade of suprememe (!) power #RARE
+--maximum blood genij approved
+
+--requires the 5 pieces of Ihuicatl Tonauac --worldmodel
+--Severed Head of Ihuicatl Tonauac		--models/props/cs_office/snowman_head.mdl
+--Energy Shield of Ihuicatl Tonauac		--models/slyfo/pallet_battery.mdl
+--Genome of Ihuicatl Tonauac			--models/props/de_tides/vending_tshirt.mdl
+--Dual Blasters of Ihuicatl Tonauac		--models/slyfo_2/rocketpod_turbo_full.mdl
+--Light Sneakers of Ihuicatl Tonauac	--models/props_c17/SuitCase001a.mdl
+--combinator							--models/props_lab/servers.mdl					--probably is own entity, like shop. call comb lol
+
+--Robot Claw?
+--carte blanche? give money https://www.youtube.com/watch?v=NSoumHfgIqc --lodsa mone?
+--golden gun? made from new roleplayer prop crate?
+--drop money from shop for robbing ships
+--sword of some sort, maybe with shield
+
+--[[
+function ENT:PhysicsCollide(data, phys)
+	--if self:IsBroken() then return end
+	local class = data.HitEntity:GetClass()
+
+	if class:sub(1,17)=="micro_item_shell_" then
+		local type = tonumber(class:sub(18))
+
+		local ammo_needed = self["Ammo"..type.."Max"] - self["GetAmmo"..type](self)
+		local ammo_taken = data.HitEntity:TryTake(ammo_needed)
+
+		if ammo_taken>0 then
+			self:EmitSound(sound_reload)
+			self["SetAmmo"..type](self,self["GetAmmo"..type](self)+ammo_taken)
+		end
+	end
+end
+--]]
+
+--todo:
+--spawned in initialization of the swep. 
+	--also slow player down by like, 1/3rd when in use!
+--make tracers work ffs
+--make it so bullets fired by this gun do not collide with this gun. 
+--1. fix the SetParent?
+--2. ask parakeet about how to fix the serverside/clientside spamming glitch
+--3. consider using http://wiki.garrysmod.com/page/Entity/PhysicsInitSphere & http://wiki.garrysmod.com/page/Entity/PassesDamageFilter maybe use traces instead of bullets
+-- if you switch off the weapon, it will still have the shield there in the air...
+--SWEP:Holster( Entity weapon ) 
 
 AddCSLuaFile()
 
-SWEP.PrintName = "Stick"
-SWEP.Author = "Sky"
-SWEP.Purpose = "Pretend you have a sword!" --
-SWEP.Instructions = "Primary Fire to wave to your friends!"
+SWEP.PrintName = "I.T."
+SWEP.Author = "Ihuicatl Tonauac" --Sky of the Light in Nahuatl
+SWEP.Purpose = "The Infinite Terror of Ihuicatl Tonauac"
+SWEP.Instructions = "Primary Fire to Destroy. Secondary Fire to Protect."
 SWEP.Category = "Microcosm"
-SWEP.Spawnable = true
-SWEP.AdminSpawnable = true
-SWEP.Weight = 3 --it's a stick, what do you expect?
+SWEP.Weight = 50000 --it is beyond powerful!
 
-SWEP.Primary.ClipSize		= -1
-SWEP.Primary.DefaultClip	= -1
+--destroy
+SWEP.Primary.Sound			= "weapons/tmp/tmp-1.wav"
+SWEP.Primary.ClipSize		= 100
+SWEP.Primary.DefaultClip	= 1
 SWEP.Primary.Automatic		= true
-SWEP.Primary.Ammo		    = "none"
-SWEP.Primary.Delay			= 0.5
-SWEP.Primary.Recoil			= 0
+SWEP.Primary.Ammo		    = "Battery"
+SWEP.Primary.Delay			= 0.15
+SWEP.Primary.Recoil			= 0.25
 SWEP.Primary.TakeAmmo		= 0
 
-SWEP.Secondary.ClipSize	    = -1
-SWEP.Secondary.DefaultClip	= -1
-SWEP.Secondary.Automatic	= false
-SWEP.Secondary.Ammo		    = "none"
+SWEP.Primary.Damage			= 75
+SWEP.Primary.Spread 		= 0.2
+SWEP.Primary.NumberofShots 	= 2
+SWEP.Primary.Force			= 10
 
-SWEP.HoldType = "melee2"
-SWEP.ViewModelFOV = 70
+--protect
+SWEP.Secondary.ClipSize		= 20
+SWEP.Secondary.DefaultClip	= 1
+SWEP.Secondary.Automatic	= false
+SWEP.Secondary.Ammo			= "none"
+SWEP.Secondary.TakeAmmo		= 0
+
+SWEP.HoldType = "duel"
+SWEP.ViewModelFOV = 60
 SWEP.ViewModelFlip = false
 SWEP.UseHands = true
-SWEP.ViewModel = "models/weapons/c_grenade.mdl"
+SWEP.ViewModel = "models/weapons/cstrike/c_pist_elite.mdl"
 SWEP.WorldModel = "models/barney_animations.mdl"
 SWEP.ShowViewModel = true
 SWEP.ShowWorldModel = true
-SWEP.ViewModelBoneMods = {
-	["ValveBiped.Bip01_R_Finger41"] = { scale = Vector(1, 1, 1), pos = Vector(0, 0, 0), angle = Angle(0, -10, 0) },
-	["ValveBiped.Bip01_R_Finger1"] = { scale = Vector(1, 1, 1), pos = Vector(0, 0, 0), angle = Angle(1.11, -34.445, 16.666) },
-	["ValveBiped.Bip01_R_Finger21"] = { scale = Vector(1, 1, 1), pos = Vector(0, 0, 0), angle = Angle(0, -12.223, 0) },
-	["ValveBiped.Bip01_R_Finger11"] = { scale = Vector(1, 1, 1), pos = Vector(0, 0, 0), angle = Angle(0, -18.889, 0) },
-	["ValveBiped.Bip01_R_Hand"] = { scale = Vector(1, 1, 1), pos = Vector(0, 0, 0), angle = Angle(0, 0, 30) },
-	["ValveBiped.Bip01_R_Finger02"] = { scale = Vector(1, 1, 1), pos = Vector(0, 0, 0), angle = Angle(0, 38.888, 0) },
-	["ValveBiped.Bip01_R_Finger4"] = { scale = Vector(1, 1, 1), pos = Vector(0.185, -0.186, 0), angle = Angle(-21.112, -36.667, 0) },
-	["ValveBiped.Grenade_body"] = { scale = Vector(0.009, 0.009, 0.009), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) },
-	["ValveBiped.Bip01_R_Finger2"] = { scale = Vector(1, 1, 1), pos = Vector(0, 0, 0), angle = Angle(0, -34.445, 0) },
-	["ValveBiped.Bip01_Spine4"] = { scale = Vector(1, 1, 1), pos = Vector(0.555, -6.112, -2.408), angle = Angle(0, 0, 0) },
-	["ValveBiped.Bip01_R_Finger3"] = { scale = Vector(1, 1, 1), pos = Vector(0, 0, 0), angle = Angle(-7.778, -38.889, 0) },
-	["ValveBiped.Bip01_R_Finger31"] = { scale = Vector(1, 1, 1), pos = Vector(0, 0, 0), angle = Angle(0, -5.557, 0) },
-	["ValveBiped.Bip01_R_Finger0"] = { scale = Vector(1, 1, 1), pos = Vector(-0.186, 0, 0), angle = Angle(25.555, 10, 5.556) }
-}
+SWEP.ViewModelBoneMods = {}
 
 SWEP.VElements = {
-	["stick"] = { type = "Model", model = "models/props_foliage/driftwood_02a.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4.675, 1.557, -5.715), angle = Angle(104.026, -19.871, 36.234), size = Vector(0.035, 0.05, 0.05), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["gun_right"] = { type = "Model", model = "models/slyfo_2/weap_prover_industrialspiker.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(11.5, 1.5, -2.5), angle = Angle(0, 0, 135), size = Vector(0.55, 0.55, 0.55), color = Color(147, 110, 160, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
+	["gun_right+"] = { type = "Model", model = "models/slyfo_2/weap_prover_industrialspiker.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(11.5, 1.5, 2.9), angle = Angle(0, 0, 45), size = Vector(0.55, 0.55, 0.55), color = Color(147, 110, 160, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
+	["shield"] = { type = "Model", model = "models/hunter/misc/shell2x2.mdl", bone = "ValveBiped.Bip01_Spine4", rel = "", pos = Vector(0, 0, 0), angle = Angle(90, 0, 0), size = Vector(1, 1, 1), color = Color(160, 215, 255, 0), surpresslightning = false, material = "models/spawn_effect2", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
-	["stick"] = { type = "Model", model = "models/props_foliage/driftwood_02a.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(6.752, 1.557, -6.753), angle = Angle(111.039, -10.52, -17.532), size = Vector(0.035, 0.05, 0.05), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["gun_right+"] = { type = "Model", model = "models/slyfo_2/weap_prover_industrialspiker.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(12, 1, 0), angle = Angle(0, 0, 45), size = Vector(0.55, 0.55, 0.55), color = Color(147, 110, 160, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
+	["shoe_right+"] = { type = "Model", model = "models/props_junk/Shoe001a.mdl", bone = "ValveBiped.Bip01_R_Foot", rel = "", pos = Vector(3.635, -0.519, -1.558), angle = Angle(0, -35, 90), size = Vector(1.25, 1.25, 0.497), color = Color(100, 100, 100, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
+	["hat"] = { type = "Model", model = "models/slyfo_2/p_acsry_shelmet2.mdl", bone = "ValveBiped.Bip01_Head1", rel = "", pos = Vector(3.25, 0, 0), angle = Angle(0, -90, -90), size = Vector(1.25, 1.25, 1.25), color = Color(75, 75, 75, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
+	["shoe_upper_right+"] = { type = "Model", model = "models/props_combine/headcrabcannister01a.mdl", bone = "ValveBiped.Bip01_L_Foot", rel = "", pos = Vector(3.635, 0.518, -0.519), angle = Angle(0, -35, 0), size = Vector(0.15, 0.15, 0.15), color = Color(75, 75, 10, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
+	["shoe_upper_right"] = { type = "Model", model = "models/props_combine/headcrabcannister01a.mdl", bone = "ValveBiped.Bip01_R_Foot", rel = "", pos = Vector(3.635, 0.518, 0.518), angle = Angle(0, -35, 0), size = Vector(0.15, 0.15, 0.15), color = Color(75, 75, 10, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
+	["shield_gen"] = { type = "Model", model = "models/props_lab/eyescanner.mdl", bone = "ValveBiped.Bip01_Spine", rel = "", pos = Vector(-1.558, 3, 0), angle = Angle(180, 100, 90), size = Vector(0.75, 0.75, 0.75), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
+	["gun_right"] = { type = "Model", model = "models/slyfo_2/weap_prover_industrialspiker.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(12, 1, 0), angle = Angle(0, 0, 135), size = Vector(0.55, 0.55, 0.55), color = Color(147, 110, 160, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
+	["shoe_right++"] = { type = "Model", model = "models/props_junk/Shoe001a.mdl", bone = "ValveBiped.Bip01_L_Foot", rel = "", pos = Vector(3.635, -0.519, -1.558), angle = Angle(0, -35, 90), size = Vector(1.25, 1.25, 0.497), color = Color(100, 100, 100, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }--[[,
+	["shield"] = { type = "Model", model = "models/hunter/misc/sphere2x2.mdl", bone = "ValveBiped.Bip01_Spine", rel = "", pos = Vector(0, -10, 0), angle = Angle(90, 0, 0), size = Vector(1, 1, 1), color = Color(160, 215, 255, 0), surpresslightning = false, material = "models/spawn_effect2", skin = 0, bodygroup = {} }]]
 }
 
+local shield_on = false
+local gun_flip = false
+
+--secrete code to prevent people from get in other gamemode! KEEP IT AN EASTER EGG!!!
+SWEP.Spawnable = false --how get???!!
+SWEP.AdminSpawnable = false --not even andman can get it in sandbox!!
+
 function SWEP:PrimaryAttack()
-	--if (!self:CanPrimaryAttack()) then return end
-	self.Weapon:SendWeaponAnim(ACT_VM_THROW) --ACT_VM_THROW
-	self.Owner:SetAnimation(PLAYER_ATTACK1)
-	--delay
-	self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
 
-	self.Weapon:EmitSound("npc/fast_zombie/claw_miss1.wav")
-	timer.Simple( 0.5, function() self.Weapon:SendWeaponAnim(ACT_VM_IDLE) end )
+	--if ( !self:CanPrimaryAttack() ) then return end
+
+	local bullet = {}
+		bullet.Num = self.Primary.NumberofShots
+		bullet.Src = self.Owner:GetShootPos() + (self.Owner:GetAimVector() * 76) --(self.Owner:GetAimVector() + Vector(0,20,-22))
+		--IMPORTANT: this spawns bullets ahead of the player... you can actually shoot through thin walls at close range. 
+		--Fix for this would be a bullet filter for bullets that are made by the user. 
+		bullet.Dir = self.Owner:GetAimVector()
+		bullet.Spread = Vector( self.Primary.Spread * 0.1 , self.Primary.Spread * 0.1, 0)
+		bullet.Tracer = 0
+		bullet.Force = self.Primary.Force
+		bullet.Damage = self.Primary.Damage
+		bullet.AmmoType = self.Primary.Ammo
+ 
+	local rnda = self.Primary.Recoil * -1
+	local rndb = self.Primary.Recoil * math.random(-1, 1)
+
+	self:ShootEffects()
+
+	self.Owner:FireBullets( bullet )
+	self:EmitSound(Sound(self.Primary.Sound))
+	self.Owner:ViewPunch( Angle( rnda,rndb,rnda ) )
+	self:TakePrimaryAmmo(self.Primary.TakeAmmo)
+
+	self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
+	self:SetNextSecondaryFire( CurTime() + self.Primary.Delay )
 end
 
-function SWEP:SecondaryAttack()
-	self.Weapon:SendWeaponAnim(ACT_VM_IDLE)
+function SWEP:Think()
+	if shield_on && self:Clip1() < 1 then --for when the shield runs out of power by decay
+		print("timer powered off")
+		self:EmitSound(Sound("items/nvg_off.wav"))
+		self.VElements["shield"].color.a = 0
+		if SERVER && shield_ent:IsValid() then
+			shield_ent:Remove()
+		end
+		shield_on = false
+	end
+	--helps deal with server/client disconnect?
+	if shield_on && self.VElements["shield"].color.a == 0 then
+		self.VElements["shield"].color.a = 42
+		self:EmitSound(Sound("items/nvg_on.wav"))
+	elseif !shield_on && self.VElements["shield"].color.a == 42 then
+		self.VElements["shield"].color.a = 0
+		self:EmitSound(Sound("items/nvg_off.wav"))
+	end
+	--updates the shields position so I don't have to use parenting which is affected by angles. this is not affected by angles.
+	if SERVER && shield_on && shield_ent:IsValid() then
+		shield_ent:SetPos(self.Owner:GetPos() + (self.Owner:GetAimVector() * 1) + Vector(0,0,40))
+	end
 end
 
---saved as stick in SCK
+
+
+function SWEP:SecondaryAttack() --protect
+	--toggle shiled
+	--if (!self:CanSecondaryAttack()) then return end
+
+		if shield_on then
+			self:EmitSound(Sound("items/nvg_off.wav"))
+			--turn shield off
+			print("turnt off")
+			self.VElements["shield"].color.a = 0
+			if SERVER && shield_ent:IsValid() then
+				shield_ent:Remove()
+			end
+			--turn off invincibility
+			shield_on = false
+		elseif !shield_on && self:Clip1() >= 5 then
+			self:EmitSound(Sound("items/nvg_on.wav"))
+			--turn shield on
+			print("turnt on")
+			self.VElements["shield"].color.a = 42
+			if SERVER then
+				--local vector_rotate = Vector(0,0,32)
+				--vector_rotate:Rotate(self.Owner:GetAngles())
+
+
+				--The following commands are in alphabetical order.
+
+				
+				shield_ent = ents.Create("micro_secrete_shield")
+				--shield_ent:SetParent(self.Owner, -1) --try using ENT:Think() to continously update pos?
+				shield_ent:SetPos(self.Owner:GetPos()) -- + vector_rotate
+				shield_ent:SetPower(self:Clip1()*4)
+				shield_ent:Spawn()
+			end
+			--turn on invincibility
+			shield_on = true
+		end
+	
+end
+
+function SWEP:ShootEffects()
+	if gun_flip then
+		--self.Weapon:SendWeaponAnim( ACT_VM_PRIMARYATTACK ) -- View model animation
+		self.Owner:SetAnimation( PLAYER_ATTACK1 )
+		gun_flip = false
+	else
+		--self.Weapon:SendWeaponAnim( ACT_VM_SECONDARYATTACK ) -- View model animation
+		self.Owner:SetAnimation( PLAYER_ATTACK1 ) --there isn't 2 animation lol
+		gun_flip = true
+	end
+	--self.Owner:MuzzleFlash()
+	
+end
+
+--saved as it in SCK
 --[[/********************************************************
 	SWEP Construction Kit base code
 		Created by Clavus
@@ -103,6 +321,43 @@ end
 function SWEP:Initialize()
 	-- other initialize code goes here
 	self:SetWeaponHoldType(self.HoldType)
+	self.Weapon:EmitSound("buttons/weapon_confirm.wav")
+	--be sure to turn shield off here
+
+	if SERVER then
+		local timer_name = "shield_regen_"..self:EntIndex()
+		timer.Create(timer_name,1,0, function()
+			if IsValid(self) then
+				if self:Clip1()<self.Primary.ClipSize then
+					self:SetClip1(self:Clip1()+1)
+				end
+			else
+				timer.Destroy(timer_name)
+			end
+		end)
+
+		local timer_name = "shield_deplete_"..self:EntIndex()
+		timer.Create(timer_name,1,0, function()
+			if IsValid(self) then
+				--print(self:Clip1() .." clip1")
+				if shield_on && self:Clip1() >= 1 then --for causing the shield decay
+					print("timer decay")
+					self:SetClip1(self:Clip1()-2)
+					if SERVER && shield_ent:IsValid() then
+						shield_ent:SetPower(shield_ent:GetPower()-1)
+						self:SetClip1(shield_ent:GetPower())
+						--prevents ammo from going negative when the shield is shot at low power.
+						if self:Clip1() < 0 then
+							self:SetClip1(0)
+						end
+					end
+				end
+			else
+				timer.Destroy(timer_name)
+			end
+		end)
+	end
+
 
 	if CLIENT then
 		-- Create a new table for every weapon instance

@@ -16,7 +16,7 @@ function ENT:Initialize()
 	self:PhysicsInitStandard()
 	--self:PhysicsInit(SOLID_VPHYSICS)
 	self:SetMoveType(MOVETYPE_VPHYSICS)
-	self:SetSolid(SOLID_VPHYSICS)
+	--self:SetSolid(SOLID_VPHYSICS)
 	self:SetMoveType(0)
 	self.treeLevel = 7
 	self.hasLeveled = false
@@ -56,7 +56,7 @@ if SERVER then
 						--print("making coconut again")
 						newFruit = ents.Create("micro_item_salainen_kookospahkina_puu")
 						if ( !IsValid( newFruit ) ) then return end
-						newFruit:SetPos(self:GetPos() + Vector(math.random(-25,25),math.random(-25,25),128))
+						newFruit:SetPos(self:GetPos() + Vector(math.random(-12,12),math.random(-12,12),128+math.random(0,25)))
 						--at position up in the tree (might need some if statements to do bearing fruit earlier/later)
 							--maybe use the entity's height subtract some?
 						self.energy = self.energy - (self.startingEnergy / self.numberOfFruit)
@@ -67,7 +67,8 @@ if SERVER then
 				--end
 				--
 				if self.energy <= 0 then --KILL FUNCTION; SLAYER
-					self:Remove()
+					timer.Simple( 51, function() self:Remove() end )
+					--self:Remove()
 				end
 				if self:IsOnFire() then
 					self:Remove()
@@ -77,12 +78,9 @@ if SERVER then
 			end
 		end)
 	end
-end
 
-function ENT:OnTakeDamage(damageto)
-	--print("we doing it now, doctor! " .. self.health)
-	self.health = self.health - damageto:GetDamage()
-	if self.health <= 0 then
+	function ENT:OnRemove()
+		PrintTable( self:GetChildren() )
 		self:EmitSound("weapons/debris1.wav")
 		--PRODUCE WOOD HERE
 		puulle = ents.Create("micro_item_salainen_puulle")
@@ -97,7 +95,21 @@ function ENT:OnTakeDamage(damageto)
 		kanto:Spawn()
 
 		--make leaf gibs...
-		--???
+		--models/props_foliage/fern01.mdl
+		--make leaves fall
+		--leaf = ents.Create("prop_physics")
+		--if ( !IsValid( leaf ) ) then return end
+		--leaf:SetModel("models/props_foliage/fern01.mdl")
+		--leaf:SetPos(self:GetPos() + Vector(0,0,128))
+		--leaf:PhysicsInitStandard()
+		--leaf:Spawn()
+	end
+end
+
+function ENT:OnTakeDamage(damageto)
+	--print("we doing it now, doctor! " .. self.health)
+	self.health = self.health - damageto:GetDamage()
+	if self.health <= 0 then
 		self:Remove()
 	end
 end

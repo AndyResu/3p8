@@ -32,7 +32,7 @@ SWEP.UseHands = true --you haven't lived until you have seen the dat boi playerm
 local vmodel = "models/zombie/classic_torso.mdl"
 --somehow set the model to be invisible
 SWEP.ViewModel = vmodel
-SWEP.WorldModel = "models/weapons/shell.mdl"
+SWEP.WorldModel = "models/barney_animations.mdl"
 SWEP.ShowViewModel = true
 SWEP.ShowWorldModel = true
 SWEP.ViewModelBoneMods = {

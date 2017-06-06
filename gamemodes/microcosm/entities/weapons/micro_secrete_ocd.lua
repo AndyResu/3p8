@@ -1,85 +1,130 @@
+--Watch out for the...
 --[[
-	FILE THEME SONG:
-	https://www.youtube.com/watch?v=ZXhuso4OTG4
-	I was thinking about a children's song about tapping sticks together. The innocence would match this weapon's innocence. Styx is much danker tho :^P
-	https://www.youtube.com/watch?v=M-UKTeWNgOk "Tap your Sticks", reminds me of King Louie's' "Throw Yo Sets Up" https://www.youtube.com/watch?v=ntGq2MdbP_Y
-	I sorta want to make a remix. 
+    .-'''-.                                                                                                                                                    
+   '   _    \                                           .---.                                                                                                  
+ /   /` '.   \         /|        .--.                   |   |                                                                                                  
+.   |     \  '         ||        |__|                   |   |                                                                                                  
+|   '      |  '.-,.--. ||        .--.     .|            |   |                                                                                                  
+\    \     / / |  .-. |||  __    |  |   .' |_     __    |   |                                                                                                  
+ `.   ` ..' /  | |  | |||/'__ '. |  | .'     | .:--.'.  |   |                                                                                                  
+    '-...-'`   | |  | ||:/`  '. '|  |'--.  .-'/ |   \ | |   |                                                                                                  
+               | |  '- ||     | ||  |   |  |  `" __ | | |   |                                                                                                  
+               | |     ||\    / '|__|   |  |   .'.''| | |   |                                                                                                  
+               | |     |/\'..' /        |  '.'/ /   | |_'---'                                                                                                  
+       _..._   |_|     '  `'-'`         |   / \ \._,\ '/                                                                                                       
+    .-'_..._''.                         `'-'   `--'  `"                                                                                                        
+  .' .'      '.\  .              __.....__           __.....__                  __.....__     /|                                        __.....__              
+ / .'           .'|          .-''         '.     .-''         '.            .-''         '.   ||                            .--./)  .-''         '.            
+. '            <  |         /     .-''"'-.  `.  /     .-''"'-.  `.         /     .-''"'-.  `. ||                  .-,.--.  /.''\\  /     .-''"'-.  `. .-,.--.  
+| |             | |        /     /________\   \/     /________\   \       /     /________\   \||  __              |  .-. || |  | |/     /________\   \|  .-. | 
+| |             | | .'''-. |                  ||                  |    _  |                  |||/'__ '.   _    _  | |  | | \`-' / |                  || |  | | 
+. '             | |/.'''. \\    .-------------'\    .-------------'  .' | \    .-------------'|:/`  '. ' | '  / | | |  | | /("'`  \    .-------------'| |  | | 
+ \ '.          .|  /    | | \    '-.____...---. \    '-.____...---. .   | /\    '-.____...---.||     | |.' | .' | | |  '-  \ '---. \    '-.____...---.| |  '-  
+  '. `._____.-'/| |     | |  `.             .'   `.             .'.'.'| |// `.             .' ||\    / '/  | /  | | |       /'""'.\ `.             .' | |      
+    `-.______ / | |     | |    `''-...... -'       `''-...... -'.'.'.-'  /    `''-...... -'   |/\'..' /|   `'.  | | |      ||     ||  `''-...... -'   | |      
+             `  | '.    | '.                                    .'   \_.'                     '  `'-'` '   .'|  '/|_|      \'. __//                   |_|      
+                '---'   '---'                                   .-'''-.                                 `-'  `--'           `'---'                             
+_______                                                .---.   '   _    \                                                                                      
+\  ___ `'.         __.....__   _________   _...._      |   | /   /` '.   \                __  __   ___         __.....__        _..._                          
+ ' |--.\  \    .-''         '. \        |.'      '-.   |   |.   |     \  '.-.          .-|  |/  `.'   `.   .-''         '.    .'     '.                        
+ | |    \  '  /     .-''"'-.  `.\        .'```'.    '. |   ||   '      |  '\ \        / /|   .-.  .-.   ' /     .-''"'-.  `. .   .-.   .     .|                
+ | |     |  '/     /________\   \\      |       \     \|   |\    \     / /  \ \      / / |  |  |  |  |  |/     /________\   \|  '   '  |   .' |_               
+ | |     |  ||                  | |     |        |    ||   | `.   ` ..' /    \ \    / /  |  |  |  |  |  ||                  ||  |   |  | .'     |              
+ | |     ' .'\    .-------------' |      \      /    . |   |    '-...-'`      \ \  / /   |  |  |  |  |  |\    .-------------'|  |   |  |'--.  .-'              
+ | |___.' /'  \    '-.____...---. |     |\`'-.-'   .'  |   |                   \ `  /    |  |  |  |  |  | \    '-.____...---.|  |   |  |   |  |                
+/_______.'/    `.             .'  |     | '-....-'`    |   |                    \  /     |__|  |__|  |__|  `.             .' |  |   |  |   |  |                
+\_______|/       `''-...... -'   .'     '.             '---'                    / /                          `''-...... -'   |  |   |  |   |  '.'              
+                               '-----------'                                |`-' /                                           |  |   |  |   |   /               
+                                                                             '..'                                            '--'   '--'   `'-'     
 
-	--I was thinking maybe use driftwood for the stick, OR a pallet gib :^)
+There's a food mod for Rimworld that adds lots of foods, including Hamburgers. 
+There's an event in Rimworld that sends droppods that contain a random item.
+Orbital Cheeseburger Deployment is my name for my favorite outcome.
+It's saved my butt a few times.
+
+File theme song:
+https://www.youtube.com/watch?v=CmIKR458M0A
+LOVE SONGS WITH MR. LUNT :^)
+
+todo:
+make code into giant hamburger
+maybe make it be something like a laser pointer.
+models/food/burger.mdl
 ]]
 
 AddCSLuaFile()
 
-SWEP.PrintName = "Stick"
+SWEP.PrintName = "O.C.D." --AKA, O.H.D. "The 'O': High Definition" or "The 'O': Huge Dick". Overly Complicated Dick
 SWEP.Author = "Sky"
-SWEP.Purpose = "Pretend you have a sword!" --
-SWEP.Instructions = "Primary Fire to wave to your friends!"
+SWEP.Purpose = "Orbital Cheeseburger Deployment" 
+SWEP.Instructions = "Primary Fire to make Liberty Rain Upon your Foes"
 SWEP.Category = "Microcosm"
 SWEP.Spawnable = true
 SWEP.AdminSpawnable = true
-SWEP.Weight = 3 --it's a stick, what do you expect?
+SWEP.Weight = 1776 --space america xD
 
-SWEP.Primary.ClipSize		= -1
-SWEP.Primary.DefaultClip	= -1
-SWEP.Primary.Automatic		= true
-SWEP.Primary.Ammo		    = "none"
-SWEP.Primary.Delay			= 0.5
-SWEP.Primary.Recoil			= 0
-SWEP.Primary.TakeAmmo		= 0
-
-SWEP.Secondary.ClipSize	    = -1
+SWEP.Primary.ClipSize		= 1
+SWEP.Primary.DefaultClip	= 1777 --will show up as 1/1776
+SWEP.Primary.Automatic		= false --i wish
+SWEP.Primary.Ammo		    = "XBowBolt"
+ 
+SWEP.Secondary.ClipSize	    = -1 --makes a cool clicking sound
 SWEP.Secondary.DefaultClip	= -1
 SWEP.Secondary.Automatic	= false
 SWEP.Secondary.Ammo		    = "none"
 
-SWEP.HoldType = "melee2"
+SWEP.HoldType = "crossbow"
 SWEP.ViewModelFOV = 70
 SWEP.ViewModelFlip = false
-SWEP.UseHands = true
-SWEP.ViewModel = "models/weapons/c_grenade.mdl"
-SWEP.WorldModel = "models/barney_animations.mdl"
+SWEP.UseHands = true --you haven't lived until you have seen the dat boi playermodel carry it
+SWEP.ViewModel = "models/weapons/c_crossbow.mdl"
+SWEP.WorldModel = "models/weapons/w_crossbow.mdl"
 SWEP.ShowViewModel = true
 SWEP.ShowWorldModel = true
-SWEP.ViewModelBoneMods = {
-	["ValveBiped.Bip01_R_Finger41"] = { scale = Vector(1, 1, 1), pos = Vector(0, 0, 0), angle = Angle(0, -10, 0) },
-	["ValveBiped.Bip01_R_Finger1"] = { scale = Vector(1, 1, 1), pos = Vector(0, 0, 0), angle = Angle(1.11, -34.445, 16.666) },
-	["ValveBiped.Bip01_R_Finger21"] = { scale = Vector(1, 1, 1), pos = Vector(0, 0, 0), angle = Angle(0, -12.223, 0) },
-	["ValveBiped.Bip01_R_Finger11"] = { scale = Vector(1, 1, 1), pos = Vector(0, 0, 0), angle = Angle(0, -18.889, 0) },
-	["ValveBiped.Bip01_R_Hand"] = { scale = Vector(1, 1, 1), pos = Vector(0, 0, 0), angle = Angle(0, 0, 30) },
-	["ValveBiped.Bip01_R_Finger02"] = { scale = Vector(1, 1, 1), pos = Vector(0, 0, 0), angle = Angle(0, 38.888, 0) },
-	["ValveBiped.Bip01_R_Finger4"] = { scale = Vector(1, 1, 1), pos = Vector(0.185, -0.186, 0), angle = Angle(-21.112, -36.667, 0) },
-	["ValveBiped.Grenade_body"] = { scale = Vector(0.009, 0.009, 0.009), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) },
-	["ValveBiped.Bip01_R_Finger2"] = { scale = Vector(1, 1, 1), pos = Vector(0, 0, 0), angle = Angle(0, -34.445, 0) },
-	["ValveBiped.Bip01_Spine4"] = { scale = Vector(1, 1, 1), pos = Vector(0.555, -6.112, -2.408), angle = Angle(0, 0, 0) },
-	["ValveBiped.Bip01_R_Finger3"] = { scale = Vector(1, 1, 1), pos = Vector(0, 0, 0), angle = Angle(-7.778, -38.889, 0) },
-	["ValveBiped.Bip01_R_Finger31"] = { scale = Vector(1, 1, 1), pos = Vector(0, 0, 0), angle = Angle(0, -5.557, 0) },
-	["ValveBiped.Bip01_R_Finger0"] = { scale = Vector(1, 1, 1), pos = Vector(-0.186, 0, 0), angle = Angle(25.555, 10, 5.556) }
-}
+SWEP.ViewModelBoneMods = {}
 
 SWEP.VElements = {
-	["stick"] = { type = "Model", model = "models/props_foliage/driftwood_02a.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4.675, 1.557, -5.715), angle = Angle(104.026, -19.871, 36.234), size = Vector(0.035, 0.05, 0.05), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["hotdog"] = { type = "Model", model = "models/food/hotdog.mdl", bone = "ValveBiped.bolt", rel = "", pos = Vector(0, 6.25, 6), angle = Angle(90, 0, -90), size = Vector(1.7, 0.5, 0.5), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
-	["stick"] = { type = "Model", model = "models/props_foliage/driftwood_02a.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(6.752, 1.557, -6.753), angle = Angle(111.039, -10.52, -17.532), size = Vector(0.035, 0.05, 0.05), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["hotdog"] = { type = "Model", model = "models/food/hotdog.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(6.5, -2, 4.675), angle = Angle(84, -22, 90), size = Vector(1.7, 0.5, 0.5), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 }
 
+function SWEP:make_liberty_rain()
+	local tr = self.Owner:GetEyeTrace()
+
+	if CLIENT then return end
+
+	local ent = ents.Create("micro_item_secrete_hd")
+	local vector_rotated = Vector(0,-20,-22)
+	vector_rotated:Rotate(self.Owner:GetAngles())
+	ent:SetPos(self.Owner:EyePos() + vector_rotated)
+	ent:SetAngles(self.Owner:EyeAngles())
+	ent:Spawn()
+
+	local phys = ent:GetPhysicsObject()
+
+	if !(phys && IsValid(phys)) then ent:Remove() return end
+
+	phys:ApplyForceCenter(self.Owner:GetAimVector():GetNormalized() *  math.pow(tr.HitPos:Length(), 3))
+end
+
 function SWEP:PrimaryAttack()
-	--if (!self:CanPrimaryAttack()) then return end
-	self.Weapon:SendWeaponAnim(ACT_VM_THROW) --ACT_VM_THROW
-	self.Owner:SetAnimation(PLAYER_ATTACK1)
-	--delay
-	self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
+	--"Taking fire, need assistance!"
+	--"Roger that."
+	--Mortar falling sound
+	--Ground impact noise
+	--unpacking noise
+	--something like, "Payload delivered"
+	if (!self:CanPrimaryAttack()) then return end
 
-	self.Weapon:EmitSound("npc/fast_zombie/claw_miss1.wav")
-	timer.Simple( 0.5, function() self.Weapon:SendWeaponAnim(ACT_VM_IDLE) end )
+	self.Weapon:EmitSound("weapons/crossbow/fire1.wav")
+	self:liberate_the_hungry()
+	self:TakePrimaryAmmo(1)
 end
 
-function SWEP:SecondaryAttack()
-	self.Weapon:SendWeaponAnim(ACT_VM_IDLE)
-end
-
---saved as stick in SCK
+--saved as hotdog in SCK
 --[[/********************************************************
 	SWEP Construction Kit base code
 		Created by Clavus

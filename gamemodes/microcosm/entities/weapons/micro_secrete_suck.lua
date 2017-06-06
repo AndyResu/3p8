@@ -1,85 +1,110 @@
 --[[
 	FILE THEME SONG:
-	https://www.youtube.com/watch?v=ZXhuso4OTG4
-	I was thinking about a children's song about tapping sticks together. The innocence would match this weapon's innocence. Styx is much danker tho :^P
-	https://www.youtube.com/watch?v=M-UKTeWNgOk "Tap your Sticks", reminds me of King Louie's' "Throw Yo Sets Up" https://www.youtube.com/watch?v=ntGq2MdbP_Y
-	I sorta want to make a remix. 
+	
 
-	--I was thinking maybe use driftwood for the stick, OR a pallet gib :^)
 ]]
 
 AddCSLuaFile()
 
-SWEP.PrintName = "Stick"
+SWEP.PrintName = "Test Weapon: Difficult"
 SWEP.Author = "Sky"
-SWEP.Purpose = "Pretend you have a sword!" --
-SWEP.Instructions = "Primary Fire to wave to your friends!"
+SWEP.Purpose = "DESTROY" --
+SWEP.Instructions = "Primary Fire to shoot a bullet that does your current health as damage, then subtracts 1 health from you!"
 SWEP.Category = "Microcosm"
 SWEP.Spawnable = true
 SWEP.AdminSpawnable = true
-SWEP.Weight = 3 --it's a stick, what do you expect?
+SWEP.Weight = 10 --
 
-SWEP.Primary.ClipSize		= -1
-SWEP.Primary.DefaultClip	= -1
-SWEP.Primary.Automatic		= true
-SWEP.Primary.Ammo		    = "none"
-SWEP.Primary.Delay			= 0.5
+
+
+SWEP.Primary.ClipSize		= 99
+SWEP.Primary.DefaultClip	= 99
+SWEP.Primary.Automatic		= false
+SWEP.Primary.Ammo		    = "Health"
+SWEP.Primary.Delay			= 5
 SWEP.Primary.Recoil			= 0
 SWEP.Primary.TakeAmmo		= 0
+SWEP.Primary.Spread			= 0.01
 
 SWEP.Secondary.ClipSize	    = -1
 SWEP.Secondary.DefaultClip	= -1
 SWEP.Secondary.Automatic	= false
 SWEP.Secondary.Ammo		    = "none"
 
-SWEP.HoldType = "melee2"
-SWEP.ViewModelFOV = 70
+SWEP.HoldType = "ar2"
+SWEP.ViewModelFOV = 70.000
 SWEP.ViewModelFlip = false
 SWEP.UseHands = true
-SWEP.ViewModel = "models/weapons/c_grenade.mdl"
+SWEP.ViewModel = "models/weapons/c_annabelle.mdl"
 SWEP.WorldModel = "models/barney_animations.mdl"
 SWEP.ShowViewModel = true
 SWEP.ShowWorldModel = true
 SWEP.ViewModelBoneMods = {
-	["ValveBiped.Bip01_R_Finger41"] = { scale = Vector(1, 1, 1), pos = Vector(0, 0, 0), angle = Angle(0, -10, 0) },
-	["ValveBiped.Bip01_R_Finger1"] = { scale = Vector(1, 1, 1), pos = Vector(0, 0, 0), angle = Angle(1.11, -34.445, 16.666) },
-	["ValveBiped.Bip01_R_Finger21"] = { scale = Vector(1, 1, 1), pos = Vector(0, 0, 0), angle = Angle(0, -12.223, 0) },
-	["ValveBiped.Bip01_R_Finger11"] = { scale = Vector(1, 1, 1), pos = Vector(0, 0, 0), angle = Angle(0, -18.889, 0) },
-	["ValveBiped.Bip01_R_Hand"] = { scale = Vector(1, 1, 1), pos = Vector(0, 0, 0), angle = Angle(0, 0, 30) },
-	["ValveBiped.Bip01_R_Finger02"] = { scale = Vector(1, 1, 1), pos = Vector(0, 0, 0), angle = Angle(0, 38.888, 0) },
-	["ValveBiped.Bip01_R_Finger4"] = { scale = Vector(1, 1, 1), pos = Vector(0.185, -0.186, 0), angle = Angle(-21.112, -36.667, 0) },
-	["ValveBiped.Grenade_body"] = { scale = Vector(0.009, 0.009, 0.009), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) },
-	["ValveBiped.Bip01_R_Finger2"] = { scale = Vector(1, 1, 1), pos = Vector(0, 0, 0), angle = Angle(0, -34.445, 0) },
-	["ValveBiped.Bip01_Spine4"] = { scale = Vector(1, 1, 1), pos = Vector(0.555, -6.112, -2.408), angle = Angle(0, 0, 0) },
-	["ValveBiped.Bip01_R_Finger3"] = { scale = Vector(1, 1, 1), pos = Vector(0, 0, 0), angle = Angle(-7.778, -38.889, 0) },
-	["ValveBiped.Bip01_R_Finger31"] = { scale = Vector(1, 1, 1), pos = Vector(0, 0, 0), angle = Angle(0, -5.557, 0) },
-	["ValveBiped.Bip01_R_Finger0"] = { scale = Vector(1, 1, 1), pos = Vector(-0.186, 0, 0), angle = Angle(25.555, 10, 5.556) }
+	["ValveBiped.Gun"] = { scale = Vector(0.009, 0.009, 0.009), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) }
 }
 
 SWEP.VElements = {
-	["stick"] = { type = "Model", model = "models/props_foliage/driftwood_02a.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4.675, 1.557, -5.715), angle = Angle(104.026, -19.871, 36.234), size = Vector(0.035, 0.05, 0.05), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["skull"] = { type = "Model", model = "models/gibs/agibs.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(-26.494, -1.558, -25.455), angle = Angle(-100, 129.74, 0), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
+	["hair1+"] = { type = "Model", model = "models/props_c17/furnituredrawer001a_shard01.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(-30.65, -5.715, -24.417), angle = Angle(-90, 134.416, 0), size = Vector(0.5, 0.5, 0.5), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
+	["gawn"] = { type = "Model", model = "models/props_combine/breenlight.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(-27.532, -1.558, -14.027), angle = Angle(0, -50.26, 0), size = Vector(0.8, 0.8, 0.8), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
+	["hair1"] = { type = "Model", model = "models/props_c17/furnituredrawer001a_shard01.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(-30.65, -1.558, -23.378), angle = Angle(-90, 180, 0), size = Vector(0.5, 0.5, 0.5), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
+	["hair1++"] = { type = "Model", model = "models/props_c17/furnituredrawer001a_shard01.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(-26.494, -4.676, -23.378), angle = Angle(-90, 90, 0), size = Vector(0.5, 0.5, 0.5), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
-	["stick"] = { type = "Model", model = "models/props_foliage/driftwood_02a.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(6.752, 1.557, -6.753), angle = Angle(111.039, -10.52, -17.532), size = Vector(0.035, 0.05, 0.05), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["hair1"] = { type = "Model", model = "models/props_c17/furnituredrawer001a_shard01.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(15, 3.635, -10), angle = Angle(-13, 0, 141.429), size = Vector(0.5, 0.5, 0.5), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
+	["hair1+"] = { type = "Model", model = "models/props_c17/furnituredrawer001a_shard01.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(15, -1.558, -10), angle = Angle(180, -155.456, 57.272), size = Vector(0.5, 0.5, 0.5), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
+	["skull"] = { type = "Model", model = "models/gibs/agibs.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(17.142, 1, -7), angle = Angle(0, 0, 180), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
+	["gawn"] = { type = "Model", model = "models/props_combine/breenlight.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(9, 1, -4), angle = Angle(70, 0, 0), size = Vector(0.75, 0.75, 0.75), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
+	["hair1++"] = { type = "Model", model = "models/props_c17/furnituredrawer001a_shard01.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(15, 1, -10), angle = Angle(0, 0, 0), size = Vector(0.5, 0.5, 0.5), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 }
 
 function SWEP:PrimaryAttack()
-	--if (!self:CanPrimaryAttack()) then return end
-	self.Weapon:SendWeaponAnim(ACT_VM_THROW) --ACT_VM_THROW
+	if (!self:CanPrimaryAttack()) then return end
+	--shoot bullet with current hp as damage
+	
+	local bullet = {}
+		bullet.Num = math.floor(self.Owner:Health()/3.25)
+		bullet.Src = self.Owner:GetShootPos() + (self.Owner:GetAimVector())
+		bullet.Dir = self.Owner:GetAimVector()
+		bullet.Spread = Vector( self.Primary.Spread * math.floor(self.Owner:Health()/3.25), self.Primary.Spread * math.floor(self.Owner:Health()/3.25), self.Primary.Spread * math.floor(self.Owner:Health()/3.25))
+		bullet.Tracer = 1
+		bullet.Force = self.Owner:Health()
+		bullet.Damage = self.Owner:Health()
+		bullet.AmmoType = self.Primary.Ammo
+ 
+	local rnda = self.Primary.Recoil * -1
+	local rndb = self.Primary.Recoil * math.random(-1, 1)
+
+	self:ShootEffects()
+
+	self.Owner:FireBullets( bullet )
+	self.Owner:ViewPunch( Angle( rnda,rndb,rnda ) )
+	--subtract 1 hp
+	self.Owner:SetHealth(self.Owner:Health()-1)
+
+	--take 1 ammo
+	self:TakePrimaryAmmo(self.Primary.TakeAmmo)
+
 	self.Owner:SetAnimation(PLAYER_ATTACK1)
 	--delay
-	self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
+	--self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
 
-	self.Weapon:EmitSound("npc/fast_zombie/claw_miss1.wav")
-	timer.Simple( 0.5, function() self.Weapon:SendWeaponAnim(ACT_VM_IDLE) end )
+	self.Weapon:EmitSound("phx/epicmetal_hard".. math.random(1,7) ..".wav")
 end
 
 function SWEP:SecondaryAttack()
-	self.Weapon:SendWeaponAnim(ACT_VM_IDLE)
+	--wewew
 end
 
---saved as stick in SCK
+function SWEP:Think()
+	--set ammo = hp
+	self:SetClip1(self.Owner:Health()-1)
+end
+
+
+
+--saved as blood in SCK
 --[[/********************************************************
 	SWEP Construction Kit base code
 		Created by Clavus
@@ -101,6 +126,7 @@ end
 ********************************************************/--]]
 
 function SWEP:Initialize()
+
 	-- other initialize code goes here
 	self:SetWeaponHoldType(self.HoldType)
 

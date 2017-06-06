@@ -23,6 +23,9 @@ function GM:PlayerSpawn( ply )
 	if info then
 		ply:Give("weapon_physcannon")
 		ply:Give("micro_fixer")
+		ply:Give("micro_clip_with_stendo") --the wewest lad added this
+		ply:Give("micro_secrete_tafhe") --the wewest lad added this
+		ply:Give("micro_secrete_dwarf") --the wewest lad added this
 
 		ply:SetPos(info.player_spawn_point)
 		ply:SetEyeAngles(Angle(0,0,0))
@@ -64,7 +67,12 @@ function GM:PlayerSpawn( ply )
 		ply:Give("weapon_357")
 		ply:Give("weapon_smg1")
 		ply:Give("weapon_shotgun")]]
-
+		ply:Give("micro_clip_with_stendo") --the wewest lad added this
+		ply:Give("micro_secrete_tafhe") --the wewest lad added this
+		ply:Give("micro_secrete_dwarf") --the wewest lad added this
+		ply:Give("micro_secrete_it") --the wewest lad added this
+		ply:Give("micro_secrete_stick1") --the wewest lad added this
+		ply:Give("micro_secrete_stick2") --the wewest lad added this
 		--ply:Give("micro_art_placer")
 	end
 	ply:SetupHands()

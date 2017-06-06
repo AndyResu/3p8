@@ -15,6 +15,7 @@ ENT.ItemModel = "models/hunter/misc/sphere025x025.mdl"
 function ENT:Use(ply)
 	--plant the coconut
 	self:Upgrayed()
+	self:GetPhysicsObject():Wake()
 end
 
 function ENT:Initialize()
@@ -22,14 +23,15 @@ function ENT:Initialize()
 	self:SetModel(self.ItemModel)
 	self:PhysicsInitStandard()
 	--self:PhysicsInit(SOLID_VPHYSICS)
-	self:SetMoveType(MOVETYPE_VPHYSICS)
 	self:SetSolid(SOLID_VPHYSICS)
+	--stop movement
+	self:SetMoveType(MOVETYPE_VPHYSICS)
 
 	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
-		phys:Wake()
+		phys:Sleep()
 		--make float (bouyancy)
-		self:GetPhysicsObject():SetBuoyancyRatio(1.0) --0 min, 1 max (wood)
+		phys:SetBuoyancyRatio(1.0) --0 min, 1 max (wood)
 	end
 	self.isPlanted = false
 
@@ -74,7 +76,7 @@ if SERVER then
 		end
 		self.startingEnergy = newStartingEnergy
 		self.energy = self.startingEnergy
-		print("new energy: " .. self.energy)
+		--print("new energy: " .. self.energy)
 
 		--energy timer
 		local timer_name = "treeEnergyDepletion_" .. self:EntIndex()
@@ -82,6 +84,10 @@ if SERVER then
 		timer.Create(timer_name,self.plantTime,0, function() --every (some amount) seconds, update energy status
 			--print("yeah, we doing it now!1")
 			chance = math.Rand(0,1)
+			if IsValid(self) && !self:OnGroundNotStupidEdition(self:GetPos()) then
+				--randomly make coconuts fall
+				self:GetPhysicsObject():Wake()
+			end
 			if IsValid(self) && chance > 0.67 then
 				-- autoplant functionality
 				--plant itself. below copy pasted from ENT:Use()
@@ -135,7 +141,7 @@ function ENT:Upgrayed()
 		newFruit.numberOfFruit = self.numberOfFruit
 		newFruit.startingEnergy = self.startingEnergy
 		newFruit.energy = newFruit.startingEnergy
-		print(newFruit.energy .. "newFruit Energy")
+		--print(newFruit.energy .. "newFruit Energy")
 		
 		newFruit:PassOnInfo(self.growthSpeed, self.numberOfFruit, self.startingEnergy, self.energy)
 		self:Remove()
