@@ -8,11 +8,14 @@
 
 AddCSLuaFile()
 
-ENT.Base = "anim"
+ENT.Type = "anim"
 ENT.ItemName = "time"
 ENT.ItemModel = "models/props_lab/harddrive01.mdl"
 
 function ENT:Initialize()
+	self:SetModel(self.ItemModel)
+	self:PhysicsInitStandard()
+
 	--make an array that acts like a queue with a pointer to where the current time is. 
 	self.pointer = 1 --lua starts arrays at 1
 	self.timeObjects = {}
