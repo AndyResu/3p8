@@ -1,6 +1,51 @@
+--[[
+pre
+vo/novaprospekt/al_illtakecare.wav
+vo/novaprospekt/al_done01.wav
+vo/novaprospekt/al_elevator02.wav
+vo/k_lab/al_buyyoudrink02.wav
+vo/eli_lab/al_anotherdog.wav
+vo/eli_lab/al_awesome.wav
+vo/eli_lab/al_excellent01.wav
+vo/eli_lab/al_sweet.wav
+vo/eli_lab/al_throwitdog.wav
+
+post
+vo/novaprospekt/al_careofyourself.wav
+vo/novaprospekt/al_gladtoseeyoureok.wav
+vo/novaprospekt/al_onepiece.wav
+vo/k_lab2/al_gordontakecare_b.wav
+vo/eli_lab/al_nicecatch01.wav
+vo/eli_lab/al_soquickly03.wav
+vo/eli_lab/al_thyristor02.wav
+vo/eli_lab/al_allright01.wav
+vo/citadel/al_notagain02.wav --damn it, not again
+
+
+buying sounds
+vo/eli_lab/al_giveittry.wav
+vo/eli_lab/al_hazmat.wav --laser gun
+vo/eli_lab/al_hereyougo02.wav
+vo/eli_lab/al_minefield.wav --clearing minefields
+vo/eli_lab/al_takeit.wav
+vo/eli_lab/al_takethis.wav
+
+or
+ambient/levels/labs/coinslot1.wav
+
+--chaching
+npc/combine_soldier/gear3.wav
+ambient/levels/canals/windchime4.wav
+ambient/levels/canals/windchime5.wav
+ambient/levels/labs/coinslot1.wav
+
+unrelated but cool
+ambient/levels/prison/radio_random15.wav --1 to 15
+]]
+
 AddCSLuaFile()
 
-ENT.Base = "anim"
+ENT.Type = "anim"
 
 --models/Humans/Group01/Male_Cheaple.mdl
 ENT.ComponentModel = "models/player/group01/female_02.mdl"
@@ -30,37 +75,49 @@ function ENT:Initialize()
 		if SERVER then
 			self:GetPhysicsObject():EnableMotion(false)
 			self:SetUseType(SIMPLE_USE)
-
-			self:SetHealth(self.ComponentMaxHealth)
-			self:SetMaxHealth(self.ComponentMaxHealth)
 		end
-
-		local comps_table = self:GetShipInfo().components
-		if istable(comps_table) then comps_table[self]=true end
-
 	if SERVER then
 		self:SetCash(self.StartingCash)
-		self.next_paytime = 0
+	end
+	self.health = 1000
+end
+
+function ENT:OnTakeDamage(damageto)
+	self.health = self.health - damageto:GetDamage()
+	if self.health <= 0 then
+		self:EmitSound("weapons/debris1.wav")
+		--PRODUCE gibs HERE
+
+		self:Remove()
+	end
+end
+
+function ENT:PhysicsCollide(data, phys)
+	local class = data.HitEntity:GetClass()
+
+	--use instead? vvv
+	--playerSell[class] --table, in pairs?
+	if class == "micro_item_salainen_kookospahkina_puu" then --make this check a table of items and their sell prices.
+		data.HitEntity:Remove()
+		--gib monie
+		self:AddCash(1)
+		self:EmitSound("ambient/levels/labs/coinslot1.wav") --play a cha-ching sound.
+	elseif class == "micro_item_salainen_puulle" then
+		data.HitEntity:Remove()
+		self:AddCash(10)
+		self:EmitSound("ambient/machines/hydraulic_1.wav") --saw sound
 	end
 end
 
 function ENT:Use(ply)
-	if not self:IsBroken() then
-		ply:SendLua("MICRO_SHOW_SHOP(Entity("..self:EntIndex().."))")
-	end
+	ply:SendLua("MICRO_SHOW_SHOP(Entity("..self:EntIndex().."))")
 end
 
 if SERVER then
-	function ENT:Think()
-		if CurTime()>self.next_paytime and !self:IsBroken() then
-			self:SetCash(self:GetCash()+1)
-			self.next_paytime = CurTime()+6
-		end
-	end
+	--function ENT:Think()
+	--end
 
 	function ENT:AddCash(amount)
-		if self:IsBroken() then return false end
-
 		self:SetCash(self:GetCash()+amount)
 		self:EmitSound(sound_add)
 		return true
@@ -79,20 +136,12 @@ end
 
 if CLIENT then
 	function ENT:GetScreenText()
-		local ship = self:GetShipInfo().entity
-		local hurt = self:IsBroken()
-
-		if hurt then
-			return "HONK!",Color(255,0,255)
-		else
-			return "Ready",Color(255,0,0)
-		end
+		return "Ready",Color(0,255,0)
 	end
 end
 
-function ENT:drawInfo(ship,broken)
+function ENT:drawInfo()
 	local cash = self:GetCash()
-	if broken then cash = math.random(1000000,9999999) end
 
 	draw.SimpleText("$"..cash,"micro_big",88,80,Color(255,255,0),TEXT_ALIGN_CENTER,TEXT_ALIGN_CENTER)
 	
@@ -100,22 +149,55 @@ function ENT:drawInfo(ship,broken)
 	draw.SimpleText(text,"micro_big",88,130,text_color,TEXT_ALIGN_CENTER,TEXT_ALIGN_CENTER)
 end
 
--- rerr!
-
 local items = {
 	{
-		name="Fixer Fuel",
-		desc="Reloads 100 units of fixer fuel.",
+		name="Coconut",
+		desc="In some tribal societies the more coconuts you have, the more powerful you are.",
 		cost=5,
-		pv="models/items/car_battery01.mdl",
-		ent="micro_item_fixerfuel"
+		pv="models/hunter/misc/sphere025x025.mdl",
+		ent="micro_item_salainen_kookospahkina_puu"
 	},
 	{
-		name="Rollermine",
-		desc="beep boop",
+		name="Med Kit",
+		desc="Restores 100 crew HP.",
+		cost=5,
+		pv="models/items/healthkit.mdl",
+		ent="micro_item_medkit"
+	},
+	{
+		name="Armor Kit",
+		desc="100 units of body armor.",
+		cost=100,
+		pv="models/items/battery.mdl",
+		ent="micro_item_armorkit"
+	},
+	{
+		name="Collectable Food",
+		desc="Exotic food that restores health! It's 1 of 11 collectable foods. Collect them all!",
+		cost=50,
+		pv="models/slyfo_2/acc_food_meatsandwich.mdl",
+		ent="micro_item_collectable_food"
+	},
+	{
+		name="Collectable Toy",
+		desc="A ball, a doll, or something special. Contains 1 of 5. Collect them all!",
+		cost=100,
+		pv="models/props/de_tides/vending_turtle.mdl",
+		ent="micro_item_collectable_toys"
+	},
+	{
+		name="Collectable Decoration",
+		desc="Show off loot in your richie-rich spaceship! Contains 1 of 11. Collect them all!",
 		cost=500,
-		pv="models/roller.mdl",
-		ent="npc_rollermine"
+		pv="models/maxofs2d/gm_painting.mdl",
+		ent="micro_item_collectable_deco"
+	},
+	{
+		name="Spinny Ball",
+		desc="Slightly-used ball that has spinny parts in it. Looks cool. Might be useful.",
+		cost=3000,
+		pv="models/maxofs2d/hover_rings.mdl",
+		ent="3p8_hate"
 	}
 }
 
@@ -127,11 +209,7 @@ if SERVER then
 
 		local n = tonumber(args[2])
 
-		if !ply:Alive() or !isnumber(n) or items[n]==nil or !IsValid(shop_ent) or shop_ent:GetClass()!="micro_comp_shop" or shop_ent:IsBroken() then return end
-
-		local ship = shop_ent:GetShipInfo().entity
-
-		if !IsValid(ship) or !ship:GetIsHome() then return end
+		if !ply:Alive() or !isnumber(n) or items[n]==nil or !IsValid(shop_ent) then return end
 
 		if shop_ent:GetPos():Distance(ply:GetPos())>200 then return end
 
@@ -154,7 +232,7 @@ if SERVER then
 			ent:SetPos(shop_ent:GetItemSpawn())
 			ent:Spawn()
 		else
-			item.func(ship)
+			--item.func(ship) --?????
 		end
 
 	end)
@@ -171,7 +249,7 @@ else
 		panel:MakePopup()
 
 		panel.Think = function(self)
-			if !LocalPlayer():Alive() or ent:IsBroken() then
+			if !LocalPlayer():Alive() then
 				self:Close()
 			else
 				blocked = ent:CheckBlocked()
@@ -242,10 +320,9 @@ else
 
 			function button:Think()
 				local cash = ent:GetCash()
-				local ship = ent:GetShipInfo().entity
 
 				-- WARNING! SLOW! DOES A TRACE FOR EVERY BUTTON!
-				if item.cost>cash or !IsValid(ship) or !ship:GetIsHome() or (item.ent and blocked) then
+				if item.cost>cash or (item.ent and blocked) then
 					self:SetDisabled(true)
 				else
 					self:SetDisabled(false)
@@ -256,92 +333,68 @@ else
 end
 
 --stuff from component
-	function ENT:Draw()
-		local is_controlling = LocalPlayer().proxyctrls_ent == self
+function ENT:Draw()
+	local is_controlling = LocalPlayer().proxyctrls_ent == self
 
-		local ship_info = self:GetShipInfo()
+	self:DrawModel()
+		cam.Start3D2D(self:LocalToWorld(self.ComponentScreenOffset),self:LocalToWorldAngles(self.ComponentScreenRotation), .25 )
+			self:drawScreen()
+		cam.End3D2D()
 
+end
 
-		self:DrawModel()
+hook.easy("HUDPaint",function()
+	local control_ent = LocalPlayer().proxyctrls_ent
 
-		local broken = self:IsBroken()
+	if IsValid(control_ent) and control_ent.drawScreenToHud and isfunction(control_ent.drawScreen) then
 
-		if ship_info and IsValid(ship_info.entity) then
+		local matrix = Matrix()
+		matrix:Translate(Vector(ScrW()-control_ent.ComponentScreenWidth,ScrH()-control_ent.ComponentScreenHeight,0))
+		--matrix:Scale(Vector(2,2,2))
+		cam.PushModelMatrix(matrix)
+		control_ent:drawScreen()
+		cam.PopModelMatrix()
+		--end
+	end
+end)
 
-			cam.Start3D2D(self:LocalToWorld(self.ComponentScreenOffset),self:LocalToWorldAngles(self.ComponentScreenRotation), .25 )
-				self:drawScreen(ship_info.entity,broken)
-			cam.End3D2D()
-		end
+function ENT:drawScreen()
+	local color = Color(0,0,0)
+	local width = self.ComponentScreenWidth
+	local height = self.ComponentScreenHeight
 
+	surface.SetDrawColor(color)
+	surface.DrawRect( 0, 0, width, height)
+
+	surface.SetDrawColor(Color(0,0,0))
+	
+	local function startStencil()
+		render.SetStencilEnable(true)
+		render.ClearStencil()
+		render.SetStencilReferenceValue(1)
+		render.SetStencilCompareFunction(STENCILCOMPARISONFUNCTION_ALWAYS)
+		render.SetStencilPassOperation(STENCILOPERATION_REPLACE)
+		render.SetStencilFailOperation(STENCILOPERATION_ZERO)
+		render.SetStencilZFailOperation(STENCILOPERATION_ZERO)
 	end
 
-	hook.easy("HUDPaint",function()
-		local control_ent = LocalPlayer().proxyctrls_ent
 
-		if IsValid(control_ent) and control_ent.drawScreenToHud and isfunction(control_ent.drawScreen) then
-
-			local ship_info = control_ent:GetShipInfo()
-			local broken = control_ent:IsBroken()
-
-			if IsValid(ship_info.entity) then
-				local matrix = Matrix()
-				matrix:Translate(Vector(ScrW()-control_ent.ComponentScreenWidth,ScrH()-control_ent.ComponentScreenHeight,0))
-				--matrix:Scale(Vector(2,2,2))
-				cam.PushModelMatrix(matrix)
-				control_ent:drawScreen(ship_info.entity,broken)
-				cam.PopModelMatrix()
-			end
-		end
-	end)
-
-	function ENT:drawScreen(ship,broken)
-		local color = ship:GetColor()
-		local width = self.ComponentScreenWidth
-		local height = self.ComponentScreenHeight
-
-		surface.SetDrawColor(color)
-		surface.DrawRect( 0, 0, width, height)
-
-		surface.SetDrawColor(Color(0,0,0))
-		
-		local function startStencil()
-			render.SetStencilEnable(true)
-			render.ClearStencil()
-			render.SetStencilReferenceValue(1)
-			render.SetStencilCompareFunction(STENCILCOMPARISONFUNCTION_ALWAYS)
-			render.SetStencilPassOperation(STENCILOPERATION_REPLACE)
-			render.SetStencilFailOperation(STENCILOPERATION_ZERO)
-			render.SetStencilZFailOperation(STENCILOPERATION_ZERO)
-		end
-
-
-		if self.ComponentHideName then
-			startStencil()
-			surface.DrawRect( 3, 3, width-6, height-6)
-		else
-			surface.DrawRect( 3, 3, width-6, 35)
-			draw.SimpleText(self:GetComponentName(),"micro_big",width/2,20,Color(255,255,255),TEXT_ALIGN_CENTER,TEXT_ALIGN_CENTER)
-			startStencil()
-			surface.DrawRect( 3, 41, width-6, height-44)
-		end
-
-		render.SetStencilCompareFunction(STENCILCOMPARISONFUNCTION_EQUAL)
-		render.SetStencilPassOperation(STENCILOPERATION_KEEP)
-		render.SetStencilFailOperation(STENCILOPERATION_KEEP)
-		render.SetStencilZFailOperation(STENCILOPERATION_KEEP)
-
-		self:drawInfo(ship,broken)
-
-		render.SetStencilEnable(false)
-
-		if broken then
-			local w = self.ComponentScreenWidth
-			local h = self.ComponentScreenHeight
-			for i=1,20 do
-				draw.SimpleText(string.char(math.random(33,126)),"micro_fixed",5+math.random()*(w-10),5+math.random()*(h-10),color,TEXT_ALIGN_CENTER,TEXT_ALIGN_CENTER)
-			end
-		end
+	if self.ComponentHideName then
+		startStencil()
+		surface.DrawRect( 3, 3, width-6, height-6)
+	else
+		surface.DrawRect( 3, 3, width-6, 35)
+		draw.SimpleText(self:GetComponentName(),"micro_big",width/2,20,Color(255,255,255),TEXT_ALIGN_CENTER,TEXT_ALIGN_CENTER)
+		startStencil()
+		surface.DrawRect( 3, 41, width-6, height-44)
 	end
 
-	function ENT:drawInfo(ship,broken) end
- 
+	render.SetStencilCompareFunction(STENCILCOMPARISONFUNCTION_EQUAL)
+	render.SetStencilPassOperation(STENCILOPERATION_KEEP)
+	render.SetStencilFailOperation(STENCILOPERATION_KEEP)
+	render.SetStencilZFailOperation(STENCILOPERATION_KEEP)
+
+	self:drawInfo()
+
+	render.SetStencilEnable(false)
+end

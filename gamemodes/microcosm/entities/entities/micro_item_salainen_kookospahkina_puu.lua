@@ -88,7 +88,7 @@ if SERVER then
 				--randomly make coconuts fall
 				self:GetPhysicsObject():Wake()
 			end
-			if IsValid(self) && chance > 0.67 then
+			if IsValid(self) && chance > 0.90 then
 				-- autoplant functionality
 				--plant itself. below copy pasted from ENT:Use()
 				self:Upgrayed()

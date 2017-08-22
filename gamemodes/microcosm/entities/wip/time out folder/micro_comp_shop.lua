@@ -1,3 +1,5 @@
+--in time out folder because it interferes with 3p8_shop. Uses same local variable names and same console command...
+
 AddCSLuaFile()
 
 DEFINE_BASECLASS("micro_component")

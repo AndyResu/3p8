@@ -12,7 +12,7 @@ ENT.MaxCount = 1
 local sound_unpacking = Sound("items/battery_pickup.wav")
 
 local toys = {"models/XQM/Rails/gumball_1.mdl","models/props_phx/misc/soccerball.mdl","models/balloons/balloon_dog.mdl","models/maxofs2d/companion_doll.mdl",
-            "models/maxofs2d/hover_rings.mdl","models/props/de_tides/vending_turtle.mdl"}
+            "models/props/de_tides/vending_turtle.mdl"}
 
 function ENT:Use(ply)
 

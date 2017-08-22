@@ -3,14 +3,16 @@
 	
 	use this model: 
 	models/props_phx/misc/potato.mdl
+
+	"potatoes for throw" from Full Invasion 2 Mod for Mount & Blade: Warband
 ]]
 
 AddCSLuaFile()
 
 SWEP.PrintName = "Rifle"
 SWEP.Author = "Sky"
-SWEP.Purpose = "Point and Shoot" --
-SWEP.Instructions = "Primary Fire to shoot a bullet that does your current health as damage, then subtracts 1 health from you!"
+SWEP.Purpose = "potatoes for throw" --
+SWEP.Instructions = "click and go"
 SWEP.Category = "3P8"
 SWEP.Spawnable = true
 SWEP.AdminSpawnable = true

@@ -2,6 +2,11 @@
 	FILE THEME SONG:
 	
 	use this model: models/spacebuild/nova/dronegun1.mdl
+
+
+	--todo:
+	check manhack sounds. those are good zaps
+	--scanner and roller mine too
 ]]
 
 AddCSLuaFile()
