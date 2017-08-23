@@ -4,6 +4,61 @@ ENT.Type = "anim"
 
 ENT.ItemModel = "models/props_wasteland/laundry_washer001a.mdl"
 
+--models for when the tree dies, but the trunk was not cut down?
+	--live trees drop 0, 1, 2 acorns...
+
+--sprout phase
+--models/props_foliage/grass3.mdl
+--models/props_foliage/bush2.mdl
+--models/props_foliage/mall_bigleaves_plant03_medium.mdl
+--models/props_foliage/mall_bigleaves_plant03.mdl
+
+--childhood
+--models/props_foliage/urban_tree01_small.mdl
+--models/props_foliage/urban_tree01_medium.mdl
+--models/props_foliage/urban_tree01.mdl
+
+--maturity
+--models/props_foliage/mall_tree_medium01.mdl
+--models/props_foliage/mall_tree_large01.mdl
+	--dead model
+		--models/props_foliage/tree_city01.mdl
+
+--from here, lots of trees can be used :D
+
+--models/props_foliage/urban_tree_giant01_small.mdl
+	--dead model? (chance to die after every growth stage)
+		--models/props_foliage/swamp_cypress_stump01.mdl
+--models/props_foliage/urban_tree_giant01_medium.mdl
+--models/props_foliage/urban_tree_giant_dario.mdl OR models/props_foliage/urban_tree_giant01_a.mdl
+	--dead model
+		--models/props_foliage/old_tree01.mdl
+	--cut model
+		--models/props_foliage/tree_trunk_fallen.mdl
+
+--broken trunks
+--models/props_foliage/tree_trunk_fallen.mdl --stick up in ground
+--models/props_foliage/tree_stump01.mdl --good old stump
+
+--giant ass swamp tree
+--models/props_foliage/swamp_cypress_large01_grnd.mdl
+
+--death weed
+--models/props_foliage/swamp_cypress_knee01.mdl
+--models/props_foliage/swamp_cypress_knee02.mdl
+
+--leaves that fall from tree
+--models/props_foliage/bush2.mdl
+
+--need to make a bush
+--flowers
+--rocks (exhaustable)
+
+--way to get Stick swep...
+
+--cool vines... for a root system
+--models/props_foliage/urban_vine04.mdl
+
 function ENT:Use(ply)
 	--plant the coconut
 	self:Upgrayed()

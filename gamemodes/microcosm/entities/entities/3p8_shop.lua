@@ -1,4 +1,10 @@
 --[[
+
+todo:
+bigger collison model
+can only buy 3p8_hate
+buyable breakable box, prop physics.
+
 pre
 vo/novaprospekt/al_illtakecare.wav
 vo/novaprospekt/al_done01.wav
