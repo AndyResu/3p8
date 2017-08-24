@@ -2,8 +2,9 @@
 
 todo:
 bigger collison model
-can only buy 3p8_hate
+can only buy 1 3p8_hate
 buyable breakable box, prop physics.
+make sounds random when stuff is sold by the player... make a function that takes in the pre or post as a param...
 
 pre
 vo/novaprospekt/al_illtakecare.wav
@@ -112,6 +113,10 @@ function ENT:PhysicsCollide(data, phys)
 		data.HitEntity:Remove()
 		self:AddCash(10)
 		self:EmitSound("ambient/machines/hydraulic_1.wav") --saw sound
+	elseif class == "3p8_rock_s" then
+		data.HitEntity:Remove()
+		self:AddCash(25)
+		self:EmitSound("ambient/machines/hydraulic_1.wav")
 	end
 end
 

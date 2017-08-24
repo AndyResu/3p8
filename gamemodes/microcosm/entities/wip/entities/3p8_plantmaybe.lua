@@ -52,7 +52,6 @@ ENT.ItemModel = "models/props_wasteland/laundry_washer001a.mdl"
 
 --need to make a bush
 --flowers
---rocks (exhaustable)
 
 --way to get Stick swep...
 
