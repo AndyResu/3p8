@@ -36,17 +36,18 @@ In addition, this gamemode would not be possible without
 
 
 
-# 3 Pizzas 8
+#
 
 A farming gamemode by SkyLight.
 Reminecent of oc_harvest by Tysn, Star Dew Valley, and the Harvest Moon series.
 The culmination of, like, years of the only the most cancerous maymays.
 
-Requires:   Microcosm Core: Parakeet
-            http://steamcommunity.com/sharedfiles/filedetails/?id=133006390
-            & Trees+Rocks: Edited by nightboy, ported by tryhard77885.
-            http://steamcommunity.com/sharedfiles/filedetails/?id=672126440
-            Coconut tree trunks and stumps require CS:GO right now. I'll change it.
+Requires:   
+- Microcosm Core: Parakeet
+- http://steamcommunity.com/sharedfiles/filedetails/?id=133006390
+- & Trees+Rocks: Edited by nightboy, ported by tryhard77885.
+- http://steamcommunity.com/sharedfiles/filedetails/?id=672126440
+- Coconut tree trunks and stumps require CS:GO right now. I'll change it.
 
 [Rated M: Mature humor and th(m)emes]
 
@@ -55,4 +56,4 @@ With halp from Parakeet of Parakeet's Pill Pack.
 ## SkyLight Proudly Presents:
 
 🍕🍕🍕
-3 Pizzas 8
+# 3 Pizzas 8

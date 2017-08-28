@@ -12,18 +12,19 @@ ENT.rockTable = {	"models/props_foliage/forestrock_single01.mdl", "models/props_
 					"models/props_wasteland/rockcliff07b.mdl","models/props_wasteland/rockcliff06d.mdl"}
 
 function ENT:Initialize()
-	--self:SetMaterial("models/props_pipes/guttermetal01a")
-	self:SetModel(self.rockTable[math.random(#self.rockTable)])
-	self:PhysicsInitStandard()
-	--self:PhysicsInit(SOLID_VPHYSICS)
-	self:SetSolid(SOLID_VPHYSICS)
-	--stop movement
-	self:SetMoveType(MOVETYPE_VPHYSICS)
+	if SERVER then
+		self:SetModel(self.rockTable[math.random(#self.rockTable)])
 
-	local phys = self:GetPhysicsObject()
-	if (phys:IsValid()) then
-		phys:SetMass(1000)
-		phys:Sleep() --stop movement from the get-go
+		self:PhysicsInitStandard()
+		--self:PhysicsInit(SOLID_VPHYSICS)
+		self:SetSolid(SOLID_VPHYSICS)
+		--stop movement
+		self:SetMoveType(0)
+
+		local phys = self:GetPhysicsObject()
+		if (phys:IsValid()) then
+			phys:SetMass(1000)
+		end
 	end
 
 	self.health = 2000

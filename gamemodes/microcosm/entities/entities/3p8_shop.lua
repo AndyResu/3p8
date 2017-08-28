@@ -1,10 +1,10 @@
 --[[
 
 todo:
-bigger collison model
 can only buy 1 3p8_hate
-buyable breakable box, prop physics.
+buyable breakable box, prop physics. models/props_junk/wood_crate001a.mdl
 make sounds random when stuff is sold by the player... make a function that takes in the pre or post as a param...
+--stock system and dynamic pricing for supply/demand :D
 
 pre
 vo/novaprospekt/al_illtakecare.wav
@@ -77,13 +77,16 @@ end
 function ENT:Initialize()
 	self:SetModel(self.ComponentModel)
 
-		self:PhysicsInitStandard()
+	self:PhysicsInitStandard()
 
-		if SERVER then
-			self:GetPhysicsObject():EnableMotion(false)
-			self:SetUseType(SIMPLE_USE)
-		end
 	if SERVER then
+		self:GetPhysicsObject():EnableMotion(false)
+		self:SetUseType(SIMPLE_USE)
+
+		--make collison model
+		self:SetCollisionBounds(Vector(-27,-27,0), Vector(27,27,72))
+		self:SetSolid(3)
+
 		self:SetCash(self.StartingCash)
 	end
 	self.health = 1000
@@ -210,6 +213,7 @@ local items = {
 		pv="models/maxofs2d/hover_rings.mdl",
 		ent="3p8_hate"
 	}
+	--models/weapons/w_package.mdl --the package from the citizen at the trainstation
 }
 
 if SERVER then

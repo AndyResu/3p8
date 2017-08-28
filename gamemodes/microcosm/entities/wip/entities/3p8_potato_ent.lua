@@ -1,62 +1,46 @@
+--[[
+	TODO: POTATOE HEADS
+	characters
+		models/breen/breen_face --albino ***
+		models/gman/gman_facehirez
+		models/kleiner/walter_face --bald
+		models/monk/grigori_head
+		models/mossman/mossman_face --***
+		models/odessa/odessa_face
+	rebels
+		models/humans/female/group03/chau_facemap
+		models/humans/female/group03/joey_facemap
+		models/humans/female/group03/kanisha_cylmap --***
+		models/humans/female/group03/kim_facemap
+		models/humans/female/group03/lakeetra_facemap
+		models/humans/female/group03/naomi_facemap
+
+		models/humans/female/group03/naomi_facemap
+		models/humans/male/group03/erdim_cylmap --beard
+		models/humans/male/group03/erdim_facemap --nobeard
+		models/humans/male/group03/eric_facemap
+		models/humans/male/group01/eric_facemap --notice group01 BALDIE***
+		models/humans/male/group03/joe_facemap --black guy ***
+		models/humans/male/group03/mike_facemap
+		models/humans/male/group03/sandro_facemap
+		models/humans/male/group03/ted_facemap
+		models/humans/male/group03/van_facemap
+		models/humans/male/group03/vance_facemap
+
+]]
+
 AddCSLuaFile()
 
 ENT.Type = "anim"
 
-ENT.ItemModel = "models/props_wasteland/laundry_washer001a.mdl"
+ENT.ItemModel = "models/props_phx/misc/potato.mdl"
 
 --models for when the tree dies, but the trunk was not cut down?
 	--live trees drop 0, 1, 2 acorns...
 
 --sprout phase
 --models/props_foliage/grass3.mdl
---models/props_foliage/bush2.mdl
---models/props_foliage/mall_bigleaves_plant03_medium.mdl
---models/props_foliage/mall_bigleaves_plant03.mdl
-
---childhood
---models/props_foliage/urban_tree01_small.mdl
---models/props_foliage/urban_tree01_medium.mdl
---models/props_foliage/urban_tree01.mdl
-
---maturity
---models/props_foliage/mall_tree_medium01.mdl
---models/props_foliage/mall_tree_large01.mdl
-	--dead model
-		--models/props_foliage/tree_city01.mdl
-
---from here, lots of trees can be used :D
-
---models/props_foliage/urban_tree_giant01_small.mdl
-	--dead model? (chance to die after every growth stage)
-		--models/props_foliage/swamp_cypress_stump01.mdl
---models/props_foliage/urban_tree_giant01_medium.mdl
---models/props_foliage/urban_tree_giant_dario.mdl OR models/props_foliage/urban_tree_giant01_a.mdl
-	--dead model
-		--models/props_foliage/old_tree01.mdl
-	--cut model
-		--models/props_foliage/tree_trunk_fallen.mdl
-
---broken trunks
---models/props_foliage/tree_trunk_fallen.mdl --stick up in ground
---models/props_foliage/tree_stump01.mdl --good old stump
-
---giant ass swamp tree
---models/props_foliage/swamp_cypress_large01_grnd.mdl
-
---death weed
---models/props_foliage/swamp_cypress_knee01.mdl
---models/props_foliage/swamp_cypress_knee02.mdl
-
---leaves that fall from tree
---models/props_foliage/bush2.mdl
-
---need to make a bush
---flowers
-
---way to get Stick swep...
-
---cool vines... for a root system
---models/props_foliage/urban_vine04.mdl
+--models/props_foliage/mall_big_plant01.mdl
 
 function ENT:Use(ply)
 	--plant the coconut
@@ -65,7 +49,7 @@ function ENT:Use(ply)
 end
 
 function ENT:Initialize()
-	self:SetMaterial("models/props_pipes/guttermetal01a")
+	self:SetMaterial("models/props_wasteland/tugboat02")
 	self:SetModel(self.ItemModel)
 	self:PhysicsInitStandard()
 	--self:PhysicsInit(SOLID_VPHYSICS)
@@ -148,3 +132,20 @@ function ENT:OnTakeDamage(damageto)
 end
 
 --models/props_forest/log.mdl
+
+--cocnut21
+--0 models/hunter/misc/sphere025x025.mdl
+	--models/props_pipes/guttermetal01a --material
+
+--from tree thing on workshop
+--1 models/props_foliage/ferns03.mdl
+--2 models/props_foliage/ferns02.mdl
+--3 models/props/de_dust/palm_tree_head_skybox.mdl
+--4 models/props_foliage/urban_small_palm01.mdl
+--5 models/props_foliage/mall_palmplant02.mdl
+--6 models/props_foliage/mall_palm01_medium.mdl
+--7 models/props_foliage/mall_palm01.mdl
+
+--http://gamebanana.com/models/3622
+--8 models/domitibingen/foliage/palms/d_palm_01/d_palm_s_07.mdl
+--9 models/domitibingen/foliage/palms/d_palm_01/d_palm_b_01.mdl

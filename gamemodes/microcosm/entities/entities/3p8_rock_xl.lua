@@ -7,25 +7,27 @@ AddCSLuaFile()
 
 ENT.Type = "anim"
 
-ENT.rockTable = {	"models/props_foliage/rock_coast02a.mdl", "models/props_foliage/rock_coast02b.mdl", "models/props_foliage/rock_coast02d.mdl", "models/props_foliage/rock_coast02e.mdl", "models/props_foliage/rock_coast02f.mdl",
-					"models/props_wasteland/rockcliff06i.mdl", ""}
+ENT.rockTable = {	"models/props_foliage/rock_coast02a.mdl", "models/props_foliage/rock_coast02b.mdl", "models/props_foliage/rock_coast02d.mdl", 
+					"models/props_foliage/rock_coast02e.mdl", "models/props_foliage/rock_coast02f.mdl", "models/props_wasteland/rockcliff06i.mdl"}
 
 function ENT:Initialize()
-	--self:SetMaterial("models/props_pipes/guttermetal01a")
-	self:SetModel(self.rockTable[math.random(#self.rockTable)])
-	self:PhysicsInitStandard()
-	--self:PhysicsInit(SOLID_VPHYSICS)
-	self:SetSolid(SOLID_VPHYSICS)
-	--stop movement
-	self:SetMoveType(MOVETYPE_VPHYSICS)
+	if SERVER then
+		self:SetModel(self.rockTable[math.random(#self.rockTable)])
 
-	local phys = self:GetPhysicsObject()
-	if (phys:IsValid()) then
-		phys:SetMass(1000)
-		phys:Sleep() --stop movement from the get-go
+		self:PhysicsInitStandard()
+		--self:PhysicsInit(SOLID_VPHYSICS)
+		self:SetSolid(SOLID_VPHYSICS)
+		--stop movement
+		self:SetMoveType(0)
+
+		local phys = self:GetPhysicsObject()
+		if (phys:IsValid()) then
+			phys:SetMass(1000)
+		end
 	end
 
 	self.health = 3000
+
 end
 
 

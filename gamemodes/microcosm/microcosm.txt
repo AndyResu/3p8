@@ -3,7 +3,7 @@
 	"base"		"base"
 	"title"		"Microcosm"
 	"menusystem"	"1"
-	"maps"			"^micro_"
+	"maps"			"^micro_|^3p8_"
 
 	"settings"
 	{

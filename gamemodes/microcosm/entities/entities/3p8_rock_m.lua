@@ -1,6 +1,8 @@
 --[[
 rocks (exhaustable)
 
+--stop rock movement all together... not just sleep.
+
 ]]
 
 AddCSLuaFile()
@@ -12,17 +14,19 @@ ENT.rockTable = {	"models/props_foliage/rock_forest04.mdl", "models/props_foliag
 					"models/props_wasteland/rockcliff01c.mdl", "models/props_wasteland/rockcliff01b.mdl"}
 
 function ENT:Initialize()
-	--self:SetMaterial("models/props_pipes/guttermetal01a")
-	self:SetModel(self.rockTable[math.random(#self.rockTable)])
-	self:PhysicsInitStandard()
-	--self:PhysicsInit(SOLID_VPHYSICS)
-	self:SetSolid(SOLID_VPHYSICS)
-	--stop movement
-	self:SetMoveType(MOVETYPE_VPHYSICS)
+	if SERVER then
+		self:SetModel(self.rockTable[math.random(#self.rockTable)])
 
-	local phys = self:GetPhysicsObject()
-	if (phys:IsValid()) then
-		phys:Sleep() --stop movement from the get-go
+		self:PhysicsInitStandard()
+		--self:PhysicsInit(SOLID_VPHYSICS)
+		self:SetSolid(SOLID_VPHYSICS)
+		--stop movement
+		self:SetMoveType(0)
+
+		--[[local phys = self:GetPhysicsObject()
+		if (phys:IsValid()) then
+			phys:Sleep() --stop movement from the get-go
+		end]]
 	end
 
 	self.health = 1000

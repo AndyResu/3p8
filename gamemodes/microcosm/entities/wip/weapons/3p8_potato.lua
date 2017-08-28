@@ -5,25 +5,27 @@
 	models/props_phx/misc/potato.mdl
 
 	"potatoes for throw" from Full Invasion 2 Mod for Mount & Blade: Warband
+
+	--how make throw like grenade?
 ]]
 
 AddCSLuaFile()
 
-SWEP.PrintName = "Rifle"
+SWEP.PrintName = "potaytwo"
 SWEP.Author = "Sky"
 SWEP.Purpose = "potatoes for throw" --
 SWEP.Instructions = "click and go"
 SWEP.Category = "3P8"
 SWEP.Spawnable = true
 SWEP.AdminSpawnable = true
-SWEP.Weight = 10 --
+SWEP.Weight = 2 --is light like potato is
 
 
 
 SWEP.Primary.ClipSize		= 99
-SWEP.Primary.DefaultClip	= 99
+SWEP.Primary.DefaultClip	= 1
 SWEP.Primary.Automatic		= false
-SWEP.Primary.Ammo		    = "Health"
+SWEP.Primary.Ammo		    = "Potato"
 SWEP.Primary.Delay			= 5
 SWEP.Primary.Recoil			= 0
 SWEP.Primary.TakeAmmo		= 0
