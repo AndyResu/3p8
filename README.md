@@ -34,12 +34,14 @@ In addition, this gamemode would not be possible without
 - Skylight, Pdan4, Ghettobunneh, Raubana, Zerf, and anyone I forgot who helped me test this.
 
 
-
-
+#
+#
 #
 
-A farming gamemode by SkyLight.
+The happiest farming gamemode.
+
 Reminecent of oc_harvest by Tysn, Star Dew Valley, and the Harvest Moon series.
+
 The culmination of, like, years of the only the most cancerous maymays.
 
 Requires:   
@@ -49,11 +51,11 @@ Requires:
 - http://steamcommunity.com/sharedfiles/filedetails/?id=672126440
 - Coconut tree trunks and stumps require CS:GO right now. I'll change it.
 
-[Rated M: Mature humor and th(m)emes]
+[Rated M: Mature humor and themes (& memes)]
 
 With halp from Parakeet of Parakeet's Pill Pack.
 
 ## SkyLight Proudly Presents:
 
-🍕🍕🍕
+🍕🍕🍕😋
 # 3 Pizzas 8

@@ -75,11 +75,13 @@ function GM:PlayerSpawn( ply )
 		--ply:Give("micro_art_placer")
 	end
 	ply:SetupHands()
-	ply:SetNoCollideWithTeammates(true)
+	ply:SetNoCollideWithTeammates(false)
 end
 
+--without this being true, the 3p8_potato_ent can't be picked up; the potato can't be gravity gunned so it needs this.
+--UPDAET: DOESN'T DO A DAMN THING
 function GM:AllowPlayerPickup(ply, item)
-	return false
+	return true
 end
 
 --local SHIP_ENT

@@ -1,8 +1,6 @@
 --[[
 rocks (exhaustable)
 
---stop rock movement all together... not just sleep.
-
 ]]
 
 AddCSLuaFile()

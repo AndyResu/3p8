@@ -5,6 +5,8 @@ can only buy 1 3p8_hate
 buyable breakable box, prop physics. models/props_junk/wood_crate001a.mdl
 make sounds random when stuff is sold by the player... make a function that takes in the pre or post as a param...
 --stock system and dynamic pricing for supply/demand :D
+--breakable props "crate"
+	--maybe just make an ent that allows anything that it is to be breakable
 
 pre
 vo/novaprospekt/al_illtakecare.wav
@@ -120,6 +122,10 @@ function ENT:PhysicsCollide(data, phys)
 		data.HitEntity:Remove()
 		self:AddCash(25)
 		self:EmitSound("ambient/machines/hydraulic_1.wav")
+	elseif class == "3p8_potato_ent" then
+		data.HitEntity:Remove()
+		self:AddCash(1)
+		self:EmitSound("ambient/levels/labs/coinslot1.wav")
 	end
 end
 
@@ -170,6 +176,13 @@ local items = {
 		cost=5,
 		pv="models/hunter/misc/sphere025x025.mdl",
 		ent="micro_item_salainen_kookospahkina_puu"
+	},
+	{
+		name="Potato",
+		desc="Might be a beautiful french fry some day.",
+		cost=5,
+		pv="models/props_phx/misc/potato.mdl",
+		ent="3p8_potato_ent"
 	},
 	{
 		name="Med Kit",

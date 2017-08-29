@@ -23,6 +23,7 @@ function ENT:Initialize()
 
 	--make timer for arrival. 
 
+	--find spawn location ents...
 
 	--make friends. via airdrop and knocking down barriers
 	local ent1 = ents.Create("CombineElite") --THEY'VE SENT IN THE SUPERS

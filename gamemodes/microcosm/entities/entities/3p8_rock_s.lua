@@ -17,6 +17,16 @@ function ENT:Initialize()
 		self:PhysicsInitStandard()
 		--self:PhysicsInit(SOLID_VPHYSICS)
 		self:SetSolid(SOLID_VPHYSICS)
+
+		local timer_name = "rock_s_Depletion_" .. self:EntIndex()
+		timer.Create(timer_name,600,0, function() --delete rock after 10 minutes
+			if IsValid(self)then
+				self:Remove()
+				timer.Remove(timer_name)
+			else
+				timer.Remove(timer_name)
+			end
+		end)
 	end
 
 	self:SetMoveType(MOVETYPE_VPHYSICS)

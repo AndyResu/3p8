@@ -43,11 +43,11 @@ function ENT:OnTakeDamage(damageto)
 	if self.health <= 0 then
 		self:EmitSound("weapons/debris1.wav")
 		--PRODUCE gibs HERE
-		puulle = ents.Create("prop_physics")
-		if ( !IsValid( puulle ) ) then return end
-		puulle:SetModel("GIB MODEL")
-		puulle:SetPos(self:GetPos() + Vector(0,0,5))
-		puulle:Spawn()
+		--puulle = ents.Create("prop_physics")
+		--if ( !IsValid( puulle ) ) then return end
+		--puulle:SetModel("GIB MODEL")
+		--puulle:SetPos(self:GetPos() + Vector(0,0,5))
+		--puulle:Spawn()
 
 		self:Remove()
 	end

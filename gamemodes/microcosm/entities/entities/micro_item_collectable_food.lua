@@ -23,7 +23,9 @@ function ENT:Use(ply)
     if not self.is_broken then
         self:EmitSound(sound_unpacking)
         self:SetModel(food[math.random(#food)])
-        -- im not going to bother with unfucking the collisions for now...
+        self:PhysicsInitStandard()
+		self:SetSolid(6)
+		self:SetMoveType(6)
         self.is_broken = true
         return
     end

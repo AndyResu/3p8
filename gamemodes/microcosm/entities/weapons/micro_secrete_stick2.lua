@@ -308,8 +308,6 @@ function SWEP:Reload()
 			--really uses an RPG
 		--maybe have the tree advancement be based on props being spawned by certain wizards... like wizard 1 spawns this object, makes you into wizard 2... to 4 then you become
 			--super wizard...
-		
-		--test if "it"'s shield will be affected by swep change
 
 
 		elseif string.match(model_eaten, "bananna") || string.match(model_eaten, "doll") || string.match(model_eaten, "orange") || string.match(model_eaten, "hotdog") then
