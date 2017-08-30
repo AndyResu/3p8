@@ -11,105 +11,206 @@
 
 AddCSLuaFile()
 
-SWEP.PrintName = "potaytwo"
+SWEP.PrintName = "potaytwo throw"
 SWEP.Author = "Sky"
 SWEP.Purpose = "potatoes for throw" --
-SWEP.Instructions = "click and go"
+SWEP.Instructions = "click and go mouse one.\nsecond mouse for secrete, but only 1 at a tiem"
 SWEP.Category = "3P8"
 SWEP.Spawnable = true
 SWEP.AdminSpawnable = true
 SWEP.Weight = 2 --is light like potato is
 
+SWEP.Slot = 4
+SWEP.SlotPos = 1
 
-
-SWEP.Primary.ClipSize		= 99
-SWEP.Primary.DefaultClip	= 1
+SWEP.Primary.ClipSize		= 999
+SWEP.Primary.DefaultClip	= 0
 SWEP.Primary.Automatic		= false
-SWEP.Primary.Ammo		    = "Potato"
-SWEP.Primary.Delay			= 5
+SWEP.Primary.Ammo		    = "slam"
+SWEP.Primary.Delay			= 1
 SWEP.Primary.Recoil			= 0
-SWEP.Primary.TakeAmmo		= 0
+SWEP.Primary.TakeAmmo		= 1
 SWEP.Primary.Spread			= 0.01
 
-SWEP.Secondary.ClipSize	    = -1
-SWEP.Secondary.DefaultClip	= -1
+SWEP.Secondary.ClipSize	    = 999
+SWEP.Secondary.DefaultClip	= 0
 SWEP.Secondary.Automatic	= false
-SWEP.Secondary.Ammo		    = "none"
+SWEP.Secondary.Ammo		    = "slam"
+SWEP.Secondary.Delay		= 1
+SWEP.Secondary.Recoil		= 0
+SWEP.Secondary.TakeAmmo		= 1
+SWEP.Secondary.Spread		= 0.01
 
-SWEP.HoldType = "ar2"
-SWEP.ViewModelFOV = 70.000
+SWEP.HoldType = "grenade"
+SWEP.ViewModelFOV = 70
 SWEP.ViewModelFlip = false
 SWEP.UseHands = true
-SWEP.ViewModel = "models/weapons/c_annabelle.mdl"
-SWEP.WorldModel = "models/barney_animations.mdl"
+SWEP.ViewModel = "models/weapons/c_grenade.mdl"
+SWEP.WorldModel = "models/weapons/c_arms_animations.mdl"
 SWEP.ShowViewModel = true
 SWEP.ShowWorldModel = true
 SWEP.ViewModelBoneMods = {
-	["ValveBiped.Gun"] = { scale = Vector(0.009, 0.009, 0.009), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) }
+	["ValveBiped.Grenade_body"] = { scale = Vector(0.009, 0.009, 0.009), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) }
 }
 
 SWEP.VElements = {
-	["skull"] = { type = "Model", model = "models/gibs/agibs.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(-26.494, -1.558, -25.455), angle = Angle(-100, 129.74, 0), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
-	["hair1+"] = { type = "Model", model = "models/props_c17/furnituredrawer001a_shard01.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(-30.65, -5.715, -24.417), angle = Angle(-90, 134.416, 0), size = Vector(0.5, 0.5, 0.5), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
-	["gawn"] = { type = "Model", model = "models/props_combine/breenlight.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(-27.532, -1.558, -14.027), angle = Angle(0, -50.26, 0), size = Vector(0.8, 0.8, 0.8), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
-	["hair1"] = { type = "Model", model = "models/props_c17/furnituredrawer001a_shard01.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(-30.65, -1.558, -23.378), angle = Angle(-90, 180, 0), size = Vector(0.5, 0.5, 0.5), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
-	["hair1++"] = { type = "Model", model = "models/props_c17/furnituredrawer001a_shard01.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(-26.494, -4.676, -23.378), angle = Angle(-90, 90, 0), size = Vector(0.5, 0.5, 0.5), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["potato"] = { type = "Model", model = "models/props_phx/misc/potato.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.635, 3.635, -0.519), angle = Angle(0, 0, 0), size = Vector(0.85, 0.85, 0.85), color = Color(255, 255, 255, 255), surpresslightning = false, material = "models/props_wasteland/tugboat02", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
-	["hair1"] = { type = "Model", model = "models/props_c17/furnituredrawer001a_shard01.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(15, 3.635, -10), angle = Angle(-13, 0, 141.429), size = Vector(0.5, 0.5, 0.5), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
-	["hair1+"] = { type = "Model", model = "models/props_c17/furnituredrawer001a_shard01.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(15, -1.558, -10), angle = Angle(180, -155.456, 57.272), size = Vector(0.5, 0.5, 0.5), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
-	["skull"] = { type = "Model", model = "models/gibs/agibs.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(17.142, 1, -7), angle = Angle(0, 0, 180), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
-	["gawn"] = { type = "Model", model = "models/props_combine/breenlight.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(9, 1, -4), angle = Angle(70, 0, 0), size = Vector(0.75, 0.75, 0.75), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
-	["hair1++"] = { type = "Model", model = "models/props_c17/furnituredrawer001a_shard01.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(15, 1, -10), angle = Angle(0, 0, 0), size = Vector(0.5, 0.5, 0.5), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["potato"] = { type = "Model", model = "models/props_phx/misc/potato.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.599, 3.599, -0.5), angle = Angle(0, 0, 0), size = Vector(0.85, 0.85, 0.85), color = Color(255, 255, 255, 255), surpresslightning = false, material = "models/props_wasteland/tugboat02", skin = 0, bodygroup = {} }
 }
 
+local eat_range = 70
+
 function SWEP:PrimaryAttack()
+	--throw potato
 	if (!self:CanPrimaryAttack()) then return end
-	--shoot bullet with current hp as damage
+
+	local tr = self.Owner:GetEyeTrace()
+
+	if CLIENT then return end
+
+	local ent = ents.Create("3p8_potato_ent")
+	--local vector_rotated = Vector(0,-20,-22)
+	--vector_rotated:Rotate(self.Owner:GetAngles())
+	ent:SetPos(self.Owner:EyePos() --[[+ vector_rotated]])
+	ent:SetAngles(self.Owner:EyeAngles())
+	ent:Spawn()
+
+	local phys = ent:GetPhysicsObject()
+
+	if !(phys && IsValid(phys)) then ent:Remove() return end
+
+	--phys:ApplyForceCenter(self.Owner:GetAimVector():GetNormalized() *  math.pow(tr.HitPos:Length(), 3))
+	phys:ApplyForceCenter(self.Owner:GetAimVector():GetNormalized()*5000 + Vector(0,0,2000))
 	
-	local bullet = {}
-		bullet.Num = math.floor(self.Owner:Health()/3.25)
-		bullet.Src = self.Owner:GetShootPos() + (self.Owner:GetAimVector())
-		bullet.Dir = self.Owner:GetAimVector()
-		bullet.Spread = Vector( self.Primary.Spread * math.floor(self.Owner:Health()/3.25), self.Primary.Spread * math.floor(self.Owner:Health()/3.25), self.Primary.Spread * math.floor(self.Owner:Health()/3.25))
-		bullet.Tracer = 1
-		bullet.Force = self.Owner:Health()
-		bullet.Damage = self.Owner:Health()
-		bullet.AmmoType = self.Primary.Ammo
- 
-	local rnda = self.Primary.Recoil * -1
-	local rndb = self.Primary.Recoil * math.random(-1, 1)
-
-	self:ShootEffects()
-
-	self.Owner:FireBullets( bullet )
-	self.Owner:ViewPunch( Angle( rnda,rndb,rnda ) )
-	--subtract 1 hp
-	self.Owner:SetHealth(self.Owner:Health()-1)
-
 	--take 1 ammo
 	self:TakePrimaryAmmo(self.Primary.TakeAmmo)
 
+	self.Weapon:SendWeaponAnim(ACT_VM_THROW)
 	self.Owner:SetAnimation(PLAYER_ATTACK1)
 	--delay
-	--self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
+	self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
 
-	self.Weapon:EmitSound("phx/epicmetal_hard".. math.random(1,7) ..".wav")
+	self.Weapon:EmitSound("weapons/iceaxe/iceaxe_swing1.wav")
+	timer.Simple( 0.5, function() self.Weapon:SendWeaponAnim(ACT_VM_IDLE) end )
 end
 
 function SWEP:SecondaryAttack()
-	--wewew
+	--throw potato head.
+	if (!self:CanSecondaryAttack()) then return end
+
+	local tr = self.Owner:GetEyeTrace()
+
+	if CLIENT then return end
+
+	local ent = ents.Create("3p8_potato_head")
+	--local vector_rotated = Vector(0,-20,-22)
+	--vector_rotated:Rotate(self.Owner:GetAngles())
+	ent:SetPos(self.Owner:EyePos() --[[+ vector_rotated]])
+	ent:SetAngles(self.Owner:EyeAngles())
+	ent:Spawn()
+	ent:SetMaterial(self.HeadMaterial)
+
+	local phys = ent:GetPhysicsObject()
+
+	if !(phys && IsValid(phys)) then ent:Remove() return end
+
+	phys:ApplyForceCenter(self.Owner:GetAimVector():GetNormalized()*5000 + Vector(0,0,2000))
+	
+	--take 1 ammo
+	self:TakeSecondaryAmmo(self.Secondary.TakeAmmo)
+
+	self.Weapon:SendWeaponAnim(ACT_VM_THROW)
+	self.Owner:SetAnimation(PLAYER_ATTACK1)
+	--delay
+	self:SetNextSecondaryFire(CurTime() + self.Secondary.Delay)
+
+	self.Weapon:EmitSound("weapons/iceaxe/iceaxe_swing1.wav")
+	timer.Simple( 0.5, function() self.Weapon:SendWeaponAnim(ACT_VM_IDLE) end )
+end
+
+function SWEP:Reload()
+	--grab potatos
+	--used to change what spell the player is on (current_spells) by using a trace to find what prop_physics the player is aiming at and eating it >:)
+	--print("Current Spells "..current_spells)
+	local ply = self:GetOwner()
+	local shootpos = ply:GetShootPos()
+	local endshootpos = shootpos + ply:GetAimVector() * eat_range
+	local tmin = Vector(1,1,1)*-10
+	local tmax = Vector(1,1,1)*10
+	local tr = util.TraceHull( {
+		start = shootpos,
+		endpos = endshootpos,
+		filter = ply,
+		mins = tmin,
+		maxs = tmax,
+		mask = MASK_SHOT_HULL
+	} )
+	if not IsValid(tr.Entity) then
+		tr = util.TraceLine({
+			start = shootpos,
+			endpos = endshootpos,
+			filter = ply,
+			mask = MASK_SHOT_HULL
+		})
+	end
+	local ent = tr.Entity
+	if IsValid(ent) && ent:GetClass() == "3p8_potato_ent" && self:Clip1() <= 998 then
+		self.VElements["potato"].color.a = 255
+		self.WElements["potato"].color.a = 255
+
+		self:SetClip1(self:Clip1()+1)
+
+		--the client is not allowed access to this command...
+		self.Weapon:SendWeaponAnim(ACT_VM_THROW)
+		ply:SetAnimation(PLAYER_ATTACK1)
+		
+		--remove the ground potato
+		if SERVER then
+			ent:Remove()
+		end
+		ply:EmitSound("npc/headcrab_fast/headbite.wav")
+	elseif IsValid(ent) && ent:GetClass() == "3p8_potato_head" && self:Clip2() <= 0 then
+		self.VElements["potato"].color.a = 255
+		self.WElements["potato"].color.a = 255
+		self.HeadMaterial = ent:GetMaterial()
+
+		self:SetClip2(self:Clip2()+1)
+
+		--the client is not allowed access to this command...
+		self.Weapon:SendWeaponAnim(ACT_VM_THROW)
+		ply:SetAnimation(PLAYER_ATTACK1)
+		
+		--remove the ground potato
+		if SERVER then
+			ent:Remove()
+		end
+		ply:EmitSound("npc/headcrab_fast/headbite.wav")
+	elseif !IsValid(ent) then
+		--self.Weapon:SendWeaponAnim(ACT_VM_THROW)
+		--ply:SetAnimation(PLAYER_ATTACK1)
+		--ply:EmitSound("npc/fast_zombie/claw_miss1.wav")
+	end
+	timer.Simple( 0.5, function() self.Weapon:SendWeaponAnim(ACT_VM_IDLE) end )
 end
 
 function SWEP:Think()
-	--set ammo = hp
-	self:SetClip1(self.Owner:Health()-1)
+	--draw potato only if potato
+	if self:Clip1() <= 0 then
+		--make potato model invis.
+		self.VElements["potato"].color.a = 0
+		self.WElements["potato"].color.a = 0
+	else
+		self.VElements["potato"].color.a = 255
+		self.WElements["potato"].color.a = 255
+	end
 end
 
 
 
---saved as blood in SCK
+--saved as potato in SCK
 --[[/********************************************************
 	SWEP Construction Kit base code
 		Created by Clavus
@@ -131,6 +232,9 @@ end
 ********************************************************/--]]
 
 function SWEP:Initialize()
+
+	--sky added
+	self.HeadMaterial = ""
 
 	-- other initialize code goes here
 	self:SetWeaponHoldType(self.HoldType)

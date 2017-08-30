@@ -1,5 +1,7 @@
 --[[
-	TODO: done <3
+	TODO:
+	--make plant disappear too
+		--predator?
 ]]
 
 AddCSLuaFile()
@@ -18,8 +20,8 @@ function ENT:Initialize()
 
 	self.isPlanted = false
 
-	self.numberOfVegetables = math.random(1,4)
-	self.growthTime = math.random(120, 300)
+	self.numberOfVegetables = math.random(1,3)
+	self.growthTime = math.random(180, 420)
 
 	self.headder = 0
 
@@ -40,7 +42,7 @@ function ENT:Initialize()
 
 		--potato clock
 		local timer_name = "potatoDepletion_" .. self:EntIndex()
-		timer.Create(timer_name,600,0, function()
+		timer.Create(timer_name,300,0, function()
 			chance = math.Rand(0,1)
 			if !self.isPlanted && IsValid(self) && chance > 0.90 then
 				-- autoplant functionality
@@ -50,7 +52,7 @@ function ENT:Initialize()
 				timer.Remove(timer_name)
 			end
 			if !self.isPlanted && IsValid(self) then
-				self.Remove()
+				self:Remove()
 				timer.Remove(timer_name)
 			end
 		end)
@@ -90,12 +92,12 @@ function ENT:Upgrayed()
 				if self.headder >= 1000 then
 					newVegeH = ents.Create("3p8_potato_head")
 					if ( !IsValid(	newVegeH ) ) then return end
-					newVegeH:SetPos(self:GetPos() + Vector(math.random(-6,6),math.random(-6,6),math.random(3,4)))
+					newVegeH:SetPos(self:GetPos() + Vector(math.random(-32,32),math.random(-32,32),math.random(4,5)))
 					newVegeH:Spawn()
 				else
 					newVege = ents.Create("3p8_potato_ent")
 					if ( !IsValid(	newVege ) ) then return end
-					newVege:SetPos(self:GetPos() + Vector(math.random(-6,6),math.random(-6,6),math.random(3,4)))
+					newVege:SetPos(self:GetPos() + Vector(math.random(-32,32),math.random(-32,32),math.random(4,5)))
 					newVege:Spawn()
 				end
 			end

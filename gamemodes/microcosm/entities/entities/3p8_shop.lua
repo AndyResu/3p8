@@ -126,6 +126,10 @@ function ENT:PhysicsCollide(data, phys)
 		data.HitEntity:Remove()
 		self:AddCash(1)
 		self:EmitSound("ambient/levels/labs/coinslot1.wav")
+	elseif class == "3p8_potato_head" then
+		data.HitEntity:Remove()
+		self:AddCash(1000)
+		self:EmitSound("vo/eli_lab/al_minefield.wav")
 	end
 end
 
@@ -145,7 +149,7 @@ if SERVER then
 end
 
 function ENT:GetItemSpawn()
-	return self:GetPos()+Vector(0,0,24)
+	return self:GetPos()+Vector(32,32,24)
 end
 
 function ENT:CheckBlocked()

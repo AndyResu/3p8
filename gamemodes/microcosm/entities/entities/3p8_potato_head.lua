@@ -65,7 +65,7 @@ function ENT:Initialize()
 
 		--potato clock
 		local timer_name = "potatoHeadDepletion_" .. self:EntIndex()
-		timer.Create(timer_name,600,0, function()
+		timer.Create(timer_name,900,0, function()
 			chance = math.Rand(0,1)
 			if !IsValid(self) then
 				self.Remove()
