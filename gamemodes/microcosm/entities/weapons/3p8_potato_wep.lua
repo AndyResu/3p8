@@ -1,6 +1,4 @@
 --[[
-	FILE THEME SONG:
-	
 	use this model: 
 	models/props_phx/misc/potato.mdl
 
@@ -13,7 +11,7 @@ AddCSLuaFile()
 
 SWEP.PrintName = "potaytwo throw"
 SWEP.Author = "Sky"
-SWEP.Purpose = "potatoes for throw" --
+SWEP.Purpose = "potatoes for throw"
 SWEP.Instructions = "click and go mouse one.\nsecond mouse for secrete, but only 1 at a tiem"
 SWEP.Category = "3P8"
 SWEP.Spawnable = true

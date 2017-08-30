@@ -78,6 +78,7 @@ end
 
 function ENT:Initialize()
 	self:SetModel(self.ComponentModel)
+	self:SetAngles(Angle(0,-90,0))
 
 	self:PhysicsInitStandard()
 
@@ -116,11 +117,11 @@ function ENT:PhysicsCollide(data, phys)
 		self:EmitSound("ambient/levels/labs/coinslot1.wav") --play a cha-ching sound.
 	elseif class == "micro_item_salainen_puulle" then
 		data.HitEntity:Remove()
-		self:AddCash(10)
+		self:AddCash(5)
 		self:EmitSound("ambient/machines/hydraulic_1.wav") --saw sound
 	elseif class == "3p8_rock_s" then
 		data.HitEntity:Remove()
-		self:AddCash(25)
+		self:AddCash(10)
 		self:EmitSound("ambient/machines/hydraulic_1.wav")
 	elseif class == "3p8_potato_ent" then
 		data.HitEntity:Remove()
@@ -130,6 +131,10 @@ function ENT:PhysicsCollide(data, phys)
 		data.HitEntity:Remove()
 		self:AddCash(1000)
 		self:EmitSound("vo/eli_lab/al_minefield.wav")
+	elseif class == "3p8_metal" then
+		data.HitEntity:Remove()
+		self:AddCash(20)
+		self:EmitSound("ambient/materials/platedrop1.wav")
 	end
 end
 
@@ -187,6 +192,13 @@ local items = {
 		cost=5,
 		pv="models/props_phx/misc/potato.mdl",
 		ent="3p8_potato_ent"
+	},
+	{
+		name="Metal",
+		desc="Refined. Like my humor.",
+		cost=40,
+		pv="models/props_c17/oildrumchunk01a.mdl",
+		ent="3p8_metal"
 	},
 	{
 		name="Med Kit",

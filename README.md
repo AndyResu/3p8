@@ -49,7 +49,8 @@ Requires:
 - http://steamcommunity.com/sharedfiles/filedetails/?id=133006390
 - & Trees+Rocks: Edited by nightboy, ported by tryhard77885.
 - http://steamcommunity.com/sharedfiles/filedetails/?id=672126440
-- Coconut tree trunks and stumps require CS:GO right now. I'll change it.
+- CS:GO: Coconut tree trunks and stumps require right now. I'll change it.
+- CS:S: for some of the decorations.
 
 [Rated M: Mature humor and themes (& memes)]
 

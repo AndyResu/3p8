@@ -1,7 +1,5 @@
 --[[
-	TODO:
-	--make plant disappear too
-		--predator?
+	TODO:	--predator?
 ]]
 
 AddCSLuaFile()
@@ -24,8 +22,9 @@ function ENT:Initialize()
 	self.growthTime = math.random(180, 420)
 
 	self.headder = 0
+	self.timer = 0
 
-	self.health = 75
+	self.health = 25
 
 	if SERVER then
 		self:SetMaterial("models/props_wasteland/tugboat02")
@@ -44,14 +43,21 @@ function ENT:Initialize()
 		local timer_name = "potatoDepletion_" .. self:EntIndex()
 		timer.Create(timer_name,300,0, function()
 			chance = math.Rand(0,1)
-			if !self.isPlanted && IsValid(self) && chance > 0.90 then
-				-- autoplant functionality
+			-- autoplant functionality
+			if IsValid(self) && !self.isPlanted && chance > 0.90 then
 				--plant itself.
 				self:Upgrayed()
 			elseif !IsValid(self) then
 				timer.Remove(timer_name)
 			end
-			if !self.isPlanted && IsValid(self) then
+			--remove potato
+			if IsValid(self) && !self.isPlanted then
+				self:Remove()
+				timer.Remove(timer_name)
+			end
+			--remove plant
+			self.timer = self.timer + 1
+			if IsValid(self) && self.isPlanted && self.timer == 2 then
 				self:Remove()
 				timer.Remove(timer_name)
 			end
