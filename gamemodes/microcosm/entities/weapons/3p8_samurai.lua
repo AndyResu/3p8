@@ -80,7 +80,7 @@ function SWEP:PrimaryAttack()
 		--laser beam effect here
         bullet.TracerName = "ToolTracer" --cball_explode for when it hits, or HelicopterMegaBomb. could place with PhyscannonImpact for orange laser
 		bullet.Force = 75
-		bullet.Damage = 21
+		bullet.Damage = 75
 		bullet.AmmoType = self.Primary.Ammo
  
 	local rnda = self.Primary.Recoil * -1

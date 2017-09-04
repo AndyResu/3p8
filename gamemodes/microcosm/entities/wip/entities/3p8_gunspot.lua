@@ -1,1 +1,0 @@
---needed? make gamemode allow only 1 weapon, and drop weapon when other pickup

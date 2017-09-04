@@ -8,20 +8,21 @@ AddCSLuaFile()
 ENT.Base = "micro_item_salainen"
 
 --ENT.ItemName = "Kanto"
-ENT.ItemModel = "models/props/de_venice/canal_poles/canal_pole_3.mdl"
+ENT.ItemModel = "models/props_docks/channelmarker_gib01.mdl" --"models/props/de_venice/canal_poles/canal_pole_3.mdl" --csgo model
 
 function ENT:Initialize()
 	self:SetModel(self.ItemModel)
+	self:SetMaterial("models/props_foliage/trees_city")
 	self:PhysicsInitStandard()
 	--self:PhysicsInit(SOLID_VPHYSICS)
 	self:SetMoveType(MOVETYPE_VPHYSICS)
-	self:SetSolid(3)
+	self:SetSolid(6)
 	self:SetMoveType(0)
 	
-	self.health = 1000
+	self.health = 400
 
 	--energy timer
-	local timer_name = "treeEnergyDepletion_" .. self:EntIndex()
+	local timer_name = "kantoEnergyDepletion_" .. self:EntIndex()
 	timer.Create(timer_name,100,0, function() --every 100s, update energy status
 		--print("100 seconds pass")
 		if IsValid(self)then
@@ -40,6 +41,7 @@ end
 
 function ENT:OnTakeDamage(damageto)
 	self.health = self.health - damageto:GetDamage()
+	self:SetHealth(self.health) --make invincible?
 	if self.health <= 0 then
 		self:EmitSound("weapons/debris1.wav")
 		--PRODUCE gibs HERE

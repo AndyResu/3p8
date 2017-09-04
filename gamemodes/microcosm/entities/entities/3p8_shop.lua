@@ -7,6 +7,7 @@ make sounds random when stuff is sold by the player... make a function that take
 --stock system and dynamic pricing for supply/demand :D
 --breakable props "crate"
 	--maybe just make an ent that allows anything that it is to be breakable
+cosmetic NPC chilling like a villain
 
 pre
 vo/novaprospekt/al_illtakecare.wav
@@ -56,8 +57,8 @@ AddCSLuaFile()
 
 ENT.Type = "anim"
 
---models/Humans/Group01/Male_Cheaple.mdl
-ENT.ComponentModel = "models/player/group01/female_02.mdl"
+--models/player/group01/female_02.mdl
+ENT.ComponentModel = "models/props_wasteland/controlroom_storagecloset001a.mdl"
 ENT.ComponentScreenWidth = 180
 ENT.ComponentScreenHeight = 180
 ENT.ComponentScreenOffset = Vector(24,-22.5,46)
@@ -78,6 +79,8 @@ end
 
 function ENT:Initialize()
 	self:SetModel(self.ComponentModel)
+	self:SetMaterial("models/effects/splodeglass_sheet") --make invis
+	self:SetCollisionGroup(COLLISION_GROUP_DEBRIS_TRIGGER)
 	self:SetAngles(Angle(0,-90,0))
 
 	self:PhysicsInitStandard()
@@ -86,21 +89,36 @@ function ENT:Initialize()
 		self:GetPhysicsObject():EnableMotion(false)
 		self:SetUseType(SIMPLE_USE)
 
-		--make collison model
-		self:SetCollisionBounds(Vector(-27,-27,0), Vector(27,27,72))
-		self:SetSolid(3)
-
 		self:SetCash(self.StartingCash)
+
+		--[[local ent = ents.Create("npc_citizen")
+		ent:SetPos(self:GetPos())
+		ent:SetAngles(Angle(0,-90,0))
+		ent:SetModel("models/player/group01/female_02.mdl")
+		ent:SetMoveType(MOVETYPE_NONE)
+
+		--self:SetParent(ent, -1) --test
+		--if this doesn't work, clear all capabilities besides animated face?
+		ent:SetNPCState(NPC_STATE_SCRIPT)
+		ent:SetSchedule(SCHED_NPC_FREEZE)
+		ent:CapabilitiesClear() 
+		ent:CapabilitiesAdd(CAP_ANIMATEDFACE || CAP_TURN_HEAD) -- Adds what the NPC is allowed to do ( It cannot move in this case ).
+		ent:DropToFloor()
+
+		ent:Spawn()]]
 	end
-	self.health = 1000
+	self.health = 100
 end
 
 function ENT:OnTakeDamage(damageto)
 	self.health = self.health - damageto:GetDamage()
-	if self.health <= 0 then
+	if self.health <= 0 && SERVER then
 		self:EmitSound("weapons/debris1.wav")
 		--PRODUCE gibs HERE
 
+		--[[if(ent:isValid()) then
+			ent:Remove()
+		end]]
 		self:Remove()
 	end
 end
@@ -110,7 +128,7 @@ function ENT:PhysicsCollide(data, phys)
 
 	--use instead? vvv
 	--playerSell[class] --table, in pairs?
-	if class == "micro_item_salainen_kookospahkina_puu" then --make this check a table of items and their sell prices.
+	if class == "3p8_kookospahkina_puu" then --make this check a table of items and their sell prices.
 		data.HitEntity:Remove()
 		--gib monie
 		self:AddCash(1)
@@ -130,7 +148,7 @@ function ENT:PhysicsCollide(data, phys)
 	elseif class == "3p8_potato_head" then
 		data.HitEntity:Remove()
 		self:AddCash(1000)
-		self:EmitSound("vo/eli_lab/al_minefield.wav")
+		ent:EmitSound("vo/eli_lab/al_minefield.wav")
 	elseif class == "3p8_metal" then
 		data.HitEntity:Remove()
 		self:AddCash(20)
@@ -158,7 +176,7 @@ function ENT:GetItemSpawn()
 end
 
 function ENT:CheckBlocked()
-	local r = 18
+	local r = 9
 	local tr = util.TraceHull{start=self:GetItemSpawn(),endpos=self:GetItemSpawn(),mins=Vector(-1,-1,-1)*r, maxs=Vector(1,1,1)*r, filter=self}
 	return tr.Hit
 end
@@ -184,7 +202,7 @@ local items = {
 		desc="In some tribal societies the more coconuts you have, the more powerful you are.",
 		cost=5,
 		pv="models/hunter/misc/sphere025x025.mdl",
-		ent="micro_item_salainen_kookospahkina_puu"
+		ent="3p8_kookospahkina_puu"
 	},
 	{
 		name="Potato",

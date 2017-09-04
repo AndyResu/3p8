@@ -1,4 +1,5 @@
 --[[
+	3p8_potato_ent
 	TODO:	--predator?
 ]]
 
@@ -12,19 +13,27 @@ function ENT:Use(ply)
 	--plant the potato
 	self:Upgrayed()
 	self:GetPhysicsObject():Wake()
+	--make sound
+	self:EmitSound("phx/eggcrack.wav")
 end
 
 function ENT:Initialize()
+	--global variable for the softcap of "nature" autoplanting potatos
+	GLOBAL_potato = GLOBAL_potato + 1
 
 	self.isPlanted = false
 
-	self.numberOfVegetables = math.random(1,3)
+	self.numberOfVegetables = math.random(1,4)
 	self.growthTime = math.random(180, 420)
 
 	self.headder = 0
 	self.timer = 0
 
 	self.health = 25
+
+	self.chance = math.Rand(0,1)
+
+	self.growTimer = 300
 
 	if SERVER then
 		self:SetMaterial("models/props_wasteland/tugboat02")
@@ -41,10 +50,10 @@ function ENT:Initialize()
 
 		--potato clock
 		local timer_name = "potatoDepletion_" .. self:EntIndex()
-		timer.Create(timer_name,300,0, function()
-			chance = math.Rand(0,1)
+		timer.Create(timer_name,self.growTimer,0, function()
+			self.chance = math.Rand(0,1)
 			-- autoplant functionality
-			if IsValid(self) && !self.isPlanted && chance > 0.90 then
+			if IsValid(self) && !self.isPlanted && self.chance > 0.35 && GLOBAL_potato < GLOBAL_potato_max then
 				--plant itself.
 				self:Upgrayed()
 			elseif !IsValid(self) then
@@ -53,15 +62,22 @@ function ENT:Initialize()
 			--remove potato
 			if IsValid(self) && !self.isPlanted then
 				self:Remove()
-				timer.Remove(timer_name)
+				--timer.Remove(timer_name)
 			end
 			--remove plant
-			self.timer = self.timer + 1
+			if IsValid(self) then
+				self.timer = self.timer + 1
+			end
 			if IsValid(self) && self.isPlanted && self.timer == 2 then
 				self:Remove()
-				timer.Remove(timer_name)
+				--timer.Remove(timer_name)
 			end
 		end)
+		if GLOBAL_potato <= 15 then
+			timer.Simple( math.random(3,7), function ()
+				self:Upgrayed()
+			end)
+		end
 	end
 end
 
@@ -73,7 +89,7 @@ function ENT:Upgrayed()
     	self:GetPhysicsObject():EnableCollisions(false) 
 
 		--make sound
-		self:EmitSound("phx/eggcrack.wav")
+		--self:EmitSound("phx/eggcrack.wav")
 
 		--change to plant model
 		self:SetMaterial("models/props_foliage/mall_trees_branches01")
@@ -145,6 +161,7 @@ function ENT:OnTakeDamage(damageto)
 	self.health = self.health - damageto:GetDamage()
 	if self.health <= 0 then
 		self:EmitSound("ambient/levels/canals/toxic_slime_gurgle2.wav")
+		GLOBAL_potato = GLOBAL_potato - 1
 		self:Remove()
 	end
 end

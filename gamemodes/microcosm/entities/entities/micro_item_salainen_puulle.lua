@@ -5,10 +5,10 @@
 
 AddCSLuaFile()
 
-ENT.Base = "micro_item_salainen"
+ENT.Base = "3p8_base_ent"
 
 --ENT.ItemName = "Puulle"
-ENT.ItemModel = "models/props/de_venice/canal_poles/canal_pole_2.mdl"
+ENT.ItemModel = "models/props_docks/channelmarker_gib01.mdl" --"models/props/de_venice/canal_poles/canal_pole_2.mdl" --csgo model
 
 --models/props_foliage/driftwood_01a.mdl
 --scale to 1/2 or 1/3
@@ -18,21 +18,21 @@ ENT.ItemModel = "models/props/de_venice/canal_poles/canal_pole_2.mdl"
 
 function ENT:Initialize()
 	self:SetModel(self.ItemModel)
+	self:SetMaterial("models/props_foliage/trees_city")
 	self:PhysicsInitStandard()
 	--self:PhysicsInit(SOLID_VPHYSICS)
 	self:SetMoveType(MOVETYPE_VPHYSICS)
 	self:SetSolid(SOLID_VPHYSICS)
-	self:SetSolid(3)
 	--self:SetMoveType(0)
 	
-	self.health = 1000
+	self.health = 300
 
 	--energy timer
-	local timer_name = "treeEnergyDepletion_" .. self:EntIndex()
+	local timer_name = "puulleEnergyDepletion_" .. self:EntIndex()
 	timer.Create(timer_name,100,0, function() --every 100s, update energy status
 		--print("100 seconds pass")
 		if IsValid(self)then
-			self.health = self.health - 200
+			self.health = self.health - 100
 			if self.health <= 0 then --KILL FUNCTION; SLAYER
 				self:Remove()
 			end
@@ -47,6 +47,7 @@ end
 
 function ENT:OnTakeDamage(damageto)
 	self.health = self.health - damageto:GetDamage()
+	self:SetHealth(self.health) --make invincible?
 	if self.health <= 0 then
 		self:EmitSound("weapons/debris1.wav")
 		--PRODUCE gibs HERE

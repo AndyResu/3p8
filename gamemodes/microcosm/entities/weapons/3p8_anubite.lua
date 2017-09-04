@@ -6,9 +6,9 @@
 
 AddCSLuaFile()
 
-SWEP.PrintName = "Terrorblade"
+SWEP.PrintName = "Spider Janissary"
 SWEP.Author = "Sky / Taivas"
-SWEP.Purpose = "Terrorblade"
+SWEP.Purpose = "badass anubite air combat"
 SWEP.Instructions = "Primary Fire to Swipe"
 SWEP.Category = "3P8"
 SWEP.Spawnable = true

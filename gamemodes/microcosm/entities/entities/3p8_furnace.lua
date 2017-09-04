@@ -2,7 +2,7 @@
 
 	the fire can
 
-todo:
+todo:	make this be crafted... not spawn as is...
 
 
 possible material:
@@ -24,7 +24,7 @@ function ENT:Initialize()
 	self:SetMaterial("models/props_lab/airlock_laser")
 	self:PhysicsInitStandard()
 
-	--scale by 10%? means the hitbox is bigger than the parented props...
+	--scaling up means the hitbox is bigger than the parented props...
 	self:SetModelScale(1.05, 0)
 
 	if SERVER then
@@ -103,6 +103,8 @@ function ENT:PhysicsCollide(data, phys)
 		metal:SetPos(self:GetPos() + Vector(0,0,64))
 		metal:SetAngles(Angle(90, math.random(-179, 180), 0))
 		metal:Spawn()
+	elseif class == "micro_item_salainen_puulle" then
+		data.HitEntity:Ignite(0,102)
 	end
 end
 
