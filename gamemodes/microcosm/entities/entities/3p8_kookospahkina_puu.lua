@@ -72,7 +72,7 @@ function ENT:Initialize()
 		self.kids = 0
 		self.maxKids = 20
 		self.growthTime = 60 + math.random(0,30)
-		print(GLOBAL_coconut .. " global")
+		--print(GLOBAL_coconut .. " global")
 		if GLOBAL_coconut <= 15 then
 			self.growthTime = 3 + math.random(0,4)
 			self.maxKids = 2

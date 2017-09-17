@@ -2,9 +2,9 @@
 	3p8
 	Uses:		Required for the gamemode to work.
 				Initializes all the global variables.
-				
+				Spawns plants
 
-	Todo:		Spawns plants?
+	Todo:		
 
 ]]
 

@@ -128,6 +128,18 @@ function ENT:PhysicsCollide(data, phys)
 
 	--use instead? vvv
 	--playerSell[class] --table, in pairs?
+	--[[							index (lua starts at 1)
+		name						1
+		base price					2
+		stock						3
+		sound						4
+		reserved					5
+			maybe new position?
+
+	]]
+
+	
+
 	if class == "3p8_kookospahkina_puu" then --make this check a table of items and their sell prices.
 		data.HitEntity:Remove()
 		--gib monie
@@ -202,7 +214,10 @@ local items = {
 		desc="In some tribal societies the more coconuts you have, the more powerful you are.",
 		cost=5,
 		pv="models/hunter/misc/sphere025x025.mdl",
-		ent="3p8_kookospahkina_puu"
+		ent="3p8_kookospahkina_puu",
+		stock=25,
+		softcap=50,
+		produce=1 --will be negative to show consumption...
 	},
 	{
 		name="Potato",
