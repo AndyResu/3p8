@@ -22,6 +22,11 @@ GLOBAL_potato_max = 	50
 GLOBAL_coconut = 		0
 GLOBAL_coconut_max =	75
 
+GLOBAL_towns = {
+	
+
+}
+
 function ENT:Initialize()
 	self:SetModel(self.Model)
 	self:SetMaterial("models/effects/splodeglass_sheet") --make invis

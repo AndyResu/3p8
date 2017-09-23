@@ -8,6 +8,7 @@ make sounds random when stuff is sold by the player... make a function that take
 --breakable props "crate"
 	--maybe just make an ent that allows anything that it is to be breakable
 cosmetic NPC chilling like a villain
+make buttons not appear if there is 0 stock, contrapositively, make them appear when there is stock
 
 pre
 vo/novaprospekt/al_illtakecare.wav

@@ -1,36 +1,37 @@
 --[[
 	3p8_sidewinderfang
-	Uses:		rocket launcer
+	Uses:		rocket launcher
 	
 	File Theme Songs:
-				
+				Rocket Lawnchair sound from Metal Slug
+				https://www.youtube.com/watch?v=7ljtZJ9g5zo
 
-	Todo:		all
+	Todo:		go on intrastellar jihad
 	
 ]]
 
 AddCSLuaFile()
 
-SWEP.PrintName = "Periscope"
+SWEP.PrintName = "Sidewinder Fang"
 SWEP.Author = "Sky"
-SWEP.Purpose = "Look around corners."
-SWEP.Instructions = "not sure yet."
+SWEP.Purpose = "Liberate."
+SWEP.Instructions = "Mouse 1 to shoot rocket."
 SWEP.Category = "3P8"
 SWEP.Spawnable = true
 SWEP.AdminSpawnable = true
-SWEP.Weight = 5
+SWEP.Weight = 40
 
 SWEP.Slot = 2
 SWEP.SlotPos = 1
 
 SWEP.Primary.ClipSize		= 1
-SWEP.Primary.DefaultClip	= 1
+SWEP.Primary.DefaultClip	= 5
 SWEP.Primary.Automatic		= false
-SWEP.Primary.Ammo		    = "none"
-SWEP.Primary.Delay			= 1
+SWEP.Primary.Ammo		    = "RPG_Round"
+SWEP.Primary.Delay			= 2
 SWEP.Primary.Recoil			= 0
-SWEP.Primary.TakeAmmo		= 0
-SWEP.Primary.Spread			= 0.00
+SWEP.Primary.TakeAmmo		= 1
+SWEP.Primary.Spread			= 0.04
 
 SWEP.Secondary.ClipSize	    = 1
 SWEP.Secondary.DefaultClip	= 1
@@ -41,138 +42,64 @@ SWEP.Secondary.Recoil		= 0
 SWEP.Secondary.TakeAmmo		= 0
 SWEP.Secondary.Spread		= 0.00
 
-SWEP.HoldType = "camera"
+SWEP.HoldType = "rpg"
 SWEP.ViewModelFOV = 70
 SWEP.ViewModelFlip = false
 SWEP.UseHands = true
-SWEP.ViewModel = "models/weapons/c_arms_animations.mdl"
+SWEP.ViewModel = "models/weapons/c_rpg.mdl"
 SWEP.WorldModel = "models/weapons/c_arms_animations.mdl"
 SWEP.ShowViewModel = true
 SWEP.ShowWorldModel = true
 SWEP.ViewModelBoneMods = {
-	["static_prop"] = { scale = Vector(0.009, 0.009, 0.009), pos = Vector(-18.705, -17.594, -16.112), angle = Angle(0, 0, 0) }
+	["base"] = { scale = Vector(0.009, 0.009, 0.009), pos = Vector(-30, 0, 0), angle = Angle(0, 0, 0) }
+}
+SWEP.VElements = {
+	["rockethouse"] = { type = "Model", model = "models/props_phx/misc/potato_launcher.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(50, -0.5, 7.5), angle = Angle(90, 0, 0), size = Vector(0.55, 0.55, 0.75), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
+	["barrel"] = { type = "Model", model = "models/props_junk/ibeam01a.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(0, 0, 5), angle = Angle(0, 0, 90), size = Vector(0.5, 0.5, 0.5), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
+	["handle"] = { type = "Model", model = "models/props_debris/rebar001a_32.mdl", bone = "ValveBiped.Bip01_L_Hand", rel = "", pos = Vector(0, 0, -1.558), angle = Angle(0, 0, 0), size = Vector(0.5, 0.5, 0.5), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
-	["base"] = { type = "Model", model = "models/props_lab/incubatorplug.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.596, 4.675, -2.597), angle = Angle(17.5, 0, 6), size = Vector(0.4, 0.4, 0.4), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
-	--Diagram:	2 left, 0 up, 1 right
-	["peri0"] = { type = "Model", model = "models/props_canal/mattpipe.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(11.947, 3.299, -11.948), angle = Angle(15.194, 0, 5.843), size = Vector(0.75, 0.75, 0.75), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
-	["peri1"] = { type = "Model", model = "models/props_canal/mattpipe.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(8.831, -5.715, 0.8), angle = Angle(15.194, 0, 97.013), size = Vector(0.75, 0.75, 0.75), color = Color(255, 255, 255, 0), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
-	["peri2"] = { type = "Model", model = "models/props_canal/mattpipe.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(9.869, 16.104, -2), angle = Angle(17.531, 0, -82.987), size = Vector(0.75, 0.75, 0.75), color = Color(255, 255, 255, 0), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["barrel"] = { type = "Model", model = "models/props_junk/ibeam01a.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(0, 0, -3.75), angle = Angle(-10, 0, 90), size = Vector(0.349, 0.349, 0.349), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
+	["handle"] = { type = "Model", model = "models/props_debris/rebar001a_32.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.635, 1.557, 3), angle = Angle(0, 0, 0), size = Vector(0.5, 0.5, 0.2), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
+	["rockethouse"] = { type = "Model", model = "models/props_phx/misc/potato_launcher.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(32.727, 0, -11.301), angle = Angle(80, 0, 0), size = Vector(0.54, 0.54, 0.725), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
+	["holder"] = { type = "Model", model = "models/props_wasteland/panel_leverhandle001a.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(-34, 0, -1), angle = Angle(0, 0, 0), size = Vector(0.3, 0.3, 0.3), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} },
+	["rocket"] = { type = "Model", model = "models/weapons/w_missile_closed.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(-28.5, 0, 0.2), angle = Angle(-10, 0, 0), size = Vector(0.5, 0.5, 0.5), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 }
 
-local periscopeLength = 48
-
 function SWEP:PrimaryAttack()
-	--rotate left
-	-- -1 peri
-	self.periscope = self.periscope - 1
-	self:UpdatePeriscope()
-	self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
-end
+	if (!self:CanPrimaryAttack()) then return end
 
-function SWEP:SecondaryAttack()
-	--rotate right
-	-- +1 peri
-	self.periscope = self.periscope + 1
-	self:UpdatePeriscope()
-	self:SetNextSecondaryFire(CurTime() + self.Secondary.Delay)
-end
+	--rawket lawnchair
+	local rocket = ents.Create( "rpg_missile" )
+	rocket:SetPos( self.Owner:GetShootPos() + ( self.Owner:GetForward() * 28.0)  + ( self.Owner:GetRight() * 7.0 ) + ( self.Owner:GetUp() * -3.0 ) )
+	rocket:SetAngles( self.Owner:GetAimVector():Angle() )
+	rocket:SetKeyValue( "damage", 400 )
+    rocket:SetSaveValue( "m_flDamage", 400 ) 
+	rocket:Spawn()
+	rocket:Activate()
+	rocket:SetOwner( self.Owner )
 
-function SWEP:Reload()
-	--hold up, holster
-	if self.holster then
-		self.holster = false
-	else
-		self.holster = true
+	self:SetClip1(self:Clip1()-1)
+
+	if self:Clip1() <= 0 then
+		--make rocket model invis.
+		self.WElements["rocket"].color.a = 0
 	end
-	self:UpdatePeriscope()
 end
 
-
-
-function SWEP:UpdatePeriscope()
-	--if CLIENT self.dankInit = false then
-	--	local frame = vgui.Create( 'DFrame' )
-	--end
-	if CLIENT then self.Owner:ChatPrint("self.result: ".. self.result) end
-	print(self.holster)
-	--view model stuff
-	if !self.holster then
-		--world model stuff
-		--use modulus...
-		self.result = self.periscope %3 --3 is the number of states possible.
-		self.resultNOT1 = (self.periscope+1)%3
-		self.resultNOT2 = (self.periscope-1)%3
-		--maybe set hold type to camera
-		self.WElements["peri"..self.result].color.a = 255
-		self.WElements["peri"..self.resultNOT1].color.a = 0
-		self.WElements["peri"..self.resultNOT2].color.a = 0
-
-		--[[ --this code is done by the above in a semi-smart way
-		if self.result == 0 then
-			--up
-			self.WElements["peri"..self.result].color.a = 255
-			self.WElements["peri"..self.resultNOT1].color.a = 0
-			self.WElements["peri"..self.resultNOT2].color.a = 0
-		elseif self.result == 1 then
-			--right
-		elseif self.result == 2 then
-			--left
-		end]]
-		self:SetWeaponHoldType("camera")
-		--draw gui
-		if CLIENT then
-			self.dankInit = true
-			local frame = vgui.Create( 'DFrame' )
-			frame:SetSize( 500, 500 )
-			frame:Center()
-			frame:MakePopup()
-			--frame:Hide()
-
-			local vector_rotated = Vector(0,0,0)
-			if self.result == 0 then
-				vector_rotated = Vector(0,72 + periscopeLength,0) --72 is eye ball height I think
-			elseif self.result == 1 then --right
-				vector_rotated = Vector(0,72,periscopeLength)
-			elseif self.result == 2 then --left
-				vector_rotated = Vector(0,72,-1*periscopeLength)
-			end
-			vector_rotated:Rotate(self.Owner:GetAngles())
-			local meme = self.Owner:EyePos() + vector_rotated
-			local pos = self:GetPos()
-			local eyeA = self.Owner:EyeAngles()
-
-			function frame:Paint( w, h )
-				local x, y = pos
-
-				render.RenderView( {
-					origin = meme,
-					angles = eyeA,
-					
-					x = x,
-					y = y,
-					w = w,
-					h = h,
-				} )
-			end
-
-			function HideFrame()
-				frame:Hide()
-			end
-		end
+function SWEP:Think()
+	if self:Clip1() > 0 then
+		--make rocket model appear.
+		self.WElements["rocket"].color.a = 255
 	else
-		--undraw screen gui
-		if CLIENT && self.dankInit then
-			HideFrame()
-		end
-		--maybe try changing hold type to passive
-		self:SetWeaponHoldType("passive")
+		--make rocket model invis.
+		self.WElements["rocket"].color.a = 0
 	end
 end
 
 
-
+--back blast?
 --saved as bb in SCK
 --[[/********************************************************
 	SWEP Construction Kit base code
