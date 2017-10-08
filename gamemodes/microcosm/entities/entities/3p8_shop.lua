@@ -127,25 +127,15 @@ end
 function ENT:PhysicsCollide(data, phys)
 	local class = data.HitEntity:GetClass()
 
-	--use instead? vvv
-	--playerSell[class] --table, in pairs?
-	--[[							index (lua starts at 1)
-		name						1
-		base price					2
-		stock						3
-		sound						4
-		reserved					5
-			maybe new position?
-
-	]]
-
-	
-
+	--sell code block
 	if class == "3p8_kookospahkina_puu" then --make this check a table of items and their sell prices.
 		data.HitEntity:Remove()
 		--gib monie
 		self:AddCash(1)
 		self:EmitSound("ambient/levels/labs/coinslot1.wav") --play a cha-ching sound.
+		--DOESN'T WORK WHYYAAA
+		--print(items[1].stock)
+		GLOBAL_items_edgewood[1].stock = GLOBAL_items_edgewood[1].stock + 1
 	elseif class == "micro_item_salainen_puulle" then
 		data.HitEntity:Remove()
 		self:AddCash(5)
@@ -161,7 +151,7 @@ function ENT:PhysicsCollide(data, phys)
 	elseif class == "3p8_potato_head" then
 		data.HitEntity:Remove()
 		self:AddCash(1000)
-		ent:EmitSound("vo/eli_lab/al_minefield.wav")
+		self:EmitSound("vo/eli_lab/al_minefield.wav")
 	elseif class == "3p8_metal" then
 		data.HitEntity:Remove()
 		self:AddCash(20)
@@ -209,206 +199,242 @@ function ENT:drawInfo()
 	draw.SimpleText(text,"micro_big",88,130,text_color,TEXT_ALIGN_CENTER,TEXT_ALIGN_CENTER)
 end
 
-local items = {
+GLOBAL_items_edgewood = {
 	{
 		name="Coconut",
 		desc="In some tribal societies the more coconuts you have, the more powerful you are.",
 		cost=5,
 		pv="models/hunter/misc/sphere025x025.mdl",
 		ent="3p8_kookospahkina_puu",
-		stock=25,
-		softcap=50,
-		produce=1 --will be negative to show consumption...
+		stock=1,
+		--softcap=50,
+		produce=1 --will be negative to show consumption... --needed? 
 	},
 	{
 		name="Potato",
 		desc="Might be a beautiful french fry some day.",
 		cost=5,
 		pv="models/props_phx/misc/potato.mdl",
-		ent="3p8_potato_ent"
+		ent="3p8_potato_ent",
+		stock=100
 	},
 	{
 		name="Metal",
 		desc="Refined. Like my humor.",
 		cost=40,
 		pv="models/props_c17/oildrumchunk01a.mdl",
-		ent="3p8_metal"
+		ent="3p8_metal",
+		stock=10
 	},
 	{
 		name="Med Kit",
 		desc="Restores 100 crew HP.",
 		cost=5,
 		pv="models/items/healthkit.mdl",
-		ent="micro_item_medkit"
+		ent="micro_item_medkit",
+		stock=100
 	},
 	{
 		name="Armor Kit",
 		desc="100 units of body armor.",
 		cost=100,
 		pv="models/items/battery.mdl",
-		ent="micro_item_armorkit"
+		ent="micro_item_armorkit",
+		stock=100
 	},
 	{
 		name="Collectable Food",
 		desc="Exotic food that restores health! It's 1 of 11 collectable foods. Collect them all!",
 		cost=50,
 		pv="models/slyfo_2/acc_food_meatsandwich.mdl",
-		ent="micro_item_collectable_food"
+		ent="micro_item_collectable_food",
+		stock=100
 	},
 	{
 		name="Collectable Toy",
 		desc="A ball, a doll, or something special. Contains 1 of 5. Collect them all!",
 		cost=100,
 		pv="models/props/de_tides/vending_turtle.mdl",
-		ent="micro_item_collectable_toys"
+		ent="micro_item_collectable_toys",
+		stock=100
 	},
 	{
 		name="Collectable Decoration",
 		desc="Show off loot in your richie-rich spaceship! Contains 1 of 11. Collect them all!",
 		cost=500,
 		pv="models/maxofs2d/gm_painting.mdl",
-		ent="micro_item_collectable_deco"
+		ent="micro_item_collectable_deco",
+		stock=100
 	},
 	{
 		name="Spinny Ball",
 		desc="Slightly-used ball that has spinny parts in it. Looks cool. Might be useful.",
 		cost=3000,
 		pv="models/maxofs2d/hover_rings.mdl",
-		ent="3p8_hate"
+		ent="3p8_hate",
+		stock=1
 	}
 	--models/weapons/w_package.mdl --the package from the citizen at the trainstation
 }
 
-if SERVER then
-	-- This is shitty.
 
-	concommand.Add("micro_shop_buy",function(ply,_,args)
-		local shop_ent = Entity(tonumber(args[1]) or 0)
+-- This is shitty.
 
-		local n = tonumber(args[2])
+concommand.Add("micro_shop_buy",function(ply,_,args)
+	local shop_ent = Entity(tonumber(args[1]) or 0)
 
-		if !ply:Alive() or !isnumber(n) or items[n]==nil or !IsValid(shop_ent) then return end
+	local n = tonumber(args[2])
 
-		if shop_ent:GetPos():Distance(ply:GetPos())>200 then return end
+	if !ply:Alive() or !isnumber(n) or GLOBAL_items_edgewood[n]==nil or !IsValid(shop_ent) then return end
 
-		local item = items[n]
+	if shop_ent:GetPos():Distance(ply:GetPos())>200 then return end
 
-		if isstring(item.ent) then
-			if shop_ent:CheckBlocked() then return end
-		elseif !isfunction(item.func) then return end
+	local item = GLOBAL_items_edgewood[n]
 
-		-- point of no return
-		if shop_ent:GetCash()<item.cost then return end
-		shop_ent:SetCash(shop_ent:GetCash()-item.cost)
+	if isstring(GLOBAL_items_edgewood[n].ent) then
+		if shop_ent:CheckBlocked() then return end
+	elseif !isfunction(GLOBAL_items_edgewood[n].func) then return end
 
-		shop_ent:EmitSound(sound_buy)
+	-- point of no return
+	if shop_ent:GetCash()<GLOBAL_items_edgewood[n].cost then return end
+	shop_ent:SetCash(shop_ent:GetCash()-item.cost)
 
-		if isstring(item.ent) then
-			local ent = ents.Create(item.ent)
-			if !IsValid(ent) then error("FAILED to make bought entity!") end
-			--ent:SetModel("models/Items/item_item_crate.mdl")
-			ent:SetPos(shop_ent:GetItemSpawn())
-			ent:Spawn()
+	shop_ent:EmitSound(sound_buy)
+
+
+
+
+
+	--make this call a function outside the concommand if server/client then? not sure. this is why it is broken. maybe make sets of network variables?
+
+
+
+
+
+
+
+	GLOBAL_items_edgewood[n].stock = GLOBAL_items_edgewood[n].stock - 1 --WEWEST LAD
+	print(GLOBAL_items_edgewood[n].stock)
+	--just goes down by one each time........???!?!??!??
+
+	if isstring(GLOBAL_items_edgewood[n].ent) then
+		local ent = ents.Create(GLOBAL_items_edgewood[n].ent)
+		if !IsValid(ent) then error("FAILED to make bought entity!") end
+		--ent:SetModel("models/Items/item_item_crate.mdl")
+		ent:SetPos(shop_ent:GetItemSpawn())
+		ent:Spawn()
+	else
+		--item.func(ship) --?????
+	end
+
+end)
+
+
+function MICRO_SHOW_SHOP(ent)
+	local blocked
+
+	local panel = vgui.Create("DFrame")
+	panel:SetDraggable(false)
+	panel:SetSizable(false)
+	panel:SetTitle("Shop")
+	panel:SetSize(640,480)
+	panel:Center()
+	panel:MakePopup()
+
+	panel.Think = function(self)
+		if !LocalPlayer():Alive() then
+			self:Close()
 		else
-			--item.func(ship) --?????
+			blocked = ent:CheckBlocked()
 		end
+	end
+	
+	panel.PaintOver = function(self)
+		local color = team.GetColor(LocalPlayer():Team())
 
-	end)
-else
-	function MICRO_SHOW_SHOP(ent)
-		local blocked
+		surface.SetDrawColor(Color( 0, 0, 0))
+		surface.DrawRect(285, 30, 330, 40)
 
-		local panel = vgui.Create("DFrame")
-		panel:SetDraggable(false)
-		panel:SetSizable(false)
-		panel:SetTitle("Shop")
-		panel:SetSize(640,480)
-		panel:Center()
-		panel:MakePopup()
+		surface.SetDrawColor(color)
+		surface.DrawOutlinedRect(285, 30, 330, 40)
 
-		panel.Think = function(self)
-			if !LocalPlayer():Alive() then
-				self:Close()
-			else
-				blocked = ent:CheckBlocked()
-			end
-		end
+		local cash = ent:GetCash()
+		draw.SimpleText("$"..cash,"micro_big",605,50,Color(255,255,0),TEXT_ALIGN_RIGHT,TEXT_ALIGN_CENTER)
 		
-		panel.PaintOver = function(self)
-			local color = team.GetColor(LocalPlayer():Team())
+		local text,text_color = ent:GetScreenText()
+		draw.SimpleText(text,"micro_big",380,50,text_color,TEXT_ALIGN_CENTER,TEXT_ALIGN_CENTER)
+	end
 
-			surface.SetDrawColor(Color( 0, 0, 0))
-			surface.DrawRect(285, 30, 330, 40)
+	local scroll = panel:Add("DScrollPanel")
+	scroll:Dock(FILL)
+	scroll:DockMargin(0,50,0,0)
 
-			surface.SetDrawColor(color)
-			surface.DrawOutlinedRect(285, 30, 330, 40)
+	for i,item in pairs(GLOBAL_items_edgewood) do
+		local y_base = (i-1)*90
 
-			local cash = ent:GetCash()
-			draw.SimpleText("$"..cash,"micro_big",605,50,Color(255,255,0),TEXT_ALIGN_RIGHT,TEXT_ALIGN_CENTER)
-			
-			local text,text_color = ent:GetScreenText()
-			draw.SimpleText(text,"micro_big",380,50,text_color,TEXT_ALIGN_CENTER,TEXT_ALIGN_CENTER)
+		local panel = scroll:Add("DPanel")
+		panel:SetPos(0, y_base)
+		panel:SetSize(610,80)
+
+		local title = panel:Add("DLabel")
+		title:SetPos(100,0)
+		title:SetFont("DermaLarge")
+		title:SetText(item.name)
+		title:SetDark(true) 
+		title:SizeToContents()
+
+		local cost = panel:Add("DLabel")
+		cost:SetFont("DermaLarge")
+		cost:SetText("$"..item.cost)
+		cost:SetDark(true) 
+		cost:SizeToContents()
+		cost:SetPos(600-cost:GetWide(),10)
+
+		local stock = panel:Add("DLabel")
+		--stock:SetFont("DermaLarge")
+		stock:SetText("Stock: "..GLOBAL_items_edgewood[i].stock.." ")
+		stock:SetDark(true)
+		stock:SizeToContents()
+		stock:SetPos(530-stock:GetWide(),60)
+
+		local icon = panel:Add("DModelPanel")
+		icon:SetSize(70, 70)
+		icon:SetPos(0,0)
+		icon:SetModel(item.pv)
+		icon:SetLookAt( Vector(0,0,0) )
+		icon:SetFOV(1.5*icon:GetEntity():GetModelRadius())
+
+		local desc = panel:Add("DLabel")
+		desc:SetPos(100,40)
+		desc:SetText(item.desc)
+		desc:SetDark(true) 
+		desc:SizeToContents()
+
+		local button = panel:Add("DButton")
+		button:SetText("Buy")
+		button:SetPos(540,50)
+
+		function button:DoClick()
+			RunConsoleCommand("micro_shop_buy",ent:EntIndex(),i)
 		end
 
-		local scroll = panel:Add("DScrollPanel")
-		scroll:Dock(FILL)
-		scroll:DockMargin(0,50,0,0)
+		function stock:Think()
+			stock:SetText("Stock: "..GLOBAL_items_edgewood[i].stock.." ")
+		end
 
-		for i,item in pairs(items) do
-			local y_base = (i-1)*90
+		function button:Think()
+			local cash = ent:GetCash()
 
-			local panel = scroll:Add("DPanel")
-			panel:SetPos(0, y_base)
-			panel:SetSize(610,80)
-
-			local title = panel:Add("DLabel")
-			title:SetPos(100,0)
-			title:SetFont("DermaLarge")
-			title:SetText(item.name)
-			title:SetDark(true) 
-			title:SizeToContents()
-
-			local cost = panel:Add("DLabel")
-			cost:SetFont("DermaLarge")
-			cost:SetText("$"..item.cost)
-			cost:SetDark(true) 
-			cost:SizeToContents()
-			cost:SetPos(600-cost:GetWide(),10)
-
-			local icon = panel:Add("DModelPanel")
-			icon:SetSize(70, 70)
-			icon:SetPos(0,0)
-			icon:SetModel(item.pv)
-			icon:SetLookAt( Vector(0,0,0) )
-			icon:SetFOV(1.5*icon:GetEntity():GetModelRadius())
-
-			local desc = panel:Add("DLabel")
-			desc:SetPos(100,40)
-			desc:SetText(item.desc)
-			desc:SetDark(true) 
-			desc:SizeToContents()
-
-			local button = panel:Add("DButton")
-			button:SetText("Buy")
-			button:SetPos(540,50)
-
-			function button:DoClick()
-				RunConsoleCommand("micro_shop_buy",ent:EntIndex(),i)
-			end
-
-			function button:Think()
-				local cash = ent:GetCash()
-
-				-- WARNING! SLOW! DOES A TRACE FOR EVERY BUTTON!
-				if item.cost>cash or (item.ent and blocked) then
-					self:SetDisabled(true)
-				else
-					self:SetDisabled(false)
-				end
+			-- WARNING! SLOW! DOES A TRACE FOR EVERY BUTTON!
+			if GLOBAL_items_edgewood[i].cost>cash or (GLOBAL_items_edgewood[i].ent and blocked) or GLOBAL_items_edgewood[i].stock<=0 then
+				self:SetDisabled(true)
+			else
+				self:SetDisabled(false)
 			end
 		end
 	end
 end
+
 
 --stuff from component
 function ENT:Draw()

@@ -22,12 +22,18 @@ GLOBAL_potato_max = 	50
 GLOBAL_coconut = 		0
 GLOBAL_coconut_max =	75
 
+--controls if grass should automatically plant themselves or not.
+GLOBAL_grass = 			0
+GLOBAL_grass_max =		150
+
 GLOBAL_towns = {
 	
 
 }
 
 function ENT:Initialize()
+	self.distanceToGround = -80
+
 	self:SetModel(self.Model)
 	self:SetMaterial("models/effects/splodeglass_sheet") --make invis
 	self:SetCollisionGroup(COLLISION_GROUP_DEBRIS_TRIGGER) --make nocollide
@@ -50,6 +56,17 @@ function ENT:Initialize()
 			--might spawn off map...
 			newFruit:Spawn()
 			newFruit:GetPhysicsObject():Wake()
+		end
+		for i = 1,10 do
+			newFruit = ents.Create("3p8_grass")
+			if ( !IsValid( newFruit ) ) then return end
+			newFruit:SetPos(self:GetPos() + Vector(math.random(-1024,1024),math.random(-1024,1024),self.distanceToGround))
+			if !newFruit:OnGroundNotStupidEdition(newFruit:GetPos()) && newFruit:WaterLevel() != 0 then
+				newFruit:Remove()
+			else
+				--might spawn off map...
+				newFruit:Spawn()
+			end
 		end
 	end
 end

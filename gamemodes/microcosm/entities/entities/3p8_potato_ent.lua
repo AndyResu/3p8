@@ -25,6 +25,9 @@ function ENT:Initialize()
 
 	self.numberOfVegetables = math.random(1,4)
 	self.growthTime = math.random(180, 420)
+	if GLOBAL_potato <= 15 then
+		self.growthTime = 3 + math.random(0,4)
+	end
 
 	self.headder = 0
 	self.timer = 0
@@ -109,18 +112,20 @@ function ENT:Upgrayed()
 		self:SetModelScale( math.random(50,80)/100, self.growthTime) --grow the model over self.growthTime time. COOL!
 		
 		timer.Simple( self.growthTime, function ()
-			for i = 1,self.numberOfVegetables do
-				self.headder = math.random(1,1000)
-				if self.headder >= 1000 then
-					newVegeH = ents.Create("3p8_potato_head")
-					if ( !IsValid(	newVegeH ) ) then return end
-					newVegeH:SetPos(self:GetPos() + Vector(math.random(-32,32),math.random(-32,32),math.random(4,5)))
-					newVegeH:Spawn()
-				else
-					newVege = ents.Create("3p8_potato_ent")
-					if ( !IsValid(	newVege ) ) then return end
-					newVege:SetPos(self:GetPos() + Vector(math.random(-32,32),math.random(-32,32),math.random(4,5)))
-					newVege:Spawn()
+			if self:IsValid() then
+				for i = 1,self.numberOfVegetables do
+					self.headder = math.random(1,1000)
+					if self.headder >= 1000 then
+						newVegeH = ents.Create("3p8_potato_head")
+						if ( !IsValid(	newVegeH ) ) then return end
+						newVegeH:SetPos(self:GetPos() + Vector(math.random(-32,32),math.random(-32,32),math.random(4,5)))
+						newVegeH:Spawn()
+					else
+						newVege = ents.Create("3p8_potato_ent")
+						if ( !IsValid(	newVege ) ) then return end
+						newVege:SetPos(self:GetPos() + Vector(math.random(-32,32),math.random(-32,32),math.random(4,5)))
+						newVege:Spawn()
+					end
 				end
 			end
 		end)

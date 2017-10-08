@@ -129,7 +129,6 @@ if SERVER then
 	function ENT:OnRemove()
 		GLOBAL_coconut = GLOBAL_coconut - 1
 		--PrintTable( self:GetChildren() )
-		self:EmitSound("weapons/debris1.wav")
 		if self.treeLevel >= 3 then
 			--PRODUCE WOOD HERE
 			puulle = ents.Create("micro_item_salainen_puulle")

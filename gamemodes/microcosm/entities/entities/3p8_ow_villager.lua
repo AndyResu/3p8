@@ -44,7 +44,7 @@ end
 --for movement...?
 function ENT:SetTarget(pos)
 	self.target = pos
-	print(self.target.x .. " " .. self.target.y .. " " .. self.target.z .. " " .. "self.target")
+	--print(self.target.x .. " " .. self.target.y .. " " .. self.target.z .. " " .. "self.target")
 	--rotate the model to face the target. maybe
 	--self:SetAngles((self.target.x - self:GetPos().x, self.target.y - self:GetPos().y, self.target.z - self:GetPos().z):Angle())
 end
