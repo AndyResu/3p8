@@ -27,7 +27,7 @@ GLOBAL_grass = 			0
 GLOBAL_grass_max =		150
 
 GLOBAL_towns = {
-	
+	--each town ent adds itself.
 
 }
 

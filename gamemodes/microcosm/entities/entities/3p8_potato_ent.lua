@@ -47,7 +47,7 @@ function ENT:Initialize()
 
 		local phys = self:GetPhysicsObject()
 		if (phys:IsValid()) then
-			phys:Sleep()
+			--phys:Sleep()
 			phys:SetMass(10)
 		end
 

@@ -33,8 +33,8 @@ SWEP.Primary.Recoil			= 0
 SWEP.Primary.TakeAmmo		= 1
 SWEP.Primary.Spread			= 0.04
 
-SWEP.Secondary.ClipSize	    = 1
-SWEP.Secondary.DefaultClip	= 1
+SWEP.Secondary.ClipSize	    = 0
+SWEP.Secondary.DefaultClip	= 0
 SWEP.Secondary.Automatic	= false
 SWEP.Secondary.Ammo		    = "none"
 SWEP.Secondary.Delay		= 1

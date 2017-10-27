@@ -65,13 +65,17 @@ ENT.ComponentScreenHeight = 180
 ENT.ComponentScreenOffset = Vector(24,-22.5,46)
 ENT.ComponentScreenRotation = Angle(0,90,90)
 
-ENT.StartingCash = 0
-
 local sound_add = Sound("ambient/levels/canals/windchime2.wav")
 local sound_buy = Sound("ambient/levels/citadel/weapon_disintegrate2.wav")
 
+ENT.StartingCash = 0
+ENT.StartingFruit = 1
+
 function ENT:SetupDataTables()
 	self:NetworkVar("Int", 0, "Cash")
+	self:NetworkVar("Int", 0, "Stock_Coco")
+	--self:NetworkVar("Int", 0, "Cash")
+	
 end
 
 function ENT:GetComponentName()
@@ -91,6 +95,8 @@ function ENT:Initialize()
 		self:SetUseType(SIMPLE_USE)
 
 		self:SetCash(self.StartingCash)
+		self:SetStock_Coco(self.StartingFruit)
+		
 
 		--[[local ent = ents.Create("npc_citizen")
 		ent:SetPos(self:GetPos())
@@ -133,9 +139,9 @@ function ENT:PhysicsCollide(data, phys)
 		--gib monie
 		self:AddCash(1)
 		self:EmitSound("ambient/levels/labs/coinslot1.wav") --play a cha-ching sound.
-		--DOESN'T WORK WHYYAAA
-		--print(items[1].stock)
+		print("Before Sell Coco: "..GLOBAL_items_edgewood[1].stock)
 		GLOBAL_items_edgewood[1].stock = GLOBAL_items_edgewood[1].stock + 1
+		print("After Sell Coco: "..GLOBAL_items_edgewood[1].stock)
 	elseif class == "micro_item_salainen_puulle" then
 		data.HitEntity:Remove()
 		self:AddCash(5)
@@ -207,8 +213,8 @@ GLOBAL_items_edgewood = {
 		pv="models/hunter/misc/sphere025x025.mdl",
 		ent="3p8_kookospahkina_puu",
 		stock=1,
-		--softcap=50,
-		produce=1 --will be negative to show consumption... --needed? 
+		--softcap=50, --would be used for the shop/villager AI to signal a sell order
+		--produce=1 --will be negative to show consumption... --needed?
 	},
 	{
 		name="Potato",
@@ -278,6 +284,15 @@ GLOBAL_items_edgewood = {
 }
 
 
+--[[concommand.Add("3p8_stock",function(ply,_,args)
+	local n = tonumber(args[2])
+	if !ply:Alive() or !isnumber(n) or GLOBAL_items_edgewood[n]==nil or !IsValid(shop_ent) then return "ERROR:0" end
+	if shop_ent:GetPos():Distance(ply:GetPos())>200 then return "ERROR:1" end
+	
+	print("Concommand: "..GLOBAL_items_edgewood[n].stock.."")
+	return GLOBAL_items_edgewood[n].stock..""
+end)]]
+
 -- This is shitty.
 
 concommand.Add("micro_shop_buy",function(ply,_,args)
@@ -296,7 +311,7 @@ concommand.Add("micro_shop_buy",function(ply,_,args)
 	elseif !isfunction(GLOBAL_items_edgewood[n].func) then return end
 
 	-- point of no return
-	if shop_ent:GetCash()<GLOBAL_items_edgewood[n].cost then return end
+	if shop_ent:GetCash()<GLOBAL_items_edgewood[n].cost or GLOBAL_items_edgewood[n].stock <= 0 then return end
 	shop_ent:SetCash(shop_ent:GetCash()-item.cost)
 
 	shop_ent:EmitSound(sound_buy)
@@ -312,10 +327,9 @@ concommand.Add("micro_shop_buy",function(ply,_,args)
 
 
 
-
+	print("Before Buy Coco: "..GLOBAL_items_edgewood[n].stock)		
 	GLOBAL_items_edgewood[n].stock = GLOBAL_items_edgewood[n].stock - 1 --WEWEST LAD
-	print(GLOBAL_items_edgewood[n].stock)
-	--just goes down by one each time........???!?!??!??
+	print("After Buy Coco: "..GLOBAL_items_edgewood[n].stock)
 
 	if isstring(GLOBAL_items_edgewood[n].ent) then
 		local ent = ents.Create(GLOBAL_items_edgewood[n].ent)
@@ -418,15 +432,20 @@ function MICRO_SHOW_SHOP(ent)
 			RunConsoleCommand("micro_shop_buy",ent:EntIndex(),i)
 		end
 
-		function stock:Think()
-			stock:SetText("Stock: "..GLOBAL_items_edgewood[i].stock.." ")
-		end
+		--[[function stock:Think()
+			stock:SetText("Stock: "..GLOBAL_items_edgewood[i].stock.." ") --gets the value clientside...
+			--if CLIENT then return end --only the client can get to this part, so this will make the function do nothing
+			--stock:SetText("Stock: "..RunConsoleCommand("3p8_stock",ent:EntIndex(),i).." ")
+			--stock:SetText("Stock: ".."0".." ")
+			
+			--print(GLOBAL_items_edgewood[i].stock)
+		end]]
 
 		function button:Think()
 			local cash = ent:GetCash()
 
 			-- WARNING! SLOW! DOES A TRACE FOR EVERY BUTTON!
-			if GLOBAL_items_edgewood[i].cost>cash or (GLOBAL_items_edgewood[i].ent and blocked) or GLOBAL_items_edgewood[i].stock<=0 then
+			if GLOBAL_items_edgewood[i].cost>cash or (GLOBAL_items_edgewood[i].ent and blocked) then
 				self:SetDisabled(true)
 			else
 				self:SetDisabled(false)

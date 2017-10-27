@@ -5,6 +5,8 @@
 	"potatoes for throw" from Full Invasion 2 Mod for Mount & Blade: Warband
 
 	--how make throw like grenade?
+
+	1 TODO
 ]]
 
 AddCSLuaFile()
@@ -91,7 +93,14 @@ function SWEP:PrimaryAttack()
 	--delay
 	self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
 
-	self.Weapon:EmitSound("weapons/iceaxe/iceaxe_swing1.wav")
+	local random = math.random(0,1000)
+	if (random >= 1000) then
+		--TODO: Yeet sound goes here
+		self.Weapon:EmitSound("weapons/iceaxe/iceaxe_swing1.wav")
+	else
+		self.Weapon:EmitSound("weapons/iceaxe/iceaxe_swing1.wav")
+	end
+	--self.Weapon:EmitSound("weapons/iceaxe/iceaxe_swing1.wav")
 	timer.Simple( 0.5, function() self.Weapon:SendWeaponAnim(ACT_VM_IDLE) end )
 end
 
