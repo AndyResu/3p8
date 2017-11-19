@@ -99,12 +99,16 @@ function ENT:PhysicsCollide(data, phys)
 
 	if class == "3p8_ow_edgewood" then
 		--get the shop for that city and buy/sell
+			--this is where the "ai" for it would go. Decides what to buy and sell from its inventory...
+				--use ENT:AddItem and stuff
+
 		--set new target location
 
 		--go
 		self:SetTarget(GLOBAL_towns[2].pos)
 
 	elseif class == "3p8_ow_blacklabs" then
+		--same as above except for blacklabs.
 		self:SetTarget(GLOBAL_towns[1].pos)
 	end
 end

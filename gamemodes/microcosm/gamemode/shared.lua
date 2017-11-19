@@ -1,5 +1,5 @@
 GM.Name = "Microcosm"
-GM.Author = "Adam Coggeshall"
+GM.Author = "Adam Coggeshall" --Sky edited this file :P
 GM.Email = ""
 GM.Website = "http://cogg.rocks"
 

@@ -86,12 +86,14 @@ local function help_panel(url)
 end
 
 function MICRO_SHOW_HELP()
-	MICRO_PANEL_HELP = MICRO_PANEL_HELP or help_panel("http://micro.cogg.rocks/ingame/help.html")
+	--gutted because it won't help the player play 3p8
+	--[[MICRO_PANEL_HELP = MICRO_PANEL_HELP or help_panel("http://micro.cogg.rocks/ingame/help.html")
 	MICRO_PANEL_HELP:Show()
-	MICRO_PANEL_HELP:MakePopup()
+	MICRO_PANEL_HELP:MakePopup()]]
 end
 
 function MICRO_SHOW_TEAM()
+	--[[ gutted because 3p8 has no teams
 	--local button_spots = {{10,40},{210,40},{10,140},{210,140},[0]={110,90}}
 
 	local panel = vgui.Create("DFrame")
@@ -135,11 +137,13 @@ function MICRO_SHOW_TEAM()
 				draw.SimpleText(v:Nick(),"DermaDefault",10,k*15,MICRO_TEAM_COLORS[i],TEXT_ALIGN_LEFT,TEXT_ALIGN_CENTER)
 			end
 		end
-	end
+	end]]
 end
 
 function MICRO_SHOW_STEAM()
+	--edited because I want Parakeet's work to still show up along with 3p8's work
 	gui.OpenURL("http://steamcommunity.com/groups/paramicro")
+	gui.OpenURL("http://steamcommunity.com/groups/3P8")
 end
 
 function GM:OnPlayerChat(player, text, bTeamOnly, bPlayerIsDead)

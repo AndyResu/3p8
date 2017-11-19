@@ -7,6 +7,7 @@ make sounds random when stuff is sold by the player... make a function that take
 --stock system and dynamic pricing for supply/demand :D
 --breakable props "crate"
 	--maybe just make an ent that allows anything that it is to be breakable
+--models/props_c17/pottery04a.mdl is a cool gravity gun, jump launch system
 cosmetic NPC chilling like a villain
 make buttons not appear if there is 0 stock, contrapositively, make them appear when there is stock
 

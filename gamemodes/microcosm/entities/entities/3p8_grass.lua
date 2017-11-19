@@ -66,7 +66,7 @@ function ENT:Initialize()
 		timer.Simple( self.growthTime, function ()
 			if self:IsValid() then
 				for i = 1,self.numberOfVegetables do
-					self.newPos = self:GetPos() + Vector(math.random(-256,256),math.random(-256,256),0)
+					self.newPos = self:GetPos() + Vector(math.random(-384,384),math.random(-384,384),0)
 					--if self:OnGroundNotStupidEdition(self.newPos) then
 					newVegeH = ents.Create("3p8_grass")
 					if ( !IsValid(	newVegeH ) ) then return end
