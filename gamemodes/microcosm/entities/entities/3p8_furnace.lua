@@ -76,7 +76,7 @@ function ENT:OnTakeDamage(damageto)
 				gib = ents.Create("3p8_metal")
 				if ( !IsValid( gib ) ) then return end
 				gib:SetPos(self:GetPos() + Vector(math.random(-10,10),math.random(-10,10),math.random(20,40)))
-				gib:Ignite(math.random(1,4), 0)
+				gib:Ignite(math.random(2,6), 0)
 				gib:Spawn()
 			end
 
@@ -102,12 +102,14 @@ function ENT:PhysicsCollide(data, phys)
 		if ( !IsValid( metal ) ) then return end
 		metal:SetPos(self:GetPos() + Vector(0,0,64))
 		metal:SetAngles(Angle(90, math.random(-179, 180), 0))
+		metal:Ignite(math.random(2,6), 0)
 		metal:Spawn()
 	elseif class == "micro_item_salainen_puulle" then
-		data.HitEntity:Ignite(0,102)
+		data.HitEntity:Ignite(5,102)
 	end
 end
 
+--nothing below is ever used
 function ENT:GetItemSpawn()
 	return self:GetPos()+Vector(32,32,24)
 end

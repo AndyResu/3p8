@@ -14,11 +14,11 @@ function ENT:Initialize()
 	if SERVER then
 		self:SetModel(self.rockTable[math.random(#self.rockTable)])
 
-		self:PhysicsInitStandard()
+		--self:PhysicsInitStandard()
 		--self:PhysicsInit(SOLID_VPHYSICS)
 		self:SetSolid(SOLID_VPHYSICS)
 		--stop movement
-		self:SetMoveType(0)
+		--self:SetMoveType(0)
 
 		local phys = self:GetPhysicsObject()
 		if (phys:IsValid()) then
@@ -38,7 +38,7 @@ function ENT:OnTakeDamage(damageto)
 		for i = 1,math.random(5,10) do
 			local ent1 = ents.Create("3p8_rock_s")
 			if ( !IsValid( ent1 ) ) then return end
-			ent1:SetPos(self:GetPos()+Vector(math.random(-128, 128),math.random(-128, 128),math.random(-128, 128)))
+			ent1:SetPos(self:GetPos()+Vector(math.random(-128, 128),math.random(-128, 128),math.random(-16, 128)))
 			ent1:Spawn()
 		end
 		self:Remove()		

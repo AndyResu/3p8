@@ -71,14 +71,17 @@ function SWEP:PrimaryAttack()
 	if (!self:CanPrimaryAttack()) then return end
 
 	--rawket lawnchair
-	local rocket = ents.Create( "rpg_missile" )
-	rocket:SetPos( self.Owner:GetShootPos() + ( self.Owner:GetForward() * 28.0)  + ( self.Owner:GetRight() * 7.0 ) + ( self.Owner:GetUp() * -3.0 ) )
-	rocket:SetAngles( self.Owner:GetAimVector():Angle() )
-	rocket:SetKeyValue( "damage", 350 )
-    rocket:SetSaveValue( "m_flDamage", 350 ) 
-	rocket:Spawn()
-	rocket:Activate()
-	rocket:SetOwner( self.Owner )
+	if SERVER then
+		local rocket = ents.Create( "rpg_missile" )
+		rocket:SetPos( self.Owner:GetShootPos() + ( self.Owner:GetForward() * 28.0)  + ( self.Owner:GetRight() * 7.0 ) + ( self.Owner:GetUp() * -1.0 ) )
+		rocket:SetVelocity(Vector(self.Owner:GetForward()*450))
+		rocket:SetAngles( self.Owner:GetAimVector():Angle() )
+		rocket:SetKeyValue( "damage", 350 )
+		rocket:SetSaveValue( "m_flDamage", 350 ) 
+		rocket:Spawn()
+		rocket:Activate()
+		rocket:SetOwner( self.Owner )
+	end
 
 	self:SetClip1(self:Clip1()-1)
 

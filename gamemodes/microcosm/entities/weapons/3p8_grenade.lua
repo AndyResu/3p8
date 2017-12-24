@@ -211,7 +211,7 @@ end
 
 
 
---saved as potato in SCK
+--saved as grenade in SCK
 --[[/********************************************************
 	SWEP Construction Kit base code
 		Created by Clavus

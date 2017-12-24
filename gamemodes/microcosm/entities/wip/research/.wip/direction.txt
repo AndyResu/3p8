@@ -20,3 +20,5 @@ don't have a food/water mechanic for the player.
 Be wise to the time bet. Players invest their time into the game and are betting that against dieing in hardcore mode. 
     It puts an emotional investment into playing the game and not dieing like IRL, but also makes dieing a serious experience.
         Perhaps there is a way to get the emotional investment but without the emotional divestment?
+
+asymetric warfare

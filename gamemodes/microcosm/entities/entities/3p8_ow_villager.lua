@@ -23,7 +23,7 @@ function ENT:Initialize()
 	self:SetSolid( SOLID_VPHYSICS )
 	self:SetMoveType( MOVETYPE_VPHYSICS )
 	--self:SetModelScale(1/32, 0) --make microscale
-	self.target = GLOBAL_towns[1].pos
+	self.target = Vector(0,0,0) --GLOBAL_towns[1].pos --might change default later if moved
 
 	if SERVER then
 		local phys = self:GetPhysicsObject()
