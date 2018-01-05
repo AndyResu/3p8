@@ -11,7 +11,7 @@
 
 	Todo:		
 				
-	Realisations: self:SetSubMaterial(...,...) DOES NOTHING
+	Realizations: self:SetSubMaterial(...,...) DOES NOTHING
 				fancy timers and fancy genes are hard to do right... something about local vs. self?
 ]]
 
@@ -30,8 +30,6 @@ function ENT:Use(ply)
 	if !self.isPlanted then
 		self:GetPhysicsObject():Wake()
 		self:Upgrayed()
-		--make sound
-		self:EmitSound("phx/eggcrack.wav")
 	end
 end
 
@@ -44,9 +42,9 @@ function ENT:Initialize()
 		self:SetModel(self.ItemModel)
 		self:PhysicsInitStandard()
 		--self:PhysicsInit(SOLID_VPHYSICS)
-		self:SetSolid(SOLID_VPHYSICS)
+		--self:SetSolid(SOLID_VPHYSICS)
 		--stop movement
-		self:SetMoveType(MOVETYPE_VPHYSICS)
+		--self:SetMoveType(MOVETYPE_VPHYSICS)
 
 		local phys = self:GetPhysicsObject()
 		if (phys:IsValid()) then
@@ -178,6 +176,8 @@ function ENT:Upgrayed()
 			self:SetPos(self:GetPos() + Vector(0,0,-9))
 			--rotate the thing to be upwards
 			self:SetAngles( Angle(self.angle1,self.angle2,0))
+			--make sound
+			self:EmitSound("phx/eggcrack.wav")
 		elseif self.treeLevel == 1 then
 			self:GetPhysicsObject():EnableCollisions(false)
 			self:SetModel("models/props_foliage/urban_small_palm01.mdl")

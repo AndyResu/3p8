@@ -21,8 +21,8 @@ function ENT:Initialize()
 	self:SetMaterial("models/props_foliage/trees_city")
 	self:PhysicsInitStandard()
 	--self:PhysicsInit(SOLID_VPHYSICS)
-	self:SetMoveType(MOVETYPE_VPHYSICS)
-	self:SetSolid(SOLID_VPHYSICS)
+	--self:SetMoveType(MOVETYPE_VPHYSICS)
+	--self:SetSolid(SOLID_VPHYSICS)
 	--self:SetMoveType(0)
 	
 	self.health = 300

@@ -22,3 +22,7 @@ Be wise to the time bet. Players invest their time into the game and are betting
         Perhaps there is a way to get the emotional investment but without the emotional divestment?
 
 asymetric warfare
+
+
+ambient/levels/canals/windchine1.wav
+and 2 for the beepy command stuff

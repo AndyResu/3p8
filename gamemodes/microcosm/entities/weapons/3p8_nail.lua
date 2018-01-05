@@ -1,3 +1,11 @@
+--[[
+
+	todo: have constraint add 50% to health? when 50% goes away the constraint dies
+		--consider parenting instead 
+
+			Maybe just have right click undo all welds on it. 
+]]
+
 AddCSLuaFile()
 
 SWEP.PrintName 		= "Nail ?Gun?"
@@ -22,7 +30,7 @@ function SWEP:Initialize()
 	--self.nail_sound = "doors/vent_open1.wav" --2 and 3
 	self.range = 70
 	self.nail_length = 3
-	self.nail_strength = 150
+	self.nail_strength = 0
 end
 
 function SWEP:PrimaryAttack() --position 1
@@ -85,7 +93,7 @@ function SWEP:PrimaryAttack() --position 1
 				--tr.HitPos & tr2.HitPos
 				--constraint.AdvBallsocket( ent, tr2.Entity, 0, 0, tr.HitPos, tr2.HitPos, self.nail_strength, self.nail_strength, -360, -360, -360, 360, 360, 360, 0.1, 0.1, 0.1, 0, 0 )
 				--constraint.Rope( ent, tr2.Entity, 0, 0, tr.HitPos, tr2.HitPos, 10, 1, self.nail_strength, 3, "cable/cable_back", false )
-				constraint.Weld( ent, tr2.Entity, 0, 0, self.nail_strength, false, false)
+				constraint.Weld( ent, tr2.Entity, tr.PhysicsBone, tr2.PhysicsBone, self.nail_strength, false, false)
 
 				--make nail sound
 				ply:EmitSound("doors/vent_open"..math.random(1,3)..".wav")

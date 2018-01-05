@@ -28,9 +28,10 @@ function ENT:Initialize()
 		--removal clock
 		local timer_name = "metalClock_" .. self:EntIndex()
 		timer.Create(timer_name,600,0, function()
-			chance = math.Rand(0,1)
-			if !IsValid(self) then
-				self.Remove()
+			if IsValid(self) then
+				self:Remove()
+				timer.Remove(timer_name)
+			else
 				timer.Remove(timer_name)
 			end
 		end)

@@ -13,11 +13,11 @@ ENT.ItemModel = "models/props_docks/channelmarker_gib01.mdl" --"models/props/de_
 function ENT:Initialize()
 	self:SetModel(self.ItemModel)
 	self:SetMaterial("models/props_foliage/trees_city")
-	self:PhysicsInitStandard()
+	--self:PhysicsInitStandard()
 	--self:PhysicsInit(SOLID_VPHYSICS)
-	self:SetMoveType(MOVETYPE_VPHYSICS)
-	self:SetSolid(6)
-	self:SetMoveType(0)
+	--self:SetMoveType(MOVETYPE_VPHYSICS)
+	self:SetSolid(SOLID_VPHYSICS)
+	--self:SetMoveType(0)
 	
 	self.health = 400
 

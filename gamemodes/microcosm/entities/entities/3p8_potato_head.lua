@@ -68,7 +68,7 @@ function ENT:Initialize()
 		timer.Create(timer_name,900,0, function()
 			chance = math.Rand(0,1)
 			if !IsValid(self) then
-				self.Remove()
+				self:Remove()
 				timer.Remove(timer_name)
 			end
 		end)

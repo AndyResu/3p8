@@ -33,7 +33,6 @@ function ENT:Initialize()
 	self.health = 250
 end
 
-
 function ENT:OnTakeDamage(damageto)
 	self.health = self.health - damageto:GetDamage()
 	if self.health <= 0 then

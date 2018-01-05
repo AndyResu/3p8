@@ -17,13 +17,16 @@ function ENT:Initialize()
 	self:SetModel(self.ComponentModel)
 	--self:SetMaterial("models/props_lab/airlock_laser")
 	self:PhysicsInitStandard()
-
 	--scaling up means the hitbox is bigger than the parented props...
-	self:SetModelScale(1.05, 0)
+	self:SetSolid(SOLID_VPHYSICS)
+	self:SetMoveType(0)
+	local phys = self:GetPhysicsObject()
+	if (phys:IsValid()) then
+		phys:EnableMotion(false)
+	end
 
-	self:GetPhysicsObject():EnableMotion(false)
-
-	self:SetSolid(3)
+	self.metalCounter = 0
+	self.metalToMake = 5
 
 	self.health = 750
 end
@@ -48,18 +51,31 @@ end
 function ENT:PhysicsCollide(data, phys)
 	local class = data.HitEntity:GetClass()
 
-	if class == "3p8_rock_s" then
+	if class == "3p8_metal" then
+		data.HitEntity:Remove()
+		self:EmitSound("physics/metal/metal_solid_strain"..math.random(1,5)..".wav")
+		self.metalCounter = self.metalCounter + 1
+
+		if self.metalCounter == self.metalToMake then
+			--produce metal part
+			metal = ents.Create("3p8_metal_sheet")
+			if ( !IsValid( metal ) ) then return end
+			metal:SetPos(self:GetPos() + Vector(72,-8,-8))
+			metal:SetAngles(Angle(90, 0, 90))
+			metal:Spawn()
+			self:EmitSound("physics/metal/metal_sheet_impact_soft2.wav")
+			self.metalCounter = self.metalCounter - self.metalToMake
+		end
+	elseif class == "3p8_rock_s" then
 		data.HitEntity:Remove()
 		self:EmitSound("ambient/levels/canals/headcrab_canister_ambient4.wav")
 
 		--produce metal part
 		metal = ents.Create("3p8_metal")
 		if ( !IsValid( metal ) ) then return end
-		metal:SetPos(self:GetPos() + Vector(0,0,64))
-		metal:SetAngles(Angle(90, math.random(-179, 180), 0))
+		metal:SetPos(self:GetPos() + Vector(100,-8,-8))
+		metal:SetAngles(Angle(90, 0, 90))
 		metal:Ignite(math.random(2,6), 0)
 		metal:Spawn()
-	elseif class == "micro_item_salainen_puulle" then
-		--data.HitEntity:Ignite(5,102)
 	end
 end
