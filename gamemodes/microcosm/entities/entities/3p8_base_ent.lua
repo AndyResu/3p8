@@ -1,6 +1,7 @@
 --[[
 	3p8_base_ent
 	Uses:		All entities may one day extend from this base entity which ensures all the entities "cover their bases" so-to-speak.
+				I don't think this even does anything because I overwrite it all the time
 
 	Todo:		
 
@@ -15,22 +16,14 @@ ENT.Model = "models/food/hotdog.mdl"
 function ENT:Initialize()
 	self:SetModel(self.Model)
 	self:PhysicsInitStandard()
-	self:SetMoveType(MOVETYPE_VPHYSICS)
-	self:SetSolid(SOLID_VPHYSICS)
+	--self:SetMoveType(MOVETYPE_VPHYSICS)
+	--self:SetSolid(SOLID_VPHYSICS)
 
 	if SERVER then
 		self:SetUseType(SIMPLE_USE)
 	end
 
 	self.health = 100
-end
-
-if CLIENT then
-	function ENT:OnRemove()
-		if IsValid(self.cmodel) then
-			self.cmodel:Remove()
-		end
-	end
 end
 
 function ENT:OnTakeDamage(damageto)

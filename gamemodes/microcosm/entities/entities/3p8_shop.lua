@@ -72,10 +72,14 @@ local sound_buy = Sound("ambient/levels/citadel/weapon_disintegrate2.wav")
 ENT.StartingCash = 0
 ENT.StartingFruit = 1
 
+--don't use this, use the global edgewood / 2
+ENT.CocoSell = 1
+ENT.PuulleSell = 5
+ENT.RockSell = 10
+
 function ENT:SetupDataTables()
 	self:NetworkVar("Int", 0, "Cash")
 	self:NetworkVar("Int", 0, "Stock_Coco")
-	--self:NetworkVar("Int", 0, "Cash")
 	
 end
 
@@ -116,6 +120,7 @@ function ENT:Initialize()
 		ent:Spawn()]]
 	end
 	self.health = 100
+	self.pricePer = 1
 end
 
 function ENT:OnTakeDamage(damageto)
@@ -138,18 +143,18 @@ function ENT:PhysicsCollide(data, phys)
 	if class == "3p8_kookospahkina_puu" then --make this check a table of items and their sell prices.
 		data.HitEntity:Remove()
 		--gib monie
-		self:AddCash(1)
+		self:AddCash(self.CocoSell)
 		self:EmitSound("ambient/levels/labs/coinslot1.wav") --play a cha-ching sound.
 		print("Before Sell Coco: "..GLOBAL_items_edgewood[1].stock)
 		GLOBAL_items_edgewood[1].stock = GLOBAL_items_edgewood[1].stock + 1
 		print("After Sell Coco: "..GLOBAL_items_edgewood[1].stock)
 	elseif class == "micro_item_salainen_puulle" then
 		data.HitEntity:Remove()
-		self:AddCash(5)
+		self:AddCash(self.PuulleSell)
 		self:EmitSound("ambient/machines/hydraulic_1.wav") --saw sound
 	elseif class == "3p8_rock_s" then
 		data.HitEntity:Remove()
-		self:AddCash(10)
+		self:AddCash(self.RockSell)
 		self:EmitSound("ambient/machines/hydraulic_1.wav")
 	elseif class == "3p8_potato_ent" then
 		data.HitEntity:Remove()
@@ -163,6 +168,21 @@ function ENT:PhysicsCollide(data, phys)
 		data.HitEntity:Remove()
 		self:AddCash(20)
 		self:EmitSound("ambient/materials/platedrop1.wav")
+	elseif string.match(class, "3p8_collector") then
+		--should use the global edgewood prices / 2 I think
+		if string.match(class, "_puu") then
+			self.pricePer = self.CocoSell
+		elseif string.match(class, "_puulle") then
+			self.pricePer = self.PuulleSell
+		elseif string.match(class, "_rock") then
+			self.pricePer = self.RockSell
+		else
+			print("ERROR: Collector type not yet implemented in 3p8_shop!")
+			self.pricePer = 1
+		end
+		self:AddCash(data.HitEntity:GetCount()*self.pricePer)
+		data.HitEntity:SetCount(0)
+		self:EmitSound("items/ammocrate_open.wav")
 	end
 end
 
@@ -182,7 +202,7 @@ if SERVER then
 end
 
 function ENT:GetItemSpawn()
-	return self:GetPos()+Vector(32,32,24)
+	return self:GetPos() + self:GetForward()*32 + Vector(0,0,64)
 end
 
 function ENT:CheckBlocked()
@@ -247,6 +267,38 @@ GLOBAL_items_edgewood = {
 		cost=100,
 		pv="models/items/battery.mdl",
 		ent="micro_item_armorkit",
+		stock=100
+	},
+	{
+		name="Coconut Collector",
+		desc="Can carry and preserve 5 coconuts.",
+		cost=20,
+		pv="models/props_junk/cardboard_box001a.mdl",
+		ent="3p8_collector_puu",
+		stock=100
+	},
+	{
+		name="Log Collector",
+		desc="Can carry and preserve 5 logs.",
+		cost=20,
+		pv="models/props_junk/wood_crate002a.mdl",
+		ent="3p8_collector_puulle",
+		stock=100
+	},
+	{
+		name="Rock Collector",
+		desc="Can carry and preserve 5 rocks.",
+		cost=20,
+		pv="models/props_wasteland/laundry_washer001a.mdl",
+		ent="3p8_collector_rock",
+		stock=100
+	},
+	{
+		name="Metal Collector",
+		desc="Can carry and preserve 5 metal pieces.",
+		cost=20,
+		pv="models/props_lab/filecabinet02.mdl",
+		ent="3p8_collector_metal",
 		stock=100
 	},
 	{

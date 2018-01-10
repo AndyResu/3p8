@@ -5,7 +5,7 @@
 
 AddCSLuaFile()
 
-ENT.Base = "micro_item_salainen"
+ENT.Type = "anim"
 
 --ENT.ItemName = "Kanto"
 ENT.ItemModel = "models/props_docks/channelmarker_gib01.mdl" --"models/props/de_venice/canal_poles/canal_pole_3.mdl" --csgo model

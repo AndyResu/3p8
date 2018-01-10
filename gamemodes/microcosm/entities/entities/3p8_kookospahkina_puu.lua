@@ -19,7 +19,7 @@
 
 AddCSLuaFile()
 
-ENT.Base = "3p8_base_ent"
+ENT.Type = "anim"
 
 ENT.ItemModel = "models/hunter/misc/sphere025x025.mdl"
 
@@ -48,7 +48,7 @@ function ENT:Initialize()
 
 		local phys = self:GetPhysicsObject()
 		if (phys:IsValid()) then
-			phys:Sleep()
+			--phys:Sleep()
 			--make float (bouyancy)
 			phys:SetBuoyancyRatio(1.0) --0 min, 1 max (wood)
 		end
@@ -184,7 +184,7 @@ function ENT:Upgrayed()
 			--PrintTable(self:GetMaterials())
 			self:SetMaterial()
 			self:PhysicsInitStandard()
-			self:SetMoveType(MOVETYPE_VPHYSICS)
+			--self:SetMoveType(MOVETYPE_VPHYSICS)
 			self:SetMoveType(0)
 			self.treeLevel = self.treeLevel + 1 --2
 			self.health = 250 * self.treeLevel
@@ -199,7 +199,7 @@ function ENT:Upgrayed()
 			self:SetMaterial()
 			--print("bad material for leaves")
 			self:PhysicsInitStandard()
-			self:SetMoveType(MOVETYPE_VPHYSICS)
+			--self:SetMoveType(MOVETYPE_VPHYSICS)
 			self:SetMoveType(0)
 			self.treeLevel = self.treeLevel + 1 --3
 			self.health = 250 * self.treeLevel
@@ -213,7 +213,7 @@ function ENT:Upgrayed()
 
 			self:SetMaterial()
 			self:PhysicsInitStandard()
-			self:SetMoveType(MOVETYPE_VPHYSICS)
+			--self:SetMoveType(MOVETYPE_VPHYSICS)
 			self:SetMoveType(0)
 			self.treeLevel = self.treeLevel + 1 --4
 			self.health = 250 * self.treeLevel

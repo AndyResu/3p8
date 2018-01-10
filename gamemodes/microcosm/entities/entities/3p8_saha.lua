@@ -1,5 +1,3 @@
-
-
 --[[
 	3p8_saha
 	Uses:		turn logs into wood products
@@ -81,7 +79,22 @@ function ENT:PhysicsCollide(data, phys)
 			self:EmitSound("ambient/machines/hydraulic_1.wav")
 			self.woodCounter = self.woodCounter - self.woodToMake
 		end
-	elseif class == "prop_physics" then
+	elseif class == "3p8_collector_puulle" then
+		self:EmitSound("physics/wood/wood_box_break"..math.random(1,2)..".wav")
+		self.woodCounter = self.woodCounter + data.HitEntity:GetCount()
+		data.HitEntity:SetCount(0)
+		if self.woodCounter == self.woodToMake then
+			--produce metal part
+			wood = ents.Create("prop_physics")
+			if ( !IsValid( wood ) ) then return end
+			wood:SetPos(self:GetPos() + Vector(0,0,32))
+			wood:SetAngles(Angle(90, 0, 0))
+			wood:SetModel("models/props_wasteland/wood_fence01a.mdl")
+			wood:Spawn()
+			self:EmitSound("ambient/machines/hydraulic_1.wav")
+			self.woodCounter = self.woodCounter - self.woodToMake
+		end
+	--[[elseif class == "prop_physics" then
 		--furnature plus a coconut = wood crate, dressor, idk
 		if model == "" then
 			data.HitEntity:Remove()
@@ -95,6 +108,6 @@ function ENT:PhysicsCollide(data, phys)
 			metal:Spawn()
 		elseif model == "" then
 			
-		end
+		end]]
 	end
 end

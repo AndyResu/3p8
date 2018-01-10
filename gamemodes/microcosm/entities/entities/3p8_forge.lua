@@ -56,7 +56,7 @@ function ENT:PhysicsCollide(data, phys)
 		self:EmitSound("physics/metal/metal_solid_strain"..math.random(1,5)..".wav")
 		self.metalCounter = self.metalCounter + 1
 
-		if self.metalCounter == self.metalToMake then
+		if self.metalCounter >= self.metalToMake then
 			--produce metal part
 			metal = ents.Create("3p8_metal_sheet")
 			if ( !IsValid( metal ) ) then return end
@@ -77,5 +77,31 @@ function ENT:PhysicsCollide(data, phys)
 		metal:SetAngles(Angle(90, 0, 90))
 		metal:Ignite(math.random(2,6), 0)
 		metal:Spawn()
+	elseif class == "3p8_collector_metal" then
+		self:EmitSound("physics/metal/metal_solid_strain"..math.random(1,5)..".wav")
+		self.metalCounter = self.metalCounter + data.HitEntity:GetCount()
+		data.HitEntity:SetCount(0)
+		if self.metalCounter >= self.metalToMake then
+			--produce metal part
+			metal = ents.Create("3p8_metal_sheet")
+			if ( !IsValid( metal ) ) then return end
+			metal:SetPos(self:GetPos() + Vector(72,-8,-8))
+			metal:SetAngles(Angle(90, 0, 90))
+			metal:Spawn()
+			self:EmitSound("physics/metal/metal_sheet_impact_soft2.wav")
+			self.metalCounter = self.metalCounter - self.metalToMake
+		end
+	elseif class == "3p8_collector_rock" then
+		self:EmitSound("ambient/levels/canals/headcrab_canister_ambient4.wav")
+		for i=1,data.HitEntity:GetCount() do
+			--produce metal part
+			metal = ents.Create("3p8_metal")
+			if ( !IsValid( metal ) ) then return end
+			metal:SetPos(self:GetPos() + Vector(100,-8,-8))
+			metal:SetAngles(Angle(90, 0, 90))
+			metal:Ignite(math.random(2,6), 0)
+			metal:Spawn()
+		end
+		data.HitEntity:SetCount(0)
 	end
 end

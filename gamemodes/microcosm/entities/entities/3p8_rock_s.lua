@@ -1,5 +1,8 @@
 --[[
-rocks (exhaustable)
+	3p8_rock_s
+	Uses:		rocks (exhaustable)
+
+	Todo:		
 
 ]]
 

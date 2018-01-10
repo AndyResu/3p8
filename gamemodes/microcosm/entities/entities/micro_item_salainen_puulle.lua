@@ -5,7 +5,7 @@
 
 AddCSLuaFile()
 
-ENT.Base = "3p8_base_ent"
+ENT.Type = "anim"
 
 --ENT.ItemName = "Puulle"
 ENT.ItemModel = "models/props_docks/channelmarker_gib01.mdl" --"models/props/de_venice/canal_poles/canal_pole_2.mdl" --csgo model
