@@ -89,6 +89,7 @@ function ENT:Initialize()
 			--print(self.chance)
 			if IsValid(self) then
 				if self:IsOnFire() then
+					--print("Remove coconut, fire " .. self:GetCreationID())
 					self:Remove()
 					--timer.Remove(timer_name)
 				end
@@ -98,12 +99,14 @@ function ENT:Initialize()
 						self:GetPhysicsObject():Wake()
 					end
 					if self.timer == 2 then
+						--print("Remove coconut, time " .. self:GetCreationID())
 						self:Remove()
 						--timer.Remove(timer_name)
 					end
 					self.timer = self.timer + 1
 				end
 				if self.isPlanted && self.longTimer == 10 then
+					--print("Remove coconut, long timer " .. self:GetCreationID())
 					self:Remove()
 					--timer.Remove(timer_name)
 				elseif self.isPlanted then
@@ -116,6 +119,7 @@ function ENT:Initialize()
 					self:Upgrayed()
 				end
 			elseif !IsValid(self) then
+				--print("Remove coconut, the timer itself " .. self:GetCreationID())
 				timer.Remove(timer_name)
 			end
 		end)
@@ -239,6 +243,7 @@ function ENT:Upgrayed()
 				--end)
 			end
 			if self.kids >= self.maxKids then
+				--print("Remove coconut, kids " .. self:GetCreationID())
 				self:Remove()
 				--timer.Remove(timer_name)
 			end
@@ -280,6 +285,7 @@ function ENT:OnTakeDamage(damageto)
 	self.health = self.health - damageto:GetDamage()
 	if self.health <= 0 then
 		self:EmitSound("weapons/debris1.wav")
+		--print("Remove coconut, dmg " .. self:GetCreationID())
 		self:Remove()
 	end
 end

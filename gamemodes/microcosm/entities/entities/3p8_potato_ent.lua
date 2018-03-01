@@ -60,18 +60,21 @@ function ENT:Initialize()
 				--plant itself.
 				self:Upgrayed()
 			elseif !IsValid(self) then
+				--print("Remove potato, timer itself remove " .. self:GetCreationID())
 				timer.Remove(timer_name)
 			end
 			--remove potato
 			if IsValid(self) && !self.isPlanted then
+				--print("Remove potato, not planted " .. self:GetCreationID())
 				self:Remove()
 				--timer.Remove(timer_name)
 			end
-			--remove plant
+			--remove plant **********************source of problem with client removes???*********************************
 			if IsValid(self) then
 				self.timer = self.timer + 1
 			end
 			if IsValid(self) && self.isPlanted && self.timer == 2 then
+				--print("Remove potato, planted timer " .. self:GetCreationID())
 				self:Remove()
 				--timer.Remove(timer_name)
 			end
@@ -167,6 +170,7 @@ function ENT:OnTakeDamage(damageto)
 	if self.health <= 0 then
 		self:EmitSound("ambient/levels/canals/toxic_slime_gurgle2.wav")
 		GLOBAL_potato = GLOBAL_potato - 1
+		--print("Remove potato, dmg " .. self:GetCreationID())
 		self:Remove()
 	end
 end
