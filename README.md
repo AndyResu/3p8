@@ -14,6 +14,7 @@ Reminiscent of oc_harvest by Tysn, Star Dew Valley, and the Harvest Moon series.
 
 ## Credits
 SkyLight / arcboundworker		/ Andrew Thompson
+
 Parakeet / birdbrainswagtrain	/ Adam Coggeshall coded some spaceships and general help
 
 In addition, this gamemode would not be possible without
