@@ -130,7 +130,7 @@ function ENT:Initialize()
 		self:Setew_3p8_metal(10)
 		self:Setew_micro_item_medkit(100)
 		self:Setew_micro_item_armorkit(100)
-		self:Setew_3p8_pizza_kit(100)
+		self:Setew_3p8_pizzakit(100)
 		self:Setew_3p8_collector_puu(100)
 		self:Setew_3p8_collector_puulle(100)
 		self:Setew_3p8_collector_rock(100)
@@ -140,8 +140,6 @@ function ENT:Initialize()
 		self:Setew_micro_item_collectable_deco(25)
 		self:Setew_3p8_hate(1)
 	end
-
-	print("PIZZAS IN 3p8 CURRENTLY: "..self:Getew_3p8_pizza())
 end
 
 function ENT:GetStockOf(itemID)
@@ -164,7 +162,7 @@ function ENT:GetStockOf(itemID)
 	elseif(itemID == 9) then
 		return self:Getew_micro_item_armorkit()
 	elseif(itemID == 10) then
-		return self:Getew_3p8_pizza_kit()
+		return self:Getew_3p8_pizzakit()
 	elseif(itemID == 11) then
 		return self:Getew_3p8_collector_puu()
 	elseif(itemID == 12) then
@@ -209,7 +207,7 @@ if SERVER then
 		elseif(itemID == 9) then
 			self:Setew_micro_item_armorkit(amount)
 		elseif(itemID == 10) then
-			self:Setew_3p8_pizza_kit(amount)
+			self:Setew_3p8_pizzakit(amount)
 		elseif(itemID == 11) then
 			self:Setew_3p8_collector_puu(amount)
 		elseif(itemID == 12) then
@@ -246,7 +244,7 @@ GLOBAL_items_edgewood = {
 	{
 		name="Coconut",
 		desc="In some tribal societies the more coconuts you have, the more powerful you are.",
-		cost=25,
+		cost=200,
 		pv="models/hunter/misc/sphere025x025.mdl",
 		ent="3p8_kookospahkina_puu",
 		soundSell="ambient/levels/labs/coinslot1.wav"
@@ -256,7 +254,7 @@ GLOBAL_items_edgewood = {
 	{
 		name="Potato",
 		desc="Might be a beautiful french fry some day.",
-		cost=25,
+		cost=200,
 		pv="models/props_phx/misc/potato.mdl",
 		ent="3p8_potato_ent",
 		soundSell="ambient/levels/labs/coinslot1.wav"
@@ -273,7 +271,7 @@ GLOBAL_items_edgewood = {
 	{
 		name="Pizza",
 		desc="Yea, of course we have it!",
-		cost=24,
+		cost=240,
 --SET PV
 		pv="models/props_docks/channelmarker_gib01.mdl",
 		ent="3p8_pizza",
@@ -282,7 +280,7 @@ GLOBAL_items_edgewood = {
 	{
 		name="Log",
 		desc="Put it in the sawmill to make a wall.",
-		cost=25,
+		cost=200,
 		pv="models/props_docks/channelmarker_gib01.mdl",
 		ent="micro_item_salainen_puulle",
 		soundSell="ambient/machines/hydraulic_1.wav"
@@ -290,7 +288,7 @@ GLOBAL_items_edgewood = {
 	{
 		name="Rock",
 		desc="Found all over. Exhaustible though.",
-		cost=50,
+		cost=500,
 		pv="models/props_wasteland/rockgranite03c.mdl",
 		ent="3p8_rock_s",
 		soundSell="ambient/machines/hydraulic_1.wav"
@@ -298,7 +296,7 @@ GLOBAL_items_edgewood = {
 	{
 		name="Metal",
 		desc="Refined. Like my humor.",
-		cost=100,
+		cost=1000,
 		pv="models/props_c17/oildrumchunk01a.mdl",
 		ent="3p8_metal",
 		soundSell="ambient/materials/platedrop1.wav"
@@ -306,7 +304,7 @@ GLOBAL_items_edgewood = {
 	{
 		name="Med Kit",
 		desc="100 units of HP.",
-		cost=50,
+		cost=100,
 		pv="models/items/healthkit.mdl",
 		ent="micro_item_medkit",
 		soundSell="ambient/levels/labs/coinslot1.wav"
@@ -325,7 +323,7 @@ GLOBAL_items_edgewood = {
 		cost=500,
 --SET DAT PV
 		pv="models/items/battery.mdl",
-		ent="3p8_pizza_kit",
+		ent="3p8_pizzakit",
 		soundSell="ambient/levels/labs/coinslot1.wav"
 	},
 	{
