@@ -58,30 +58,18 @@ function ENT:PhysicsCollide(data, phys)
 	local model = data.HitEntity:GetModel()
 
 	if class == "3p8_pizzakit" then
-		data.HitEntity:TryTake(1)
+		local duhCount = data.HitEntity.GetCount()
+		data.HitEntity:TryTake(duhCount)
 
 		self:EmitSound("physics/wood/wood_box_break"..math.random(1,2)..".wav")
 
-		--produce metal part
-		pizza = ents.Create("3p8_pizza")
-		if ( !IsValid( pizza ) ) then return end
-		pizza:SetPos(self:GetPos() + Vector(0,0,64))
-		pizza:SetAngles(Angle(0, math.random(-179, 180), 0))
-		pizza:Spawn()
-	--[[elseif class == "3p8_collector_puulle" then
-		self:EmitSound("physics/wood/wood_box_break"..math.random(1,2)..".wav")
-		self.woodCounter = self.woodCounter + data.HitEntity:GetCount()
-		data.HitEntity:SetCount(0)
-		if self.woodCounter == self.woodToMake then
+		for i = 1, duhCount do
 			--produce metal part
-			wood = ents.Create("prop_physics")
-			if ( !IsValid( wood ) ) then return end
-			wood:SetPos(self:GetPos() + Vector(0,0,32))
-			wood:SetAngles(Angle(90, 0, 0))
-			wood:SetModel("models/props_wasteland/wood_fence01a.mdl")
-			wood:Spawn()
-			self:EmitSound("ambient/machines/hydraulic_1.wav")
-			self.woodCounter = self.woodCounter - self.woodToMake
-		end]]
+			pizza = ents.Create("3p8_pizza")
+			if ( !IsValid( pizza ) ) then return end
+			pizza:SetPos(self:GetPos() + Vector(0,0,60))
+			pizza:SetAngles(Angle(0, math.random(-179, 180), 0))
+			pizza:Spawn()
+		end
 	end
 end

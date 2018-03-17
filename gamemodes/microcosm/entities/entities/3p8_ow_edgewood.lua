@@ -15,7 +15,7 @@
 AddCSLuaFile()
 
 ENT.Base = "3p8_base_ent"
-
+ENT.CityName = "Paradise Oasis" --angel oasis?
 ENT.Model = "models/props_lab/cactus.mdl"
 
 function ENT:Initialize()
@@ -27,9 +27,15 @@ function ENT:Initialize()
 	self:GetPhysicsObject():EnableMotion(false)
 
 	--find the local shop in edgewood.
-	GLOBAL_towns[1] = {
-		name	= "Edgewood",
+	GLOBAL_towns[#GLOBAL_towns+1] = {
+		name	= self.CityName,
 		pos		= self:GetPos()
+		shop	= nil --I think the shop's entity reference
+		--the base amount of people in the city... think the mayor and shop people I guess
+		basePop	= 5
+		--other citizens
+		people	= 0
+		money	= 1000
 	}
 
 

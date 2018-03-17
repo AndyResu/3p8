@@ -420,7 +420,7 @@ function ENT:PhysicsCollide(data, phys)
 					break
 				end
 			end
-			self.pricePer = (self:CalculateCost(currentItemID, stock)) / self.BuySellCostRatio
+			--self.pricePer = (self:CalculateCost(currentItemID, stock)) / self.BuySellCostRatio
 		elseif string.match(class, "_puulle") then
 			for i, item in pairs(GLOBAL_items_edgewood) do
 				if(item.ent == "micro_item_salainen_puulle") then
@@ -428,7 +428,7 @@ function ENT:PhysicsCollide(data, phys)
 					break
 				end
 			end
-			self.pricePer = (self:CalculateCost(currentItemID, stock)) / self.BuySellCostRatio
+			--self.pricePer = (self:CalculateCost(currentItemID, stock)) / self.BuySellCostRatio
 		elseif string.match(class, "_rock") then
 			for i, item in pairs(GLOBAL_items_edgewood) do
 				if(item.ent == "3p8_rock_s") then
@@ -436,7 +436,7 @@ function ENT:PhysicsCollide(data, phys)
 					break
 				end
 			end
-			self.pricePer = (self:CalculateCost(currentItemID, stock)) / self.BuySellCostRatio
+			--self.pricePer = (self:CalculateCost(currentItemID, stock)) / self.BuySellCostRatio
 		elseif string.match(class, "_metal") then
 			for i, item in pairs(GLOBAL_items_edgewood) do
 				if(item.ent == "3p8_metal") then
@@ -444,12 +444,14 @@ function ENT:PhysicsCollide(data, phys)
 					break
 				end
 			end
-			self.pricePer = (self:CalculateCost(currentItemID, stock)) / self.BuySellCostRatio
+			--self.pricePer = (self:CalculateCost(currentItemID, stock)) / self.BuySellCostRatio
 		else
 			print("ERROR: Collector type not yet implemented in 3p8_shop!")
-			self.pricePer = 1
+			--self.pricePer = 1
 		end
-		self:AddCash(data.HitEntity:GetCount()*self.pricePer)
+		--can't use self.pricePer here, it must follow the supply/cost curve
+		--self:AddCash(data.HitEntity:GetCount()*self.pricePer)
+		self:ow_sellToShop(currentItemID, data.HitEntity:GetCount())
 		data.HitEntity:SetCount(0)
 		self:EmitSound("items/ammocrate_open.wav")
 	elseif (currentItemID > 0) then
@@ -475,6 +477,15 @@ function ENT:CalculateCost(itemID, stockOfItem)
 		--do that divide by two outside. leave this method for calculating price (like MSRP) for an item
 		-- / self.BuySellCostRatio
 	return math.ceil((GLOBAL_items_edgewood[itemID].cost) / (stockOfItem*self.SupplyDampening))
+end
+
+function ow_sellToShop(itemID, amount)
+	self:SetStockOf(itemID, self:GetStockOf(itemID+amount)
+	local stock = self:GetStockOf(itemID)
+	--sell the stock along the price / supply curve
+	for i = 1, i < amount do
+		self:AddCash(math.ceil(-1*(self:CalculateCost(itemID, stock-amount+i)) / self.BuySellCostRatio))
+	end
 end
 
 function ENT:OnTakeDamage(damageto)

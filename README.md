@@ -1,6 +1,6 @@
 # 3 Pizzas 8
 
-The happiest farming gamemode for Garry's Mod.
+The happiest farming and economic simulation gamemode for Garry's Mod.
 
 Reminiscent of oc_harvest by Tysn, Star Dew Valley, and the Harvest Moon series.
 
