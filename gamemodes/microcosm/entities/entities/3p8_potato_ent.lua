@@ -18,27 +18,27 @@ function ENT:Use(ply)
 end
 
 function ENT:Initialize()
-	--global variable for the softcap of "nature" autoplanting potatos
-	GLOBAL_potato = GLOBAL_potato + 1
-
-	self.isPlanted = false
-
-	self.numberOfVegetables = math.random(1,4)
-	self.growthTime = math.random(180, 420)
-	if GLOBAL_potato <= 15 then
-		self.growthTime = 3 + math.random(0,4)
-	end
-
-	self.headder = 0
-	self.timer = 0
-
-	self.health = 25
-
-	self.chance = math.Rand(0,1)
-
-	self.growTimer = 300
-
 	if SERVER then
+		--global variable for the softcap of "nature" autoplanting potatos
+		GLOBAL_potato = GLOBAL_potato + 1
+
+		self.isPlanted = false
+
+		self.numberOfVegetables = math.random(1,4)
+		self.growthTime = math.random(180, 420)
+		if GLOBAL_potato <= 15 then
+			self.growthTime = 3 + math.random(0,4)
+		end
+
+		self.headder = 0
+		self.timer = 0
+
+		self.health = 25
+
+		self.chance = math.Rand(0,1)
+
+		self.growTimer = 300
+
 		self:SetMaterial("models/props_wasteland/tugboat02")
 		self:SetModel(self.ItemModel)
 		self:PhysicsInitStandard()

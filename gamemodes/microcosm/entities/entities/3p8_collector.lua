@@ -15,7 +15,7 @@ ENT.HeldObject = "3p8_kookospahkina_puu"
 ENT.ItemName = "Collector"
 ENT.ItemModel = "models/props_junk/cardboard_box001a.mdl"
 ENT.MaxCount = 5
-ENT.Health = 50
+ENT.health = 50
 
 function ENT:SetupDataTables()
 	self:NetworkVar("Int", 0, "Count")

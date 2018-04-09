@@ -58,7 +58,7 @@ function ENT:PhysicsCollide(data, phys)
 	local model = data.HitEntity:GetModel()
 
 	if class == "3p8_pizzakit" then
-		local duhCount = data.HitEntity.GetCount()
+		local duhCount = data.HitEntity:GetCount()
 		data.HitEntity:TryTake(duhCount)
 
 		self:EmitSound("physics/wood/wood_box_break"..math.random(1,2)..".wav")

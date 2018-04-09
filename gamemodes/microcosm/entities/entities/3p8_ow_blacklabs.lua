@@ -41,12 +41,12 @@ function ENT:Initialize()
 	--find the local shop in blacklabs.
 	GLOBAL_towns[#GLOBAL_towns+1] = {
 		name	= self.CityName,
-		pos		= self:GetPos()
-		shop	= nil --I think the shop's entity reference
+		pos		= self:GetPos(),
+		shop	= nil, --I think the shop's entity reference
 		--the base amount of people in the city... think the mayor and shop people I guess
-		basePop	= 5
+		basePop	= 5,
 		--other citizens
-		people	= 0
+		people	= 0,
 		money	= 1000
 	}
 
