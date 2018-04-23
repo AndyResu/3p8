@@ -50,6 +50,9 @@ end
 --this is done because self:SetCount(0) must run to ensure that the box starts empty, not full of the entity
 function ENT:Initialize()
 	self:SetModel(self.ItemModel)
+	if(self.Material != nil) then
+		self:SetMaterial(self.Material)
+	end
 	self:PhysicsInitStandard()
 
 	if SERVER then

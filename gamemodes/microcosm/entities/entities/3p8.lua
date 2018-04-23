@@ -17,11 +17,13 @@ ENT.Type = "anim"
 ENT.Model = "models/props_combine/breenglobe.mdl"
 
 --need a list of ENT. variables for city/shop positions
-ENT.OasisCityPos = Vector(136, 3429, 48)
-ENT.OasisShopPos = Vector(-268, 2730, 48)
+ENT.OasisCityPos = Vector(2373, -802, 0)
+ENT.OasisShopPos = Vector(2323, -708, 0)
 
-ENT.BlkLbCityPos = Vector(211, 3499, 48)
-ENT.BlkLbShopPos = Vector(351, 3634, 48)
+ENT.BlkLbCityPos = Vector(2533, -959, 0)
+ENT.BlkLbShopPos = Vector(2593, -716, 0)
+
+ENT.sunPos = Vector(0,0,2208)
 
 --has the following format
 	--name="what it will show up as in the shop",
@@ -150,6 +152,14 @@ ENT.ItemList = {
 		soundSell="items/ammocrate_open.wav"
 	},
 	{
+		name="Pizza Box",
+		desc="Can carry and preserve 3 pizzas!",
+		cost=100,
+		pv="models/props_c17/consolebox01a.mdl",
+		ent="3p8_collector_pizza",
+		soundSell="items/ammocrate_open.wav"
+	},
+	{
 		name="Collectable Food",
 		desc="Exotic food that restores health! It's 1 of 11 collectable foods. Collect them all!",
 		cost=500,
@@ -197,6 +207,10 @@ GLOBAL_grass = 			0
 GLOBAL_grass_max =		150
 
 function ENT:Initialize()
+	--todo: fix later. 13 normally
+	print("3p8 ent number (for manual entering): "..tostring(self))
+	print("Currently set to 13 as 'meme' in 3p8_shop. Ctrl+F it to change...")
+
 	self.distanceToGround = -68
 	self.fuckNature = true
 
@@ -298,6 +312,10 @@ function ENT:Initialize()
 				stock = 100
 			},
 			{
+				ent = "3p8_collector_pizza",
+				stock = 150
+			},
+			{
 				ent = "micro_item_collectable_food",
 				stock = 100
 			},
@@ -360,5 +378,9 @@ function ENT:Initialize()
 		blacklabs.StockArray = blacklabsStocks
 		blacklabs:Spawn()
 
+		sun = ents.Create("3p8_sky_sun")
+		if ( !IsValid( sun ) ) then return end
+		sun:SetPos(self.sunPos)
+		sun:Spawn()
 	end
 end

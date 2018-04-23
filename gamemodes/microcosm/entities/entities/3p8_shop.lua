@@ -89,7 +89,7 @@ function ENT:Initialize()
 	self:SetModel(self.ComponentModel)
 	self:SetMaterial("models/effects/splodeglass_sheet") --make invis
 	self:SetCollisionGroup(COLLISION_GROUP_DEBRIS_TRIGGER)
-	self:SetAngles(Angle(0,-90,0))
+	self:SetAngles(Angle(0,90,0))
 	self:PhysicsInitStandard()
 	self.health = 100
 
@@ -124,11 +124,11 @@ function ENT:Initialize()
 	if CLIENT then
 		--doesn't work on 2-player server ******************************************************************************************************************************
 		--for client. Works fine for server
-		print(self.ParentEnt)
 		self.ParentEnt = self:GetNWEntity("ParentEnt", "error")
-		print(self.ParentEnt)
 		--loop through the possible network entity names and reconnstruct the array clientside
-		local meme = self.ParentEnt.ParentEnt.ItemList
+		--local meme = self.ParentEnt.ParentEnt.ItemList
+		local meme = Entity(13).ItemList
+
 		--wow, this works. who to heck done it?????????????????????????????????????
 		--local memeArray = {{1},{},{},{},{5},{},{},{},{},{10},{},{},{},{},{15},{},{},{},{},{20},{},{},{},{},{25},{},{},{},{},{30},{},{},{},{},{35},{},{},{},{},{40},{},{},{},{},{45},{},{},{},{},{50}}
 		--[[local memeArray = {}
@@ -199,7 +199,15 @@ function ENT:PhysicsCollide(data, phys)
 	
 end
 
+--make different for clientside and serverside
 function ENT:CalculateCost(itemID, stockOfItem)
+	--price = (base cost of item / 2) / (stock * 0.1) (rounded up)
+		--do that divide by two outside. leave this method for calculating price (like MSRP) for an item
+		-- / self.BuySellCostRatio
+	return math.ceil((self.StockArray[itemID].cost) / (stockOfItem*self.SupplyDampening))
+end
+
+function ENT:CalculateCostServer(itemID, stockOfItem)
 	--price = (base cost of item / 2) / (stock * 0.1) (rounded up)
 		--do that divide by two outside. leave this method for calculating price (like MSRP) for an item
 		-- / self.BuySellCostRatio
@@ -211,7 +219,7 @@ function ENT:PlayerSellToShop(entName, amount)
 	local stock = self:GetNWInt(entName, -999)
 	--sell the stock along the price / supply curve
 	for i = 1, amount do
-		self:AddCash(math.ceil(1*(self:CalculateCost(self:GetItemIDFromEntName(entName), stock-amount+i)) / self.BuySellCostRatio))
+		self:AddCash(math.ceil(1*(self:CalculateCostServer(self:GetItemIDFromEntName(entName), stock-amount+i)) / self.BuySellCostRatio))
 	end
 end
 
@@ -313,7 +321,7 @@ concommand.Add("micro_shop_buy",function(ply,_,args)
 
 	-- point of no return
 	local stocky = shop_ent:GetNWInt(shop_ent.ParentEnt.ParentEnt.ItemList[n].ent, -999)
-	local costy = shop_ent:CalculateCost(shop_ent:GetItemIDFromEntName(shop_ent.ParentEnt.ParentEnt.ItemList[n].ent), stocky)
+	local costy = shop_ent:CalculateCostServer(shop_ent:GetItemIDFromEntName(shop_ent.ParentEnt.ParentEnt.ItemList[n].ent), stocky)
 	if shop_ent:GetCash()<costy or stocky <= 0 then return end
 	shop_ent:SetCash(shop_ent:GetCash()-costy)
 	shop_ent:SetNWInt(shop_ent.ParentEnt.ParentEnt.ItemList[n].ent, stocky-1)
@@ -383,7 +391,7 @@ function MICRO_SHOW_SHOP(ent)
 			local title = panel:Add("DLabel")
 			title:SetPos(100,0)
 			title:SetFont("DermaLarge")
-			title:SetText(ent.ParentEnt.ParentEnt.ItemList[i].name)
+			title:SetText(ent.StockArray[i].name)
 			title:SetDark(true) 
 			title:SizeToContents()
 
@@ -404,13 +412,13 @@ function MICRO_SHOW_SHOP(ent)
 			local icon = panel:Add("DModelPanel")
 			icon:SetSize(70, 70)
 			icon:SetPos(0,0)
-			icon:SetModel(ent.ParentEnt.ParentEnt.ItemList[i].pv)
+			icon:SetModel(ent.StockArray[i].pv)
 			icon:SetLookAt( Vector(0,0,0) )
 			icon:SetFOV(1.5*icon:GetEntity():GetModelRadius())
 
 			local desc = panel:Add("DLabel")
 			desc:SetPos(100,40)
-			desc:SetText(ent.ParentEnt.ParentEnt.ItemList[i].desc)
+			desc:SetText(ent.StockArray[i].desc)
 			desc:SetDark(true) 
 			desc:SizeToContents()
 

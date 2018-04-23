@@ -104,6 +104,8 @@ function ENT:PhysicsCollide(data, phys)
 		metal:SetAngles(Angle(90, math.random(-179, 180), 0))
 		metal:Ignite(math.random(2,6), 0)
 		metal:Spawn()
+	elseif class == "prop_physics" then
+		data.HitEntity:Ignite(5,102)
 	elseif class == "micro_item_salainen_puulle" then
 		data.HitEntity:Ignite(5,102)
 	end

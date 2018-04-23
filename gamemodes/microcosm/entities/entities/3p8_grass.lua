@@ -13,7 +13,6 @@ AddCSLuaFile()
 
 ENT.Type = "anim"
 
-
 ENT.models = {	"models/props_foliage/swamp_grass01.mdl", "models/props_foliage/swamp_grass_row01.mdl"}
 
 function ENT:Initialize()

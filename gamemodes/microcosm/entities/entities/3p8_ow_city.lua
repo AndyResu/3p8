@@ -25,7 +25,10 @@ ENT.ShopEnt = nil
 function ENT:Initialize()
 	--self:SetModelScale(1/32, 0) --cactus is small enough as it is
 
+	--print("City: ".. tostring(self.ParentEnt))
 	self.ParentEnt = self:GetNWEntity("ParentEnt", "error")
+	--print("City after: ".. tostring(self.ParentEnt))
+	--above code only sort of works...
 
 	if SERVER then
 		self:SetModel(self.Model)
