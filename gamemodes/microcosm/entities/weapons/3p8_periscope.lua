@@ -68,6 +68,7 @@ SWEP.WElements = {
 }
 
 local periscopeLength = 48
+SWEP.holster = true
 
 function SWEP:PrimaryAttack()
 	--rotate left
@@ -102,11 +103,12 @@ function SWEP:UpdatePeriscope()
 	--	local frame = vgui.Create( 'DFrame' )
 	--end
 	if CLIENT then self.Owner:ChatPrint("self.result: ".. self.result) end
-	print(self.holster)
+	--print("self.holster: "..self.holster)
 	--view model stuff
 	if !self.holster then
 		--world model stuff
 		--use modulus...
+		print("self.result: "..self.result)
 		self.result = self.periscope %3 --3 is the number of states possible.
 		self.resultNOT1 = (self.periscope+1)%3
 		self.resultNOT2 = (self.periscope-1)%3

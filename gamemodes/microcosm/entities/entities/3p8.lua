@@ -21,7 +21,7 @@ ENT.OasisCityPos = Vector(2373, -802, 0)
 ENT.OasisShopPos = Vector(2323, -708, 0)
 
 ENT.BlkLbCityPos = Vector(2533, -959, 0)
-ENT.BlkLbShopPos = Vector(2593, -716, 0)
+ENT.BlkLbShopPos = Vector(187, 1090, -2304)
 
 ENT.sunPos = Vector(0,0,2208)
 
@@ -212,7 +212,7 @@ function ENT:Initialize()
 	print("Currently set to 13 as 'meme' in 3p8_shop. Ctrl+F it to change...")
 
 	self.distanceToGround = -68
-	self.fuckNature = true
+	self.fuckNature = false
 
 	self:SetModel(self.Model)
 	self:SetMaterial("models/effects/splodeglass_sheet") --make invis
@@ -378,9 +378,13 @@ function ENT:Initialize()
 		blacklabs.StockArray = blacklabsStocks
 		blacklabs:Spawn()
 
+		--space
 		sun = ents.Create("3p8_sky_sun")
 		if ( !IsValid( sun ) ) then return end
 		sun:SetPos(self.sunPos)
 		sun:Spawn()
+
+		--microcosm car
+		
 	end
 end

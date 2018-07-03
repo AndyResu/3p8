@@ -143,9 +143,9 @@ if SERVER then
 		nav:Spawn()
 
 		--disable this for now
-		--[[local tele = ents.Create("micro_comp_teleporter")
+		local tele = ents.Create("3p8_teleporter")
 		tele:SetPos(micro_ship_origin+Vector(-200,-225,0))
-		tele:Spawn()]]
+		tele:Spawn()
 
 		local spk = ents.Create("micro_speaker")
 		spk:SetPos(micro_ship_origin+Vector(0,0,-100))
