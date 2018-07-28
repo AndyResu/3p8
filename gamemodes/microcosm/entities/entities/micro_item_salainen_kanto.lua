@@ -11,32 +11,35 @@ ENT.Type = "anim"
 ENT.ItemModel = "models/props_docks/channelmarker_gib01.mdl" --"models/props/de_venice/canal_poles/canal_pole_3.mdl" --csgo model
 
 function ENT:Initialize()
-	self:SetModel(self.ItemModel)
-	self:SetMaterial("models/props_foliage/trees_city")
-	--self:PhysicsInitStandard()
-	--self:PhysicsInit(SOLID_VPHYSICS)
-	--self:SetMoveType(MOVETYPE_VPHYSICS)
-	self:SetSolid(SOLID_VPHYSICS)
-	--self:SetMoveType(0)
-	
-	self.health = 400
+	if SERVER then
+		self:SetModel(self.ItemModel)
+		self:SetMaterial("models/props_foliage/trees_city")
+		--self:PhysicsInitStandard()
+		--self:PhysicsInit(SOLID_VPHYSICS)
+		--self:SetMoveType(MOVETYPE_VPHYSICS)
+		self:SetSolid(SOLID_VPHYSICS)
+		--self:SetMoveType(0)
+		
+		self.health = 400
 
-	--energy timer
-	local timer_name = "kantoEnergyDepletion_" .. self:EntIndex()
-	timer.Create(timer_name,100,0, function() --every 100s, update energy status
-		--print("100 seconds pass")
-		if IsValid(self)then
-			self.health = self.health - 100
-			if self.health <= 0 then --KILL FUNCTION; SLAYER
-				self:Remove()
+		--energy timer
+		local timer_name = "kantoEnergyDepletion_" .. self:EntIndex()
+		timer.Create(timer_name,100,0, function() --every 100s, update energy status
+			--print("100 seconds pass")
+			if IsValid(self)then
+				self.health = self.health - 100
+				if self.health <= 0 then --KILL FUNCTION; SLAYER
+					self:Remove()
+				end
+				if self:IsOnFire() then
+					self:Remove()
+				end
+			else
+				timer.Remove(timer_name)
 			end
-			if self:IsOnFire() then
-				self:Remove()
-			end
-		else
-			timer.Remove(timer_name)
-		end
-	end)
+		end)
+		--print("kanto: "..self:EntIndex())
+	end
 end
 
 function ENT:OnTakeDamage(damageto)

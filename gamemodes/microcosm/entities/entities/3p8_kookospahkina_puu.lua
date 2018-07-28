@@ -123,7 +123,9 @@ function ENT:Initialize()
 				timer.Remove(timer_name)
 			end
 		end)
+		--print("puu Server: "..self:EntIndex())
 	end
+	--print("puu Client: "..self:EntIndex())
 end
 
 if SERVER then

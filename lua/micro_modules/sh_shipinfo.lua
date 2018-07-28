@@ -20,7 +20,7 @@ end]]
 function ENTITY:IsBroken()
 	local frac = .3
 
-	if self:GetClass()=="micro_ship" then
+	if self:GetClass()=="micro_ship" || self:GetClass()=="3p8_ship" then
 		frac=.1
 	end
 
@@ -142,9 +142,10 @@ if SERVER then
 		end
 		nav:Spawn()
 
-		--disable this for now
-		local tele = ents.Create("3p8_teleporter")
+		local tele = ents.Create("micro_comp_teleporter")
 		tele:SetPos(micro_ship_origin+Vector(-200,-225,0))
+		--Used to get the position of teleporters on ships directly.
+		ship_ent.info.teleEnt = tele
 		tele:Spawn()
 
 		local spk = ents.Create("micro_speaker")
@@ -210,11 +211,11 @@ if SERVER then
 			table.insert(MICRO_SHIP_INFO,new_ship_info)
 
 			-- Ship Ent
-			local ship_ent = ents.Create("micro_ship")
+			local ship_ent = ents.Create("3p8_ship")
 			ship_ent:SetPos(home:GetPos()+Vector(0,0,25))
 			ship_ent:SetAngles(home:GetAngles())
 			ship_ent:SetShipID(i)
-			ship_ent:SetColor(MICRO_TEAM_COLORS[i])
+			--ship_ent:SetColor(MICRO_TEAM_COLORS[i])
 			ship_ent:Spawn()
 			ship_ent.home = home
 		end

@@ -321,7 +321,8 @@ local sound_unhook = Sound("npc/attack_helicopter/aheli_mine_drop1.wav")
 
 local damage_whitelist = {
 	micro_ship=true,
-	micro_artifact=true
+	micro_artifact=true,
+	ow_tower = true
 }
 
 function ENT:OnTakeDamage(dmg)

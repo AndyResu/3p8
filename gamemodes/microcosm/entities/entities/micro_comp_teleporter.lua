@@ -40,27 +40,33 @@ function ENT:Initialize()
 	self.teleporter_distance = 0
 	self.teleporter_distance_closest = 9999999
 	self.teleporter_guide_of_closest = {}
+	self.teleporter_guide_of_closest = 0
+
 	for i=1,#MICRO_SHIP_INFO do
-		self.teleporter_guide_of_closest[i] = 0
+		if self:GetShipInfo() == MICRO_SHIP_INFO[i] then
+			self.teamo = i
+		end
 	end
-	self.teamo = 0
 	self.sound_has_played = false
-	self.teleporter_position_relative_to_the_ship = Vector(-200,-225,0) --changed later, don't worry
 end
 
 function ENT:Use(ply)
 	if not self:IsBroken() then
 		--easy way to get the team the teleporter is on
-		for i=1,#MICRO_SHIP_INFO do
+		--[[for i=1,#MICRO_SHIP_INFO do
 			if self:GetShipInfo() == MICRO_SHIP_INFO[i] then
 				self.teamo = i
 			end
-		end
+		end]]
 
-		if self.teleporter_guide_of_closest[self.teamo] != 0 then
+		if self.teleporter_guide_of_closest != 0 then
 			--print("TELESNORT AWAYWAYS ".. self.teleporter_guide_of_closest[self.teamo])
 			ply:SetEyeAngles(ply:GetShootPos():Angle()*-1) --I know, I know, it doesn't work well.
-			ply:SetPos(MICRO_SHIP_INFO[self.teleporter_guide_of_closest[self.teamo]].origin + self.teleporter_position_relative_to_the_ship + teleporter_origin_fix)
+			if self.teleporter_guide_of_closest <= #MICRO_SHIP_INFO then --the closest thing is a ship
+				ply:SetPos(MICRO_SHIP_INFO[self.teleporter_guide_of_closest].teleEnt:GetPos() + teleporter_origin_fix)
+			else	--the closest thing is a city
+				ply:SetPos(OW_CITY_TELE_POS[self.teleporter_guide_of_closest-#MICRO_SHIP_INFO] + teleporter_origin_fix)
+			end
 			ply:EmitSound(sound_tele_use)
 		end
 	end
@@ -73,25 +79,41 @@ function ENT:Think()
 	if CLIENT then return end
 
 	self.teleporter_distance_closest = 9999999
-	for t=1,#MICRO_SHIP_INFO do --is really team number, hence t
-		for i=1,#MICRO_SHIP_INFO do
-			self.teleporter_distance = MICRO_SHIP_INFO[t].entity:GetPos():Distance(MICRO_SHIP_INFO[i].entity:GetPos())
-			if t != i then
+
+	--print("i need less going on: "..tostring(MICRO_SHIP_INFO[self.teamo].entity:GetPos()))
+	self.currentPos = MICRO_SHIP_INFO[self.teamo].entity:GetPos()
+	--print("22222222222222222222: "..tostring(self.currentPos))
+	--t = self.teamo
+	for i=1,(#MICRO_SHIP_INFO+#OW_CITY_POS) do
+		if i <= #MICRO_SHIP_INFO then --to check spaceships
+			self.teleporter_distance = self.currentPos:Distance(MICRO_SHIP_INFO[i].entity:GetPos())
+			if self.teamo != i then
 				if self.teleporter_distance < max_teleport_distance && self.teleporter_distance <= self.teleporter_distance_closest then
 					self.teleporter_distance_closest = self.teleporter_distance
 					--print("telepoter distance closet "..teleporter_distance_closest)
-					self.teleporter_guide_of_closest[t] = i
+					self.teleporter_guide_of_closest = i
 					self:SetInRange(true)
 					--print("tele guide info ".. self.teleporter_guide_of_closest[t])
-				elseif self.teleporter_distance_closest >= max_teleport_distance then
-					self.teleporter_guide_of_closest[t] = 0
-				end
-				if self:GetInRange() && self.teleporter_distance_closest >= max_teleport_distance then
-					self:SetInRange(false)
-					self.sound_has_played =  false
 				end
 			end
+		else --to check OW cities
+			--print(OW_CITY_POS[i-#MICRO_SHIP_INFO])
+			self.teleporter_distance = self.currentPos:Distance(OW_CITY_POS[i-#MICRO_SHIP_INFO])
+			if self.teleporter_distance < max_teleport_distance && self.teleporter_distance <= self.teleporter_distance_closest then
+				self.teleporter_distance_closest = self.teleporter_distance
+				--print("telepoter distance closet "..teleporter_distance_closest)
+				self.teleporter_guide_of_closest = i
+				self:SetInRange(true)
+				--print("tele guide info ".. self.teleporter_guide_of_closest[t])
+			end
 		end
+	end
+	if self:GetInRange() && self.teleporter_distance_closest >= max_teleport_distance then
+		self:SetInRange(false)
+		self.sound_has_played =  false
+	end
+	if self.teleporter_distance_closest >= max_teleport_distance then
+		self.teleporter_guide_of_closest = 0
 	end
 	if self:GetInRange() && not self.sound_has_played then
 		self:EmitSound(sound_in_range)

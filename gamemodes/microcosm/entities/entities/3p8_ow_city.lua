@@ -21,6 +21,8 @@ ENT.StartingMoney = 1000
 ENT.StartingPeople = 5
 ENT.ShopPos = Vector(-268, 2730, 48)
 ENT.ShopEnt = nil
+ENT.TelePos = nil
+ENT.CityNum = nil
 
 function ENT:Initialize()
 	--self:SetModelScale(1/32, 0) --cactus is small enough as it is
@@ -54,6 +56,13 @@ function ENT:Initialize()
 		oasisShop:Spawn()
 
 		self.ShopEnt = oasisShop
+
+		if self.TelePos != nil then
+			genji = ents.Create("3p8_teleporter")
+			genji:SetPos(self.TelePos)
+			genji.CityNumber = self.CityNum
+			genji:Spawn()
+		end
 	end
 
 	--create a villager to get the ball rolling?

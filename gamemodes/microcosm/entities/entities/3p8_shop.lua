@@ -127,7 +127,8 @@ function ENT:Initialize()
 		self.ParentEnt = self:GetNWEntity("ParentEnt", "error")
 		--loop through the possible network entity names and reconnstruct the array clientside
 		--local meme = self.ParentEnt.ParentEnt.ItemList
-		local meme = Entity(13).ItemList
+		--local meme = Entity(13).ItemList
+		local meme = Entity(THREEPATE_ENT_ID).ItemList
 
 		--wow, this works. who to heck done it?????????????????????????????????????
 		--local memeArray = {{1},{},{},{},{5},{},{},{},{},{10},{},{},{},{},{15},{},{},{},{},{20},{},{},{},{},{25},{},{},{},{},{30},{},{},{},{},{35},{},{},{},{},{40},{},{},{},{},{45},{},{},{},{},{50}}
@@ -268,7 +269,7 @@ function ENT:OnTakeDamage(damageto)
 end
 
 function ENT:Use(ply)
-	ply:SendLua("MICRO_SHOW_SHOP(Entity("..self:EntIndex().."))")
+	ply:SendLua("MICRO_SHOW_SHOP2(Entity("..self:EntIndex().."))")
 end
 
 if SERVER then
@@ -306,7 +307,7 @@ end
 
 -- This is bad.
 
-concommand.Add("micro_shop_buy",function(ply,_,args)
+concommand.Add("3p8_shop_buy",function(ply,_,args)
 	local shop_ent = Entity(tonumber(args[1]) or 0)
 
 	local n = tonumber(args[2])
@@ -339,7 +340,7 @@ concommand.Add("micro_shop_buy",function(ply,_,args)
 	end
 end)
 
-function MICRO_SHOW_SHOP(ent)
+function MICRO_SHOW_SHOP2(ent)
 	local blocked
 
 	local panel = vgui.Create("DFrame")
@@ -427,7 +428,7 @@ function MICRO_SHOW_SHOP(ent)
 			button:SetPos(540,50)
 
 			function button:DoClick()
-				RunConsoleCommand("micro_shop_buy",ent:EntIndex(),i)
+				RunConsoleCommand("3p8_shop_buy",ent:EntIndex(),i)
 			end
 
 			function button:Think()
@@ -453,27 +454,27 @@ function ENT:Draw()
 
 	self:DrawModel()
 		cam.Start3D2D(self:LocalToWorld(self.ComponentScreenOffset),self:LocalToWorldAngles(self.ComponentScreenRotation), .25 )
-			self:drawScreen()
+			self:drawScreenShop()
 		cam.End3D2D()
 
 end
 
-hook.easy("HUDPaint",function()
+hook.Add("HUDPaint","3p8_shop",function()
 	local control_ent = LocalPlayer().proxyctrls_ent
 
-	if IsValid(control_ent) and control_ent.drawScreenToHud and isfunction(control_ent.drawScreen) then
+	if IsValid(control_ent) and control_ent.drawScreenToHud and isfunction(control_ent.drawScreenShop) then
 
 		local matrix = Matrix()
 		matrix:Translate(Vector(ScrW()-control_ent.ComponentScreenWidth,ScrH()-control_ent.ComponentScreenHeight,0))
 		--matrix:Scale(Vector(2,2,2))
 		cam.PushModelMatrix(matrix)
-		control_ent:drawScreen()
+		control_ent:drawScreenShop()
 		cam.PopModelMatrix()
 		--end
 	end
 end)
 
-function ENT:drawScreen()
+function ENT:drawScreenShop()
 	local color = Color(0,0,0)
 	local width = self.ComponentScreenWidth
 	local height = self.ComponentScreenHeight

@@ -17,13 +17,26 @@ ENT.Type = "anim"
 ENT.Model = "models/props_combine/breenglobe.mdl"
 
 --need a list of ENT. variables for city/shop positions
-ENT.OasisCityPos = Vector(2373, -802, 0)
+--ENT.OasisCityPos = Vector(2373, -802, 0)
 ENT.OasisShopPos = Vector(2323, -708, 0)
 
-ENT.BlkLbCityPos = Vector(2533, -959, 0)
+--ENT.BlkLbCityPos = Vector(2533, -959, 0)
 ENT.BlkLbShopPos = Vector(187, 1090, -2304)
 
+OW_CITY_POS = 	{
+					Vector(100, 604, 1488), --OasisCityPos
+					Vector(958, 571, 1488) --BlkLbCityPos
+				}
+
+--ENT.TeleOffset = Vector(0,0,64)
+OW_CITY_TELE_POS = 	{
+						Vector(2454, 900, 128) + Vector(0,0,64), --Oasis
+						Vector(-5212, 1233, 92) + Vector(0,0,64) --BlkLb
+					}
+
 ENT.sunPos = Vector(0,0,2208)
+
+ENT.Tower1Pos = Vector(600, 375, 1495)
 
 --has the following format
 	--name="what it will show up as in the shop",
@@ -208,8 +221,8 @@ GLOBAL_grass_max =		150
 
 function ENT:Initialize()
 	--todo: fix later. 13 normally
-	print("3p8 ent number (for manual entering): "..tostring(self))
-	print("Currently set to 13 as 'meme' in 3p8_shop. Ctrl+F it to change...")
+	--print("3p8 ent number (for manual entering): "..tostring(self))
+	--print("Currently set to 13 as 'meme' in 3p8_shop. Ctrl+F it to change...")
 
 	self.distanceToGround = -68
 	self.fuckNature = false
@@ -218,6 +231,7 @@ function ENT:Initialize()
 	self:SetMaterial("models/effects/splodeglass_sheet") --make invis
 	self:SetCollisionGroup(COLLISION_GROUP_DEBRIS_TRIGGER) --make nocollide
 	self:SetModelScale(0.01, 0) --make super small
+	THREEPATE_ENT_ID = self:EntIndex()
 
 	if SERVER then
 		if !self.fuckNature then
@@ -256,12 +270,15 @@ function ENT:Initialize()
 
 		oasis = ents.Create("3p8_ow_city")
 		if ( !IsValid( oasis ) ) then return end
+		oasis.CityNum = 1
 		oasis.CityName = "Paradise Oasis"
 		oasis.Model = "models/props_lab/cactus.mdl"
 		oasis:SetNWEntity("ParentEnt", self)
 		oasis.ParentEnt = oasis:GetNWEntity("ParentEnt", "error")
-		oasis:SetPos(self.OasisCityPos)
+		oasis:SetPos(OW_CITY_POS[oasis.CityNum])
 		oasis.ShopPos = self.OasisShopPos
+		oasis.TelePos = OW_CITY_TELE_POS[oasis.CityNum]
+		
 		--set angles here too
 
 		--will set the city's shop stock here
@@ -339,12 +356,14 @@ function ENT:Initialize()
 
 		blacklabs = ents.Create("3p8_ow_city")
 		if ( !IsValid( blacklabs ) ) then return end
+		blacklabs.CityNum = 2
 		blacklabs.CityName = "Black Labs"
 		blacklabs.Model = "models/props_c17/suitcase001a.mdl"
 		blacklabs:SetNWEntity("ParentEnt", self)
 		blacklabs.ParentEnt = blacklabs:GetNWEntity("ParentEnt", "error")
-		blacklabs:SetPos(self.BlkLbCityPos)
+		blacklabs:SetPos(OW_CITY_POS[blacklabs.CityNum])
 		blacklabs.ShopPos = self.BlkLbShopPos
+		blacklabs.TelePos = OW_CITY_TELE_POS[blacklabs.CityNum]
 		--set angles here too
 
 		--will set the city's shop stock here
@@ -385,6 +404,14 @@ function ENT:Initialize()
 		sun:Spawn()
 
 		--microcosm car
-		
+		--done in shared.lua
+
+		--a tower
+		tower1 = ents.Create("ow_tower")
+		if ( !IsValid( tower1 ) ) then return end
+		tower1:SetPos(self.Tower1Pos)
+		tower1:SetModel("models/props_c17/lamp001a.mdl")
+		tower1:SetMaterial("models/props_combine/com_shield001a")
+		tower1:Spawn()
 	end
 end

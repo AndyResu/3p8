@@ -84,7 +84,9 @@ function ENT:Initialize()
 				self:Upgrayed()
 			end)
 		end
+		--print("Potato Server: "..self:EntIndex())
 	end
+	--print("Potato Client: "..self:EntIndex())
 end
 
 function ENT:Upgrayed()
