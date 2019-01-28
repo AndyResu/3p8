@@ -13,7 +13,7 @@ ENT.Base = "micro_item"
 
 ENT.ItemName = "Enemy Tickets"
 ENT.ItemModel = "models/props_lab/citizenradio.mdl"
-ENT.MaxCount = 5
+ENT.MaxCount = 20
 
 function ENT:Use(ply)
 	--find spawn location ents...
@@ -23,7 +23,7 @@ function ENT:Use(ply)
 		--make friends. via airdrop and knocking down barriers
 		local ent1 = ents.Create("npc_combine_s") --THEY'VE SENT IN THE (not) SUPERS
 
-		ent1:SetPos(self:GetPos()+Vector(128,128,64))
+		ent1:SetPos(self:GetPos()+Vector(math.random(-128,128),math.random(-128,128),128))
 		ent1:CallOnRemove( "Casualty", function( ent ) self:TryTake(1) end )
 		ent1:Spawn()
 	end

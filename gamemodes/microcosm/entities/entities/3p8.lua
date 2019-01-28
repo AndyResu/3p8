@@ -3,8 +3,10 @@
 	Uses:		Required for the gamemode to work.
 				Initializes all the global variables.
 				Spawns plants
+				Spawns planets
 				Spawns cities
 					cities spawn shops
+					and teleporters
 
 	Todo:		
 
@@ -18,25 +20,33 @@ ENT.Model = "models/props_combine/breenglobe.mdl"
 
 --need a list of ENT. variables for city/shop positions
 --ENT.OasisCityPos = Vector(2373, -802, 0)
-ENT.OasisShopPos = Vector(2323, -708, 0)
+ENT.OasisShopPos = Vector(1097, 3475, 48)
 
 --ENT.BlkLbCityPos = Vector(2533, -959, 0)
-ENT.BlkLbShopPos = Vector(187, 1090, -2304)
+ENT.BlkLbShopPos = Vector(-5444, 1544, 92)
+ENT.oblcmShopPos = Vector(-3765, 6125, -448)
+ENT.wggShopPos = Vector(1188, 7649, -123)
 
 OW_CITY_POS = 	{
-					Vector(100, 604, 1488), --OasisCityPos
-					Vector(958, 571, 1488) --BlkLbCityPos
+					Vector(535, 60, 1488), --OasisCityPos
+					Vector(958, 571, 1488), --BlkLbCityPos
+					Vector(100, 604, 1488), --oblcomp
+					Vector(1029, -348, 1488) --Western GG wgg
 				}
 
 --ENT.TeleOffset = Vector(0,0,64)
+--not really in the overworld OW
 OW_CITY_TELE_POS = 	{
-						Vector(2454, 900, 128) + Vector(0,0,64), --Oasis
-						Vector(-5212, 1233, 92) + Vector(0,0,64) --BlkLb
+						Vector(2454, 900, 128) + Vector(0,0,60), --Oasis
+						Vector(-5212, 1233, 92) + Vector(0,0,60), --BlkLb
+						Vector(-4698, 6323, -448) + Vector(0,0,60), --oblcm
+						Vector(804, 8757, -139) + Vector(0,0,60) --Western GG wgg
 					}
 
 ENT.sunPos = Vector(0,0,2208)
 
-ENT.Tower1Pos = Vector(600, 375, 1495)
+ENT.Tower1Pos = Vector(309, 624, 1495)
+ENT.Tower2Pos = Vector(55, 439, 1495)
 
 --has the following format
 	--name="what it will show up as in the shop",
@@ -197,6 +207,46 @@ ENT.ItemList = {
 		soundSell="ambient/levels/labs/coinslot1.wav"
 	},
 	{
+		name="Fixer Tool",
+		desc="Allows you to repair things... like your vehicle!",
+		cost=10000,
+		pv="models/weapons/w_toolgun.mdl",
+		ent="micro_fixer",
+		soundSell="weapons/physcannon/superphys_small_zap1.wav"
+	},
+	{
+		name="Fixer Fuel",
+		desc="Reloads 100 units of fixer fuel.",
+		cost=1000,
+		pv="models/items/car_battery01.mdl",
+		ent="micro_item_fixerfuel",
+		soundSell="ambient/levels/labs/coinslot1.wav"
+	},
+	{
+		name="Standard Cannon Shells",
+		desc="Reloads 200 standard cannon shells.",
+		cost=1000,
+		pv="models/items/ar2_grenade.mdl",
+		ent="micro_item_shell_1",
+		soundSell="ambient/levels/labs/coinslot1.wav"
+	},
+	{
+		name="Hook Cannon Shells",
+		desc="Reloads 4 hook cannon shells.",
+		cost=500,
+		pv="models/props_junk/meathook001a.mdl",
+		ent="micro_item_shell_2",
+		soundSell="ambient/levels/labs/coinslot1.wav"
+	},
+	{
+		name="Use Cannon Shells",
+		desc="Reloads 8 use cannon shells.",
+		cost=500,
+		pv="models/dav0r/buttons/button.mdl",
+		ent="micro_item_shell_3",
+		soundSell="ambient/levels/labs/coinslot1.wav"
+	},
+	{
 		name="Spinny Ball",
 		desc="Slightly-used ball that has spinny parts in it. Looks cool. Might be useful.",
 		cost=3000,
@@ -220,12 +270,8 @@ GLOBAL_grass = 			0
 GLOBAL_grass_max =		150
 
 function ENT:Initialize()
-	--todo: fix later. 13 normally
-	--print("3p8 ent number (for manual entering): "..tostring(self))
-	--print("Currently set to 13 as 'meme' in 3p8_shop. Ctrl+F it to change...")
-
 	self.distanceToGround = -68
-	self.fuckNature = false
+	self.fuckNature = true
 
 	self:SetModel(self.Model)
 	self:SetMaterial("models/effects/splodeglass_sheet") --make invis
@@ -256,16 +302,12 @@ function ENT:Initialize()
 				for i = 1,15 do
 					newFruit = ents.Create("3p8_grass")
 					if ( !IsValid( newFruit ) ) then return end
-					newFruit:SetPos(self:GetPos() + Vector(math.random(-512,512),math.random(-512,512),self.distanceToGround))
-					if !newFruit:OnGroundNotStupidEdition(newFruit:GetPos()) && newFruit:WaterLevel() != 0 then
-						newFruit:Remove()
-					else
-						--might spawn off map...
-						newFruit:Spawn()
-						--print(j+self.distanceToGround)
-					end
+					newFruit:SetPos(self:GetPos() + Vector(math.random(-512,512),math.random(-512,512),math.random(0,25)))
+					--might spawn off map...
+					newFruit:Spawn()
+					--print(j+self.distanceToGround)
 				end
-			--end
+			--end]]
 		end
 
 		oasis = ents.Create("3p8_ow_city")
@@ -392,10 +434,90 @@ function ENT:Initialize()
 			{
 				ent = "3p8_collector_metal",
 				stock = 100
+			},
+			{
+				ent="micro_item_shell_1",
+				stock = 10
+			},
+			{
+				ent="micro_fixer",
+				stock = 50
+			},
+			{
+				ent="micro_item_fixerfuel",
+				stock = 150
 			}
 		}
 		blacklabs.StockArray = blacklabsStocks
 		blacklabs:Spawn()
+
+
+
+		oblcomp = ents.Create("3p8_ow_city")
+		if ( !IsValid( oblcomp ) ) then return end
+		oblcomp.CityNum = 3
+		oblcomp.CityName = "TBD Compound"
+		oblcomp.Model = "models/props_wasteland/prison_padlock001a.mdl"
+		oblcomp:SetNWEntity("ParentEnt", self)
+		oblcomp.ParentEnt = oblcomp:GetNWEntity("ParentEnt", "error")
+		oblcomp:SetPos(OW_CITY_POS[oblcomp.CityNum])
+		oblcomp.ShopPos = self.oblcmShopPos
+		oblcomp.TelePos = OW_CITY_TELE_POS[oblcomp.CityNum]
+		--set angles here too
+
+		--will set the city's shop stock here
+			--stock is only used to initialize, otherwise it is just a list of ent names
+		local oblcompStocks = {
+			{
+				ent="micro_item_collectable_food",
+				stock = 150
+			},
+			{
+				ent = "3p8_rock_s",
+				stock = 10
+			},
+			{
+				ent = "3p8_kookospahkina_puu",
+				stock = 15
+			},
+			{
+				ent = "3p8_potato_ent",
+				stock = 25
+			}
+		}
+		oblcomp.StockArray = oblcompStocks
+		oblcomp:Spawn()
+
+
+
+		wgg = ents.Create("3p8_ow_city")
+		if ( !IsValid( wgg ) ) then return end
+		wgg.CityNum = 4
+		wgg.CityName = "gg"
+		wgg.Model = "models/props_combine/breenglobe.mdl"
+		wgg:SetNWEntity("ParentEnt", self)
+		wgg.ParentEnt = wgg:GetNWEntity("ParentEnt", "error")
+		wgg:SetPos(OW_CITY_POS[wgg.CityNum])
+		wgg.ShopPos = self.wggShopPos
+		wgg.TelePos = OW_CITY_TELE_POS[wgg.CityNum]
+		--set angles here too
+
+		--will set the city's shop stock here
+			--stock is only used to initialize, otherwise it is just a list of ent names
+		local wggStocks = {
+			{
+				ent="micro_item_collectable_food",
+				stock = 5
+			},
+			{
+				ent = "3p8_rock_s",
+				stock = 1
+			}
+		}
+		wgg.StockArray = wggStocks
+		wgg:Spawn()
+
+
 
 		--space
 		sun = ents.Create("3p8_sky_sun")
@@ -413,5 +535,35 @@ function ENT:Initialize()
 		tower1:SetModel("models/props_c17/lamp001a.mdl")
 		tower1:SetMaterial("models/props_combine/com_shield001a")
 		tower1:Spawn()
+
+		tower2 = ents.Create("ow_tower")
+		if ( !IsValid( tower2 ) ) then return end
+		tower2:SetPos(self.Tower2Pos)
+		tower2:SetModel("models/props_c17/lamp001a.mdl")
+		tower2:SetMaterial("models/props_combine/com_shield001a")
+		tower2:Spawn()
+
+		jet1 = ents.Create("ow_jet")
+		if ( !IsValid( jet1 ) ) then return end
+		jet1:SetPos(Vector(500, 1200, 2000))
+		jet1:SetModel("models/xqm/jetbody3.mdl")
+		jet1.Home = OW_CITY_POS[oblcomp.CityNum]
+		jet1:Spawn()
+
+		jet2 = ents.Create("ow_jet")
+		if ( !IsValid( jet2 ) ) then return end
+		jet2:SetPos(Vector(700, 1400, 2200))
+		jet2:SetModel("models/xqm/jetbody3.mdl")
+		jet2.Home = OW_CITY_POS[oblcomp.CityNum]
+		jet2:Spawn()
+
+		jet3 = ents.Create("ow_jet")
+		if ( !IsValid( jet3 ) ) then return end
+		jet3:SetPos(Vector(900, 1600, 2400))
+		jet3:SetModel("models/xqm/jetbody3.mdl")
+		jet3.Home = OW_CITY_POS[oblcomp.CityNum]
+		jet3:Spawn()
+
+		
 	end
 end

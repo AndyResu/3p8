@@ -44,6 +44,12 @@ function ENT:Initialize()
 				timer.Remove(timer_name)
 			end
 		end)
+		local phys = self:GetPhysicsObject()
+		if (phys:IsValid()) then
+			timer.Simple( 3, function ()
+				phys:Sleep()
+			end)
+		end
 		--print("puulle: "..self:EntIndex())
 	end
 end

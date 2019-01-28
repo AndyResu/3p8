@@ -72,6 +72,7 @@ function GM:PlayerSpawn( ply )
 		--ply:Give("micro_secrete_stick2") --the wewest lad added this
 		ply:Give("micro_secrete_suck") --the wewest lad added this
 		ply:Give("3p8_samurai") --the wewest lad added this
+		ply:Give("3p9") --the wewest lad added this
 		ply:Give("weapon_physcannon") --the wewest lad added this
 		ply:Give("3p8_sidewinderfang") --the wewest lad added this
 		ply:Give("3p8_potato_wep") --the wewest lad added this

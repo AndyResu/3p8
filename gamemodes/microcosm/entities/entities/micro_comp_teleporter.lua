@@ -23,7 +23,7 @@ local sound_tele_use = Sound("ambient/machines/teleport1.wav")
 
 --variables to change for gameplay
 local max_teleport_distance = 125
-local teleporter_origin_fix = Vector(0,0,-48) --vector to be added to the origin of the teleporter's prop. Set manually :\
+local teleporter_origin_fix = Vector(0,0,-46) --vector to be added to the origin of the teleporter's prop. Set manually :\
 --Under ENT:Initialize() self.teleporter_position_relative_to_the_ship is hardcoded. It's the position of the teleporter relative to the origin and is the reason why this won't work with the ufo
 --end variables to change for gameplay
 
@@ -41,6 +41,7 @@ function ENT:Initialize()
 	self.teleporter_distance_closest = 9999999
 	self.teleporter_guide_of_closest = {}
 	self.teleporter_guide_of_closest = 0
+	teleporter_origin_fix = teleporter_origin_fix + self:GetForward()*48
 
 	for i=1,#MICRO_SHIP_INFO do
 		if self:GetShipInfo() == MICRO_SHIP_INFO[i] then
@@ -61,13 +62,26 @@ function ENT:Use(ply)
 
 		if self.teleporter_guide_of_closest != 0 then
 			--print("TELESNORT AWAYWAYS ".. self.teleporter_guide_of_closest[self.teamo])
-			ply:SetEyeAngles(ply:GetShootPos():Angle()*-1) --I know, I know, it doesn't work well.
+			--ply:SetEyeAngles(ply:GetShootPos():Angle()*-1) --I know, I know, it doesn't work well.
 			if self.teleporter_guide_of_closest <= #MICRO_SHIP_INFO then --the closest thing is a ship
 				ply:SetPos(MICRO_SHIP_INFO[self.teleporter_guide_of_closest].teleEnt:GetPos() + teleporter_origin_fix)
 			else	--the closest thing is a city
 				ply:SetPos(OW_CITY_TELE_POS[self.teleporter_guide_of_closest-#MICRO_SHIP_INFO] + teleporter_origin_fix)
 			end
 			ply:EmitSound(sound_tele_use)
+		end
+	end
+end
+
+function ENT:PhysicsCollide(data, phys)
+	if not self:IsBroken() then
+		if self.teleporter_guide_of_closest != 0 then
+			if self.teleporter_guide_of_closest <= #MICRO_SHIP_INFO then --the closest thing is a ship
+				data.HitEntity:SetPos(MICRO_SHIP_INFO[self.teleporter_guide_of_closest].teleEnt:GetPos() + teleporter_origin_fix)
+			else	--the closest thing is a city
+				data.HitEntity:SetPos(OW_CITY_TELE_POS[self.teleporter_guide_of_closest-#MICRO_SHIP_INFO] + teleporter_origin_fix)
+			end
+			data.HitEntity:EmitSound(sound_tele_use)
 		end
 	end
 end
@@ -84,7 +98,7 @@ function ENT:Think()
 	self.currentPos = MICRO_SHIP_INFO[self.teamo].entity:GetPos()
 	--print("22222222222222222222: "..tostring(self.currentPos))
 	--t = self.teamo
-	for i=1,(#MICRO_SHIP_INFO+#OW_CITY_POS) do
+	for i=1,(#MICRO_SHIP_INFO + #OW_CITY_POS) do
 		if i <= #MICRO_SHIP_INFO then --to check spaceships
 			self.teleporter_distance = self.currentPos:Distance(MICRO_SHIP_INFO[i].entity:GetPos())
 			if self.teamo != i then

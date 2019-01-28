@@ -234,7 +234,8 @@ function ENT:Think()
 
 		self:PhysWake()
 
-		self:SetThrottle(math.Clamp(self:GetThrottle() + self.ctrl_t*FrameTime()*10,-1,1))
+		--5 at the end is 5x the max speed of 1. sanic warhead
+		self:SetThrottle(math.Clamp(self:GetThrottle() + self.ctrl_t*FrameTime()*10,-1,5))
 
 		local hurt = self:IsBroken()
 
@@ -322,7 +323,9 @@ local sound_unhook = Sound("npc/attack_helicopter/aheli_mine_drop1.wav")
 local damage_whitelist = {
 	micro_ship=true,
 	micro_artifact=true,
-	ow_tower = true
+	ow_tower = true,
+	rpg_rocket = true,
+	ow_jet = true
 }
 
 function ENT:OnTakeDamage(dmg)

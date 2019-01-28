@@ -1,9 +1,11 @@
 --[[
-	3p8_rock_s
-	Uses:		rocks (exhaustable)
+	3p9_1hp
+	Uses:		Set player HP to 1 for testing.
 
 	Todo:		
 
+	Lore:		Copy and pasted 3p8_rock_s and got 3p9_rock_s. Kept it for lols. Then copy-pastad the 3p9_fov.
+	
 ]]
 
 AddCSLuaFile()
@@ -22,21 +24,6 @@ function ENT:Initialize()
 		self:SetSolid(SOLID_VPHYSICS)
 		self:SetMoveType(MOVETYPE_VPHYSICS)
 
-		local timer_name = "rock_s_Depletion_" .. self:EntIndex()
-		timer.Create(timer_name,600,0, function() --delete rock after 10 minutes
-			if IsValid(self)then
-				self:Remove()
-				timer.Remove(timer_name)
-			else
-				timer.Remove(timer_name)
-			end
-		end)
-		local phys = self:GetPhysicsObject()
-		if (phys:IsValid()) then
-			timer.Simple( 2, function ()
-				phys:Sleep()
-			end)
-		end
 	end
 
 	self.health = 250
@@ -48,4 +35,8 @@ function ENT:OnTakeDamage(damageto)
 		self:EmitSound("physics/concrete/boulder_impact_hard"..math.random(4)..".wav")
 		self:Remove()		
 	end
+end
+
+function ENT:Use(ply)
+	ply:SetHealth(1) --fov, time
 end

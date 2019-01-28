@@ -1,8 +1,8 @@
 --shameless copy-pasta of SkyLight's micro_item_salainen_saha which was a copy-pasta of SkyLight's micro_item_salainen_kanto which was a copy-pasta of SkyLight's micro_item_salainen_puulle which was a copy-pasta of SkyLight's micro_item_salainen_kookospahkina_puu7 which was a copy-pasta of SkyLight's micro_item_salainen_kookospahkina_puu6 which was a copy-pasta of SkyLight's micro_item_salainen_kookospahkina_puu5 which was a copy-pasta of SkyLight's micro_item_salainen_kookospahkina_puu4 which was a copy-pasta of SkyLight's micro_item_salainen_kookospahkina_puu3 which was a copy-pasta of SkyLight's micro_item_salainen_kookospahkina_puu2 which was a copy-pasta of SkyLight's micro_item_salainen_kookospahkina_puu1 which was a copy-pasta of SkyLight's micro_item_salainen_kookospahkina_puu which was a copy-pasta of SkyLight's micro_item_secrete_hd which was a copy-pasta of SkyLight's micro_collectable_food which was a copy-pasta of SkyLight's micro_item_armorkit.lua which was a copy-pasta of Parakeet's micro_item_medkit.lua
 --gottem
 
---radio
---micro_item_salainen_radio
+--3p8_radio
+--formerly micro_item_salainen_radio
 --maybe have jake be the radio dj
 --dj archieball'd and trapstaar geovainni
 --if the secrete mixtape is found, that can be put inside to play the super secrete mixtape. also ejaculable <---- SMArt!!!!!
@@ -13,6 +13,10 @@ ENT.Base = "micro_item_salainen"
 
 --ENT.ItemName = "Radio"
 ENT.ItemModel = "models/props/cs_office/radio.mdl" --chose CS:S radio. make unbreakable....?!!!
+
+ENT.Music = {"ambient/guit1.wav", "ambient/opera.wav", "ambient/music/bongo.wav", "ambient/music/country_rock_am_radio_loop.wav", "ambient/music/cubanmusic1.wav",
+			 "ambient/music/dustmusic1.wav", "ambient/music/dustmusic2.wav", "ambient/music/dustmusic3.wav", "ambient/music/flamenco.wav", "ambient/music/latin.wav", 
+			 "ambient/music/mirame_radio_thru_wall.wav", "ambient/music/piano1.wav", "ambient/music/piano2.wav"}
 
 function ENT:Initialize()
 	self:SetModel(self.ItemModel)
@@ -27,6 +31,8 @@ function ENT:Initialize()
 	self.health = 1000
 
 	self.containsMixtape = false
+	self.isOff = true
+	self.currentSong = self.Music[math.random(1,#self.Music)]
 end
 
 function ENT:OnTakeDamage(damageto)
@@ -53,9 +59,25 @@ function ENT:PhysicsCollide(data, phys)
 end
 
 function ENT:Use(ply)
+	--https://wiki.garrysmod.com/page/sound/Add
+	--^use this instead^
+	if self.isOff then
+		self.isOff = false
+		if self.containsMixtape then
+			--play mixtape
 
-	if self.containsMixtape then
-		
+		else
+			--play normal music
+			self.currentSong = self.Music[math.random(1,#self.Music)]
+			print("On: "..self.currentSong)
+			self:EmitSound(self.currentSong)
+		end
+	else
+		--stop music
+		print("Off: "..self.currentSong)
+		--doesn't work as of now, use the comment at the start of the method
+		self:StopSound(self.currentSong)
+		self.isOff = true
 	end
 end
 

@@ -51,6 +51,9 @@ function ENT:Initialize()
 			--phys:Sleep()
 			--make float (bouyancy)
 			phys:SetBuoyancyRatio(1.0) --0 min, 1 max (wood)
+			timer.Simple( 3, function ()
+				phys:Sleep()
+			end)
 		end
 		self.isPlanted = false
 
@@ -168,8 +171,8 @@ function ENT:Upgrayed()
 	--print(self:OnGroundNotStupidEdition(self:GetPos()))
 	--print("%%%%%%%%%%%%%%%%%%%%%%%%")
 
-	if self:WaterLevel() == 0 && SERVER then
-		if !self.isPlanted && self.treeLevel == 0 && self:OnGroundNotStupidEdition(self:GetPos()) then
+	if SERVER then
+		if !self.isPlanted && self.treeLevel == 0 && self:OnGroundNotStupidEdition(self:GetPos()) && self:WaterLevel() == 0 then
 			--autoplant section
 			self.isPlanted = true
 			--stop movement
@@ -256,7 +259,7 @@ end
 function ENT:OnGroundNotStupidEdition(position)
 	local plantable = false
 	local startpos = position
-	local endpos = 	startpos + Vector(0,0,-1)*10
+	local endpos = 	startpos + Vector(0,0,-1)*5
 	local tmin = Vector(1,1,1)*-5
 	local tmax = Vector(1,1,1)*5
 	local tr = util.TraceHull( {
@@ -265,14 +268,14 @@ function ENT:OnGroundNotStupidEdition(position)
 		filter = self,
 		mins = tmin,
 		maxs = tmax,
-		mask = MASK_SHOT_HULL
+		--mask = MASK_ALL
 	} )
 	if not IsValid(tr.Entity) then
 		tr = util.TraceLine({
 			start = startpos,
 			endpos = endpos,
 			filter = self,
-			mask = MASK_SHOT_HULL
+			--mask = MASK_ALL
 		})
 	end
 	local ent = tr.Entity
