@@ -19,7 +19,7 @@ MICRO_TEAM_COLORS = {
 }
 
 MICRO_HOME_SPOTS = {
-	{Vector(534, 106, 1490),Angle(0,90,0)}
+	{Vector(212, -380, 1488) + Vector(0,0,2),Angle(0,90,0)}
 
 
 	--{Vector(-2805.373047,-2629.304932,176.031250),Angle(0,90,0)}, -- top of spawn

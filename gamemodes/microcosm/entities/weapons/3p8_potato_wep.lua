@@ -7,6 +7,8 @@
 	--how make throw like grenade?
 
 	1 TODO
+
+	FILE THEME SONG: https://www.youtube.com/watch?v=Gu0TurCDC94
 ]]
 
 AddCSLuaFile()

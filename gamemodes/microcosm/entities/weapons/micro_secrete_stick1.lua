@@ -1,4 +1,6 @@
 --[[
+	micro_secrete_stick1	
+
 	FILE THEME SONG:
 	https://www.youtube.com/watch?v=ZXhuso4OTG4
 	I was thinking about a children's song about tapping sticks together. The innocence would match this weapon's innocence. Styx is much danker tho :^P

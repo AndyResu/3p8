@@ -310,7 +310,7 @@ function SWEP:Reload()
 			--super wizard...
 
 
-		elseif string.match(model_eaten, "bananna") || string.match(model_eaten, "doll") || string.match(model_eaten, "orange") || string.match(model_eaten, "hotdog") then
+		elseif string.match(model_eaten, "banana") || string.match(model_eaten, "doll") || string.match(model_eaten, "orange") || string.match(model_eaten, "hotdog") then
 			--lust wizard
 			--shoot paintcan fast
 			--change playermodel --changeling or maybe change other people

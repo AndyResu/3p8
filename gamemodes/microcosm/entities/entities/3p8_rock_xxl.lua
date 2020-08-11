@@ -29,19 +29,21 @@ function ENT:Initialize()
 	end
 
 	self.health = 3000
+	self.max = self.health
 end
 
 
 function ENT:OnTakeDamage(damageto)
 	self.health = self.health - damageto:GetDamage()
+	self:SetModelScale( self.health/self.max, 0.2)
 	if self.health <= 0 then
 		self:EmitSound("physics/concrete/boulder_impact_hard"..math.random(4)..".wav")
-		for i = 1,math.random(10,25) do
+		--[[for i = 1,math.random(10,25) do
 			local ent1 = ents.Create("3p8_rock_s")
 			if ( !IsValid( ent1 ) ) then return end
 			ent1:SetPos(self:GetPos()+Vector(math.random(-128, 128),math.random(-128, 128),math.random(-16, 128)))
 			ent1:Spawn()
-		end
+		end]]
 		self:Remove()		
 	end
 end

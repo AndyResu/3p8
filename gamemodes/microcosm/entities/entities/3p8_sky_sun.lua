@@ -19,7 +19,7 @@ ENT.Model = "models/hunter/misc/sphere375x375.mdl"
 ENT.Material = "models/atmospheres/sun/shell"
 ENT.HomeworldOffset = Vector(000,2000,0)
 ENT.LeetworldOffset = Vector(000,1000,0)
-ENT.Vertworld250Offset = Vector(500,500,500)
+ENT.Vertworld250Offset = Vector(500,500,450)
 ENT.SpinVector = Vector(0,400,0)
 ENT.SpinPos = Vector(100,0,0) --relative to self
 
@@ -70,7 +70,7 @@ function ENT:Initialize()
 		vertworld250.Sun = self --used network variables here in 3p8
 		vertworld250.TrailColor = Color(0,255,0)
 		vertworld250.TrailTime = 30
-		vertworld250.InitialPush = Vector(-300,-200,300)
+		vertworld250.InitialPush = Vector(-300,-200,250)
 		vertworld250:Spawn()
 	end
 end

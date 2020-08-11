@@ -13,6 +13,7 @@
 				
 	Realizations: self:SetSubMaterial(...,...) DOES NOTHING
 				fancy timers and fancy genes are hard to do right... something about local vs. self?
+				The invisible block on a log is why there are invis blocks everywhere.
 ]]
 
 

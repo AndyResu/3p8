@@ -20,6 +20,9 @@ ENT.Model = "models/props_combine/breenglobe.mdl"
 
 --need a list of ENT. variables for city/shop positions
 --ENT.OasisCityPos = Vector(2373, -802, 0)
+--Hillfort Version
+--ENT.OasisShopPos = Vector(0, 0, 0)
+--Edgewood version
 ENT.OasisShopPos = Vector(1097, 3475, 48)
 
 --ENT.BlkLbCityPos = Vector(2533, -959, 0)
@@ -27,26 +30,27 @@ ENT.BlkLbShopPos = Vector(-5444, 1544, 92)
 ENT.oblcmShopPos = Vector(-3765, 6125, -448)
 ENT.wggShopPos = Vector(1188, 7649, -123)
 
+--shared.lua controls the Microcosm ship's homebase
 OW_CITY_POS = 	{
-					Vector(535, 60, 1488), --OasisCityPos
-					Vector(958, 571, 1488), --BlkLbCityPos
-					Vector(100, 604, 1488), --oblcomp
-					Vector(1029, -348, 1488) --Western GG wgg
+					Vector(194, -420, 1488) + Vector(0,0,7), --OasisCityPos
+					Vector(767, 257, 1744) + Vector(0,0,7), --BlkLbCityPos
+					Vector(2422, 1214, 1488) + Vector(0,0,7), --oblcomp
+					Vector(1955, 2948, 1488) + Vector(0,0,7) --Western GG wgg
 				}
 
 --ENT.TeleOffset = Vector(0,0,64)
 --not really in the overworld OW
 OW_CITY_TELE_POS = 	{
-						Vector(2454, 900, 128) + Vector(0,0,60), --Oasis
+						Vector(2507, 891, 256) + Vector(0,0,60), --Oasis
 						Vector(-5212, 1233, 92) + Vector(0,0,60), --BlkLb
 						Vector(-4698, 6323, -448) + Vector(0,0,60), --oblcm
-						Vector(804, 8757, -139) + Vector(0,0,60) --Western GG wgg
+						Vector(1129, 8831, -139) + Vector(0,0,60) --Western GG wgg
 					}
 
-ENT.sunPos = Vector(0,0,2208)
+ENT.sunPos = Vector(0,0,2500)
 
-ENT.Tower1Pos = Vector(309, 624, 1495)
-ENT.Tower2Pos = Vector(55, 439, 1495)
+ENT.Tower1Pos = Vector(2185, 148, 1488) + Vector(0,0,7)
+ENT.Tower2Pos = Vector(1784, 273, 1488) + Vector(0,0,7)
 
 --has the following format
 	--name="what it will show up as in the shop",
@@ -63,7 +67,7 @@ ENT.ItemList = {
 		desc="In some tribal societies the more coconuts you have, the more powerful you are.",
 		cost=200,
 		pv="models/hunter/misc/sphere025x025.mdl",
-		ent="3p8_kookospahkina_puu",
+		ent="tp8_tree",
 		soundSell="ambient/levels/labs/coinslot1.wav"
 		--softcap=50, --would be used for the shop/villager AI to signal a sell order
 	},
@@ -265,13 +269,84 @@ GLOBAL_potato_max = 	50
 GLOBAL_coconut = 		0
 GLOBAL_coconut_max =	75
 
+--controls if the trees should automatically plant themselves or not.
+GLOBAL_tree = 			0
+GLOBAL_tree_max =		1500
+
 --controls if grass should automatically plant themselves or not.
 GLOBAL_grass = 			0
-GLOBAL_grass_max =		150
+GLOBAL_grass_max =		1500
+
+--controls if bushes should automatically plant themselves or not.
+GLOBAL_bush = 			0
+GLOBAL_bush_max =		1500
+
+GLOBAL_source1MaxMapSize = 32768
+GLOBAL_divisionsXY = 256 --width and depth
+GLOBAL_divisionsZ = 128 --height
+--create 3D array that covers entire map... higher values means more trees can be planted there, lower means less...
+--From https://stackoverflow.com/questions/21229211/three-dimensional-table-in-lua
+function newAutotable(dim)
+    local MT = {};
+    for i=1, dim do
+        MT[i] = {__index = function(t, k)
+            if i < dim then
+                t[k] = setmetatable({}, MT[i+1])
+                return t[k];
+            end
+        end}
+    end
+
+    return setmetatable({}, MT[1]);
+end
+
+-- Trees
+GLOBAL_forest = newAutotable(3);
+GLOBAL_forestXYMin = -(GLOBAL_source1MaxMapSize/2) / GLOBAL_divisionsXY
+GLOBAL_forestXYMax = (GLOBAL_source1MaxMapSize/2) / GLOBAL_divisionsXY
+GLOBAL_forestZMin = -(GLOBAL_source1MaxMapSize/2) / GLOBAL_divisionsZ
+GLOBAL_forestZMax = (GLOBAL_source1MaxMapSize/2) / GLOBAL_divisionsZ
+--fill array
+for x = GLOBAL_forestXYMin, GLOBAL_forestXYMax do
+	for y = GLOBAL_forestXYMin, GLOBAL_forestXYMax do
+		for z = GLOBAL_forestZMin, GLOBAL_forestZMax do
+			GLOBAL_forest[x][y][z] = 1 --2
+		end
+	end
+end
+
+-- Grass
+GLOBAL_grassGrid = newAutotable(3);
+GLOBAL_grassXYMin = -(GLOBAL_source1MaxMapSize/2) / GLOBAL_divisionsXY
+GLOBAL_grassXYMax = (GLOBAL_source1MaxMapSize/2) / GLOBAL_divisionsXY
+GLOBAL_grassZMin = -(GLOBAL_source1MaxMapSize/2) / GLOBAL_divisionsZ
+GLOBAL_grassZMax = (GLOBAL_source1MaxMapSize/2) / GLOBAL_divisionsZ
+for x = GLOBAL_grassXYMin, GLOBAL_grassXYMax do
+	for y = GLOBAL_grassXYMin, GLOBAL_grassXYMax do
+		for z = GLOBAL_grassZMin, GLOBAL_grassZMax do
+			GLOBAL_grassGrid[x][y][z] = 2 --2
+		end
+	end
+end
+
+-- Bush
+GLOBAL_bushGrid = newAutotable(3);
+GLOBAL_bushXYMin = -(GLOBAL_source1MaxMapSize/2) / GLOBAL_divisionsXY
+GLOBAL_bushXYMax = (GLOBAL_source1MaxMapSize/2) / GLOBAL_divisionsXY
+GLOBAL_bushZMin = -(GLOBAL_source1MaxMapSize/2) / GLOBAL_divisionsZ
+GLOBAL_bushZMax = (GLOBAL_source1MaxMapSize/2) / GLOBAL_divisionsZ
+for x = GLOBAL_bushXYMin, GLOBAL_bushXYMax do
+	for y = GLOBAL_bushXYMin, GLOBAL_bushXYMax do
+		for z = GLOBAL_bushZMin, GLOBAL_bushZMax do
+			GLOBAL_bushGrid[x][y][z] = 2 --3
+		end
+	end
+end
+
 
 function ENT:Initialize()
 	self.distanceToGround = -68
-	self.fuckNature = true
+	self.fuckNature = false
 
 	self:SetModel(self.Model)
 	self:SetMaterial("models/effects/splodeglass_sheet") --make invis
@@ -283,24 +358,31 @@ function ENT:Initialize()
 		if !self.fuckNature then
 			for i = 1,10 do
 				--print("making coconut again")
-				newFruit = ents.Create("3p8_kookospahkina_puu")
+				newFruit = ents.Create("tp8_tree")
 				if ( !IsValid( newFruit ) ) then return end
 				newFruit:SetPos(self:GetPos() + Vector(math.random(-512,512),math.random(-512,512),128+math.random(0,25)))
 				--might spawn coconuts off map...
 				newFruit:Spawn()
-				newFruit:GetPhysicsObject():Wake()
 			end
 			for i = 1,10 do
-				newFruit = ents.Create("3p8_potato_ent")
+				--print("making coconut again")
+				newFruit = ents.Create("tp8_tree_big")
+				if ( !IsValid( newFruit ) ) then return end
+				newFruit:SetPos(self:GetPos() + Vector(math.random(-512,512),math.random(-512,512),128+math.random(0,25)))
+				--might spawn coconuts off map...
+				newFruit:Spawn()
+			end
+			for i = 1,10 do
+				newFruit = ents.Create("tp8_bush")
 				if ( !IsValid( newFruit ) ) then return end
 				newFruit:SetPos(self:GetPos() + Vector(math.random(-512,512),math.random(-512,512),math.random(0,25)))
 				--might spawn off map...
 				newFruit:Spawn()
-				newFruit:GetPhysicsObject():Wake()
+				--newFruit:GetPhysicsObject():Wake()
 			end
 			--for j = -16,16 do
-				for i = 1,15 do
-					newFruit = ents.Create("3p8_grass")
+				for i = 1,10 do
+					newFruit = ents.Create("tp8_grass")
 					if ( !IsValid( newFruit ) ) then return end
 					newFruit:SetPos(self:GetPos() + Vector(math.random(-512,512),math.random(-512,512),math.random(0,25)))
 					--might spawn off map...
@@ -327,7 +409,7 @@ function ENT:Initialize()
 			--stock is only used to initialize, otherwise it is just a list of ent names
 		local oasisStocks = {
 			{
-				ent = "3p8_kookospahkina_puu",
+				ent = "tp8_tree",
 				stock = 50
 			},
 			{
@@ -477,7 +559,7 @@ function ENT:Initialize()
 				stock = 10
 			},
 			{
-				ent = "3p8_kookospahkina_puu",
+				ent = "tp8_tree",
 				stock = 15
 			},
 			{
@@ -545,24 +627,33 @@ function ENT:Initialize()
 
 		jet1 = ents.Create("ow_jet")
 		if ( !IsValid( jet1 ) ) then return end
-		jet1:SetPos(Vector(500, 1200, 2000))
+		jet1:SetPos(Vector(500, 1200, 2000)+Vector(math.random(-512,512),math.random(-512,512),math.random(0,25)))
 		jet1:SetModel("models/xqm/jetbody3.mdl")
 		jet1.Home = OW_CITY_POS[oblcomp.CityNum]
 		jet1:Spawn()
 
 		jet2 = ents.Create("ow_jet")
 		if ( !IsValid( jet2 ) ) then return end
-		jet2:SetPos(Vector(700, 1400, 2200))
+		jet2:SetPos(Vector(700, 1400, 2200)+Vector(math.random(-512,512),math.random(-512,512),math.random(0,25)))
 		jet2:SetModel("models/xqm/jetbody3.mdl")
 		jet2.Home = OW_CITY_POS[oblcomp.CityNum]
 		jet2:Spawn()
 
 		jet3 = ents.Create("ow_jet")
 		if ( !IsValid( jet3 ) ) then return end
-		jet3:SetPos(Vector(900, 1600, 2400))
+		jet3:SetPos(Vector(900, 1600, 2400)+Vector(math.random(-512,512),math.random(-512,512),math.random(0,25)))
 		jet3:SetModel("models/xqm/jetbody3.mdl")
 		jet3.Home = OW_CITY_POS[oblcomp.CityNum]
 		jet3:Spawn()
+		
+		for i=1,10 do
+			jet4 = ents.Create("ow_jet")
+			if ( !IsValid( jet4 ) ) then return end
+			jet4:SetPos(Vector(600, 1000, 1800)+Vector(math.random(-768,768),math.random(-768,768),math.random(0,100)))
+			jet4:SetModel("models/xqm/jetbody3.mdl")
+			jet4.Home = OW_CITY_POS[oblcomp.CityNum]
+			jet4:Spawn()
+		end
 
 		
 	end

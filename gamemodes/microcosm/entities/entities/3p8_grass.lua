@@ -15,7 +15,7 @@ ENT.Type = "anim"
 
 ENT.seedModel = "models/space/unit_sphere.mdl"
 ENT.models = {	"models/props_foliage/swamp_grass01.mdl", "models/props_foliage/swamp_grass_row01.mdl"}
-ENT.meme = nil
+--ENT.meme = nil
 
 function ENT:Initialize()
 	if CLIENT then return end
@@ -165,20 +165,20 @@ function ENT:Upgrayed()
 	self:SetModelScale( math.random(25,125)/100, self.growthTime) --grow the model over self.growthTime time. COOL!
 
 	--make invis grass "mound"
-	dirt = ents.Create("prop_physics")
-	if ( !IsValid(	dirt ) ) then return end
-	--dirt:PhysicsInitStandard()
-	dirt:SetModel("models/hunter/plates/plate3x3.mdl")
-	--dirt:SetColor(Color(0,0,0,0)) --make invis
-	dirt:SetPos(self:GetPos() + Vector(0,0,1))
-	dirt:Spawn()
-	dirt:SetMoveType(0)
-	--dirt:SetSolid(0)
-	self.meme = dirt
+	--dirt = ents.Create("prop_physics")
+	--if ( !IsValid(	dirt ) ) then return end
+	----dirt:PhysicsInitStandard()
+	--dirt:SetModel("models/hunter/plates/plate3x3.mdl")
+	----dirt:SetColor(Color(0,0,0,0)) --make invis
+	--dirt:SetPos(self:GetPos() + Vector(0,0,1))
+	--dirt:Spawn()
+	--dirt:SetMoveType(0)
+	----dirt:SetSolid(0)
+	--self.meme = dirt
 end
 
 function ENT:OnRemove()
-	if SERVER && IsValid(self.meme) then
-		self.meme:Remove() --remove dirt
-	end
+	--if SERVER && IsValid(self.meme) then
+	--	self.meme:Remove() --remove dirt
+	--end
 end

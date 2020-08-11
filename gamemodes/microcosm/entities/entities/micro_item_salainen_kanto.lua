@@ -24,7 +24,7 @@ function ENT:Initialize()
 
 		--energy timer
 		local timer_name = "kantoEnergyDepletion_" .. self:EntIndex()
-		timer.Create(timer_name,100,0, function() --every 100s, update energy status
+		timer.Create(timer_name,30,0, function() --every 100s, update energy status
 			--print("100 seconds pass")
 			if IsValid(self)then
 				self.health = self.health - 100

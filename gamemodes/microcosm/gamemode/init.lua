@@ -9,6 +9,7 @@ resource.AddWorkshop("822569462")
 local downscale = false
 
 function GM:PlayerSpawn( ply )
+	ply.entitty = {}
 	ply:StripWeapons()
 
 	ply:SetModel("models/player/barney.mdl")

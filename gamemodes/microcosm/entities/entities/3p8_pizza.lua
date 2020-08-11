@@ -20,6 +20,7 @@ function ENT:Initialize()
 	self:SetModel(self.ItemModel)
 	self:PhysicsInitStandard()
 	self:SetMaterial("models/props_borealis/mooring_cleat001")
+	self.health = 100
 
 	if SERVER then
 		self:SetUseType(SIMPLE_USE)
@@ -34,5 +35,20 @@ function ENT:Use(ply)
 	if hp_taken>0 then
 		self:EmitSound(sound_heal)
 		ply:SetHealth(ply:Health()+hp_taken)
+	end
+end
+
+function ENT:OnTakeDamage(damageto)
+	self.health = self.health - damageto:GetDamage()
+	if self.health <= 0 then
+		--self:EmitSound("weapons/debris1.wav")
+		--PRODUCE gibs HERE
+		--puulle = ents.Create("prop_physics")
+		--if ( !IsValid( puulle ) ) then return end
+		--puulle:SetModel("GIB MODEL")
+		--puulle:SetPos(self:GetPos())
+		--puulle:Spawn()
+
+		self:Remove()
 	end
 end
