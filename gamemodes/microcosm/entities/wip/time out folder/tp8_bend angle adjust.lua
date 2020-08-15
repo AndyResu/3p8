@@ -33,7 +33,7 @@ ENT.isTracking = false
 ENT.delta = 0
 ENT.timer_name = ""
 ENT.tolerancePercentage = 0.99 -- if 1, will divide by zero
-ENT.toleranceDistance = 25 --not related to above!
+ENT.toleranceDistance = 16 --not related to above!
 ENT.devMode = true
 
 --q is 27
@@ -83,8 +83,6 @@ hook.Add( "PlayerButtonUp", "ButtonUpWikiExample", function( ply, button )
 end)
 
 function ENT:stopTracking()
-	print(" ")
-	print(" ")
 	print("forzen like Elsa")
 	if !self.isTracking then return end
 	self.isTracking = false
@@ -111,6 +109,7 @@ end
 function ENT:LookForASpellAndCastIt()
 	--validate amongst various spells
 	print("wow, we doing it now!!!")
+	--use self.delta to map
 	--imagine a line, divided into 0.1 time segments
 	local isGoodToCast = true
 	local castDone = false
@@ -119,7 +118,7 @@ function ENT:LookForASpellAndCastIt()
 	--if the player stays still (<4 Hammer Units of movement), they do not lose progress
 	self.plyUniquePos = {}
 	for i=1,#self.positions-1 do
-		if !(self:similarDistance2(self.positions[i], self.positions[i+1], 2)) then
+		if !(self:similarDistance(self.positions[i], self.positions[i+1], 4)) then
 			table.insert(self.plyUniquePos, self.positions[i])
 		else
 			self.delta = self.delta - self.timeInterval
@@ -132,27 +131,19 @@ function ENT:LookForASpellAndCastIt()
 	end
 
 	-- calculate the angles
-		--rotate the playa recording to be like the spell
 	self.plyAngle = {}
 	self.plyAngleDeriv = {}
-	for spell=1,#self.spellList do
-		table.insert(self.plyAngle, {})
-		table.insert(self.plyAngleDeriv, {})
-		for i=1,#self.plyUniquePos-1 do
-			--table.insert(self.plyAngle, self.spellList[2][i]:AngleEx(self.spellList[2][i+1]))
-			--print("tha unique pos: "..self:vectorToString(self.plyUniquePos[i])..", and "..self:vectorToString(self.plyUniquePos[i+1]))
-			table.insert(self.plyAngle[spell], (self.plyUniquePos[i]-self.spellList[spell][2]):AngleEx(self.plyUniquePos[i+1]-self.spellList[spell][2]))
-			--print("plyAngle: "..self:vectorToString(self.plyAngle[spell][i]))
-		end
-		for i=1,#self.plyAngle[spell]-1 do
-			table.insert(self.plyAngleDeriv[spell], self.plyAngle[spell][i]-self.plyAngle[spell][i+1])
-			print("plyAngleDeriv: "..self:vectorToString(self.plyAngleDeriv[spell][i]))
-
-		end
+	for i=1,#self.plyUniquePos-1 do
+		--table.insert(self.plyAngle, self.spellList[2][i]:AngleEx(self.spellList[2][i+1]))
+		--print("tha unique pos: "..self:vectorToString(self.plyUniquePos[i])..", and "..self:vectorToString(self.plyUniquePos[i+1]))
+		table.insert(self.plyAngle, self.plyUniquePos[i]:AngleEx(self.plyUniquePos[i+1]))
+	end
+	for i=1,#self.plyAngle-1 do
+		table.insert(self.plyAngleDeriv, self.plyAngle[i]-self.plyAngle[i+1])
 	end
 
 	--[[this is how you add a new spell!]]
-	--[[if self.devMode && #self.plyUniquePos > 2 then
+	if self.devMode && #self.plyUniquePos > 2 then
 		local addNewSpellCode = "{"
 		local angleStrs = "{"
 		for i=1,#self.plyUniquePos-1 do
@@ -171,22 +162,31 @@ function ENT:LookForASpellAndCastIt()
 		angleStrs = angleStrs.."Angle("..self.plyAngle[#self.plyUniquePos-1].x..","..self.plyAngle[#self.plyUniquePos-1].y..","..self.plyAngle[#self.plyUniquePos-1].z..")}"
 		print(addNewSpellCode)
 		--print(angleStrs)
-	end]]
+	end
 
 	local adjusted = {}
 	if #self.plyUniquePos > 2 then
-		local second = self.plyAngleDeriv[1][2]
+		local second = self.plyAngleDeriv[2]
 		-- analyze if the player's movements match any of the spells...
 		for spell=1,#self.spellList do
 			if !castDone then
 				print("Spell: "..spell.. " ******************************************************************************************")
+				--rotate the playa recording to be like the spell
+					--add the difference between the 2nd values
+				adjusted = {}
+				table.insert(adjusted, self.plyAngleDeriv[2])
+				print("Adjusted: "..self:vectorToString(adjusted[1] - self.spellAngleDeriv[spell][2])..", "..1)
+				for i=2,#self.plyAngleDeriv do
+					table.insert(adjusted, self.plyAngleDeriv[i] - self.spellAngleDeriv[spell][2])
+					print("Adjusted: "..self:vectorToString(adjusted[i])..", ".. i)
+				end
 
 				isGoodToCast = true
 				print(#self.plyUniquePos..", "..#self.spellList[spell])
-				for i=3,#self.plyAngleDeriv[spell] do
+				for i=1,#adjusted do
 					print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-					t = i / #self.plyAngleDeriv[spell] --normalizes t from 0 to 1
-					print("(ply) t:     "..t)
+					t = i / #adjusted --normalizes t from 0 to 1
+					print("t: "..t)
 					if t >= 1 then break end
 					self.equalHere = 1
 					for equal=1,#self.spellAngleDeriv[spell] do
@@ -195,12 +195,12 @@ function ENT:LookForASpellAndCastIt()
 							break
 						end
 					end
-					print("(spell) eql: "..self.equalHere / #self.spellAngleDeriv[spell])
+					print("eql: "..self.equalHere / #self.spellAngleDeriv[spell])
 
 					--TODO: || here for similiarDistance with a small distance tolerance for those tiny movements... and flexibility
 						-- requires the vectors to be rotated :|
 						-- maybe use similar distance when recording. Only record values with a change > say, 4 units?
-					if !(self:similarDistance(self.plyAngleDeriv[spell][i],self.spellAngleDeriv[spell][self.equalHere],self.toleranceDistance)) then
+					if !(self:similarDistance(adjusted[i],self.spellAngleDeriv[spell][self.equalHere],self.toleranceDistance)) then
 						isGoodToCast = false
 						print("here is bad")
 						break --skips the rest of this spell
@@ -261,10 +261,10 @@ function ENT:Initialize()
 			for i=1,#self.spellList[spell]-1 do
 				angleHere = self.spellList[spell][i]:AngleEx(self.spellList[spell][i+1])
 				table.insert(self.spellAngle[spell], angleHere)
+				print("tha spell angle: "..self:vectorToString(angleHere))
 			end
 			for i=1,#self.spellAngle[spell]-1 do
 				table.insert(self.spellAngleDeriv[spell], self.spellAngle[spell][i] - self.spellAngle[spell][i+1])
-				print(i.." tha spell angleDeriv: "..self:vectorToString(self.spellAngleDeriv[spell][i]))
 			end
 		end
 	end
@@ -304,33 +304,10 @@ function ENT:OnRemove()
 end
 
 function ENT:similarDistance(new, old, distance)
-	--each component may not be more than 'distance' different + or - from 'orig'
+	--each component may not be more than 'percent' % different + or - from 'orig'
 	print("new.x: "..new.x.." - "..old.x.." :old.x")
 	print("new.y: "..new.y.." - "..old.y.." :old.y")
 	print("new.z: "..new.z.." - "..old.z.." :old.z")
-	local truth = true
-	local nox = math.abs(new.x - old.x)
-	local noy = math.abs(new.y - old.y)
-	local noz = math.abs(new.z - old.z)
-	--the 360-distance fixes the issue where the angle is like -359 due to going over an axis
-	if (nox > distance) && (nox < 360-distance) then
-		truth = false
-	end
-	if (noy > distance) && (noy < 360-distance) then
-		truth = false
-	end
-	if (noz > distance) && (noz < 360-distance) then
-		truth = false
-	end
-	--if truth then print("truth") end
-	return truth
-end
-
-function ENT:similarDistance2(new, old, distance)
-	--each component may not be more than 'distance' different + or - from 'orig'
-	--print("new.x: "..new.x.." - "..old.x.." :old.x")
-	--print("new.y: "..new.y.." - "..old.y.." :old.y")
-	--print("new.z: "..new.z.." - "..old.z.." :old.z")
 	local truth = true
 	if (new.x - old.x > distance) || (new.x - old.x < -distance) then
 	--if (math.abs(new.x) - math.abs(old.x) > distance) then

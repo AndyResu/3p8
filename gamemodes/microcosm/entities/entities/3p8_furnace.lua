@@ -54,7 +54,7 @@ function ENT:Initialize()
 		if ( !IsValid( can ) ) then return end
 		can:SetPos(self:GetPos() + Vector(0,0,40))
 		can:SetModel("models/props_junk/garbage_metalcan002a.mdl")
-		can:Ignite(999999, 0) --ignite forever?
+		can:Ignite(999999, 1) --ignite forever?
 		can:Spawn()
 		can:GetPhysicsObject():EnableMotion(false)
 		can:SetCollisionGroup(COLLISION_GROUP_DEBRIS_TRIGGER)
