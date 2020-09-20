@@ -23,7 +23,7 @@ SWEP.SlotPos = 1
 
 SWEP.Primary.ClipSize		= 999
 SWEP.Primary.DefaultClip	= 0
-SWEP.Primary.Automatic		= false
+SWEP.Primary.Automatic		= true
 SWEP.Primary.Ammo		    = "slam"
 SWEP.Primary.Delay			= 0.25
 SWEP.Primary.Recoil			= 0

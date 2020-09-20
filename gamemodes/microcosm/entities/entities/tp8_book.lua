@@ -10,7 +10,7 @@
 					models/props_lab/binderbluelabel.mdl
 					models/props_lab/bindergraylabel01a.mdl
 					models/props_lab/bindergraylabel01b.mdl
-					models/props_lab/bindergreenlabel.mdlq
+					models/props_lab/bindergreenlabel.mdl
 					models/props_lab/binderredlabel.mdl
 
 ]]
@@ -28,6 +28,7 @@ function ENT:Initialize()
 		self:PhysicsInit( SOLID_VPHYSICS )
 		self:SetSolid( SOLID_VPHYSICS )
 		self:SetMoveType( MOVETYPE_VPHYSICS )
+		self:SetUseType( SIMPLE_USE )
 	end
 end
 

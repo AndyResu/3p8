@@ -104,11 +104,12 @@ function ENT:Initialize()
 		timer.Create(timer_name,self.growthTime,0, function() --every (some amount) seconds, update energy status
 			--print("yeah, we doing it now!1")
 			if IsValid(self) then
-				-- if self:IsOnFire() then
+				if self:IsOnFire() then
 				-- 	--print("Remove coconut, fire " .. self:GetCreationID())
 				-- 	self:Remove()
 				-- 	--timer.Remove(timer_name)
-				-- end
+					self:Ignite(15, 100)
+				 end
 				if !self.isPlanted then
 					--if self.chance > 0.5 then
 						--try plant self in an adjacent square of the forest
@@ -208,7 +209,7 @@ function ENT:Upgrayed()
 			--self:SetMoveType(MOVETYPE_VPHYSICS)
 			self:SetMoveType(0)
 			self.treeLevel = self.treeLevel + 1 --2
-			self.health = 250 * self.treeLevel
+			self.health = self.health + 250 * self.treeLevel
 
 			--start scaling
 			self:SetModelScale( 0.01, 0) --make the model really small to start
@@ -221,7 +222,7 @@ function ENT:Upgrayed()
 			--self:SetMoveType(MOVETYPE_VPHYSICS)
 			self:SetMoveType(0)
 			self.treeLevel = self.treeLevel + 1 --3
-			self.health = 250 * self.treeLevel
+			self.health = self.health + 100 * self.treeLevel
 			
 			--start scaling
 			self:SetModelScale( 0.6, 0) --make the model small to start
@@ -235,7 +236,7 @@ function ENT:Upgrayed()
 			--self:SetMoveType(MOVETYPE_VPHYSICS)
 			self:SetMoveType(0)
 			self.treeLevel = self.treeLevel + 1 --4
-			self.health = 250 * self.treeLevel
+			self.health = self.health + 100 * self.treeLevel
 
 			--start scaling
 			self:SetModelScale( 0.8, 0) --make the model small to start

@@ -6,6 +6,7 @@
 --maybe have jake be the radio dj
 --dj archieball'd and trapstaar geovainni
 --if the secrete mixtape is found, that can be put inside to play the super secrete mixtape. also ejaculable <---- SMArt!!!!!
+--test/temp/soundscape_test/tv_music.wav loop
 
 AddCSLuaFile()
 
@@ -33,6 +34,9 @@ function ENT:Initialize()
 	self.containsMixtape = false
 	self.isOff = true
 	self.currentSong = self.Music[math.random(1,#self.Music)]
+	if SERVER then
+		self:SetUseType( SIMPLE_USE )
+	end
 end
 
 function ENT:OnTakeDamage(damageto)
@@ -40,7 +44,7 @@ function ENT:OnTakeDamage(damageto)
 	if self.health <= 0 then
 		self:EmitSound("player/bhit_helmet-1.wav")
 		--PRODUCE gibs HERE
-
+		self:StopSound(self.currentSong)
 		self:Remove()
 	end
 end
@@ -65,7 +69,8 @@ function ENT:Use(ply)
 		self.isOff = false
 		if self.containsMixtape then
 			--play mixtape
-
+				--play HL2 music?
+			
 		else
 			--play normal music
 			self.currentSong = self.Music[math.random(1,#self.Music)]

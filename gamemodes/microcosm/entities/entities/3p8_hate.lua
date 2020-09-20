@@ -8,6 +8,7 @@ AddCSLuaFile()
 ENT.Type = "anim"
 
 ENT.ItemModel = "models/maxofs2d/hover_rings.mdl"
+ENT.health = 100 --make remove when 0 hp, but not from shooting
 
 function ENT:Initialize()
 	self:SetModel(self.ItemModel)
@@ -26,8 +27,8 @@ function ENT:Initialize()
 	--find spawn location ents...
 
 	--make friends. via airdrop and knocking down barriers
-	local ent1 = ents.Create("CombineElite") --THEY'VE SENT IN THE SUPERS
+	--local ent1 = ents.Create("CombineElite") --THEY'VE SENT IN THE SUPERS
 
-    ent1:SetPos(self:GetPos()+Vector(128,128,64))
-    ent1:Spawn()
+    --ent1:SetPos(self:GetPos()+Vector(128,128,64))
+    --ent1:Spawn()
 end

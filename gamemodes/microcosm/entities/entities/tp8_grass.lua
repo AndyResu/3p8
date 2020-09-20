@@ -90,6 +90,7 @@ function ENT:Initialize()
 	timer.Create(timer_name,self.growthTime,0, function()
 		if IsValid(self) then
 			if self:IsOnFire() then
+				self:Ignite(15, 100)
 				self:Remove()
 			end
 			if !self.isPlanted then
